@@ -14,7 +14,7 @@ Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceMana
 {}
 
 // Apply filter to frame.
-bool Blur::apply(const Frame& inputFrame, const Frame& outputFrame, IParameterSet* params)
+bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, IParameterSet* params)
 {
     std::cout << "Blur is working" << std::endl;
     return false;

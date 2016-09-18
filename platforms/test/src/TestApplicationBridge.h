@@ -25,6 +25,8 @@ public:
     index_t filtersNumber();
     std::shared_ptr<IFilter> createFilter(index_t index);
     
+    void setResourceManager(IResourceManager*);
+    
 private:
 
     std::unique_ptr<IFilterCollection> filterCollection;

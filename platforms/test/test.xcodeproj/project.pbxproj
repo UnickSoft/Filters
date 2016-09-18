@@ -12,6 +12,9 @@
 		689042A41D8591A100FE972B /* TestCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 689042A21D8591A100FE972B /* TestCollection.cpp */; };
 		689042A71D85A59C00FE972B /* Blur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 689042A51D85A59C00FE972B /* Blur.cpp */; };
 		689042AA1D85C4A800FE972B /* PrivateFilterList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 689042A81D85C4A800FE972B /* PrivateFilterList.cpp */; };
+		68EC29F71D8DBEE7007C00EF /* JpegImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68EC29F51D8DBEE7007C00EF /* JpegImage.cpp */; };
+		68EC29FA1D8EA40E007C00EF /* BaseResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68EC29F81D8EA40E007C00EF /* BaseResourceManager.cpp */; };
+		68EC29FD1D8EB3A6007C00EF /* Copy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68EC29FB1D8EB3A6007C00EF /* Copy.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +46,12 @@
 		689042A61D85A59C00FE972B /* Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Blur.h; path = ../../baseFilters/Blur.h; sourceTree = "<group>"; };
 		689042A81D85C4A800FE972B /* PrivateFilterList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PrivateFilterList.cpp; path = ../../common/PrivateFilterList.cpp; sourceTree = "<group>"; };
 		689042A91D85C4A800FE972B /* PrivateFilterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrivateFilterList.h; path = ../../common/PrivateFilterList.h; sourceTree = "<group>"; };
+		68EC29F51D8DBEE7007C00EF /* JpegImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JpegImage.cpp; path = ../../common/JpegImage.cpp; sourceTree = "<group>"; };
+		68EC29F61D8DBEE7007C00EF /* JpegImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JpegImage.h; path = ../../common/JpegImage.h; sourceTree = "<group>"; };
+		68EC29F81D8EA40E007C00EF /* BaseResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BaseResourceManager.cpp; path = ../../common/BaseResourceManager.cpp; sourceTree = "<group>"; };
+		68EC29F91D8EA40E007C00EF /* BaseResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseResourceManager.h; path = ../../common/BaseResourceManager.h; sourceTree = "<group>"; };
+		68EC29FB1D8EB3A6007C00EF /* Copy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Copy.cpp; path = ../../baseFilters/Copy.cpp; sourceTree = "<group>"; };
+		68EC29FC1D8EB3A6007C00EF /* Copy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Copy.h; path = ../../baseFilters/Copy.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +68,7 @@
 		684EEB6C1D856ECC0011810B = {
 			isa = PBXGroup;
 			children = (
+				68EC29F41D8DBEB8007C00EF /* common */,
 				689042A11D85917600FE972B /* collection */,
 				689042911D85716700FE972B /* include */,
 				684EEB771D856ECC0011810B /* src */,
@@ -105,10 +115,23 @@
 				689042A31D8591A100FE972B /* TestCollection.h */,
 				689042A51D85A59C00FE972B /* Blur.cpp */,
 				689042A61D85A59C00FE972B /* Blur.h */,
-				689042A81D85C4A800FE972B /* PrivateFilterList.cpp */,
-				689042A91D85C4A800FE972B /* PrivateFilterList.h */,
+				68EC29FB1D8EB3A6007C00EF /* Copy.cpp */,
+				68EC29FC1D8EB3A6007C00EF /* Copy.h */,
 			);
 			name = collection;
+			sourceTree = "<group>";
+		};
+		68EC29F41D8DBEB8007C00EF /* common */ = {
+			isa = PBXGroup;
+			children = (
+				689042A81D85C4A800FE972B /* PrivateFilterList.cpp */,
+				689042A91D85C4A800FE972B /* PrivateFilterList.h */,
+				68EC29F51D8DBEE7007C00EF /* JpegImage.cpp */,
+				68EC29F61D8DBEE7007C00EF /* JpegImage.h */,
+				68EC29F81D8EA40E007C00EF /* BaseResourceManager.cpp */,
+				68EC29F91D8EA40E007C00EF /* BaseResourceManager.h */,
+			);
+			name = common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,10 +190,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68EC29FA1D8EA40E007C00EF /* BaseResourceManager.cpp in Sources */,
 				684EEB801D856EE50011810B /* main.cpp in Sources */,
 				689042991D858BEA00FE972B /* TestApplicationBridge.cpp in Sources */,
 				689042A71D85A59C00FE972B /* Blur.cpp in Sources */,
+				68EC29FD1D8EB3A6007C00EF /* Copy.cpp in Sources */,
 				689042AA1D85C4A800FE972B /* PrivateFilterList.cpp in Sources */,
+				68EC29F71D8DBEE7007C00EF /* JpegImage.cpp in Sources */,
 				689042A41D8591A100FE972B /* TestCollection.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -263,7 +289,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				HEADER_SEARCH_PATHS = ../../common;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/,
+					../../common,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib/;
+				OTHER_LDFLAGS = "-ljpeg";
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -272,7 +304,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				HEADER_SEARCH_PATHS = ../../common;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/include/,
+					../../common,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib/;
+				OTHER_LDFLAGS = "-ljpeg";
+				OTHER_LIBTOOLFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

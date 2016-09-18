@@ -26,8 +26,13 @@ index_t TestApplicationBridge::filtersNumber()
     return filterCollection->filtersNumber();
 }
 
-
 std::shared_ptr<IFilter> TestApplicationBridge::createFilter(index_t index)
 {
     return std::shared_ptr<IFilter>(filterCollection->createFilter(index));
 }
+
+void TestApplicationBridge::setResourceManager(IResourceManager* resourceManager)
+{
+    filterCollection->setResourceManager(resourceManager);
+}
+

@@ -9,6 +9,7 @@
 #ifndef Base_h
 #define Base_h
 
+#include <cstdlib>
 
 typedef size_t index_t;
 
@@ -16,9 +17,17 @@ typedef size_t index_t;
 // TODO define this classes later.
 struct ParameterInfo {};
 
-struct Frame {};
+struct FrameParams
+{
+    uint32_t width;
+    uint32_t height;
+};
 
-struct FrameParams {};
+struct Frame : FrameParams
+{
+    uint32_t byteSpan;
+    uint8_t* data;
+};
 
 struct Parameter {};
 

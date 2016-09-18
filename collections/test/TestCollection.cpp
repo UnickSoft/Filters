@@ -8,6 +8,7 @@
 
 #include "TestCollection.h"
 #include "Blur.h"
+#include "Copy.h"
 
 // Create this collection.
 IFilterCollection* createCollection()
@@ -15,18 +16,10 @@ IFilterCollection* createCollection()
     return new TestCollection();
 }
 
-
 TestCollection::TestCollection ()
 {
-    privateFilters.addFilter ([](const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager)
-    {
-        return new Blur(privateFilterList, resourceManager);
-    });
-    
-    publicFilters.addFilter ([](const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager)
-    {
-        return new Blur(privateFilterList, resourceManager);
-    });
+    addFilter<Copy>();
+    addFilter<Blur>();
 }
 
 // Create filter by index.
@@ -41,9 +34,23 @@ IFilter* TestCollection::createFilter(const char* const name)
     return publicFilters.createFilter(name, &privateFilters, nullptr);
 }
 
-
 // @return number of filters in list.
 index_t TestCollection::filtersNumber()
 {
     return publicFilters.filtersNumber();
 }
+
+
+template <class T> void TestCollection::addFilter()
+{
+        privateFilters.addFilter ([](const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager)
+    {
+        return new T(privateFilterList, resourceManager);
+    });
+    
+    publicFilters.addFilter ([](const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager)
+    {
+        return new T(privateFilterList, resourceManager);
+    });
+}
+

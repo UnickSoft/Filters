@@ -31,7 +31,9 @@ public:
     // @return number of filters in list.
     virtual index_t filtersNumber();
     
-public:
+private:
+    template <class T> void addFilter();
+
     PrivateFilterList privateFilters;
     PrivateFilterList publicFilters;
     

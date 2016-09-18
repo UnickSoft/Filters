@@ -1,13 +1,13 @@
 //
-//  Blur.hpp
+//  Copy.hpp
 //  test
 //
-//  Created by Олег on 11.09.16.
+//  Created by Олег on 18.09.16.
 //  Copyright © 2016 Oleg. All rights reserved.
 //
 
-#ifndef Blur_hpp
-#define Blur_hpp
+#ifndef Copy_hpp
+#define Copy_hpp
 
 #include <stdio.h>
 #include "IFilter.h"
@@ -15,11 +15,11 @@
 #include "IResourceManager.h"
 
 
-class Blur : public IFilter
+class Copy : public IFilter
 {
 public:
 
-    Blur (const IPrivateFilterList* filterList, IResourceManager* resourceManager);
+    Copy (const IPrivateFilterList* filterList, IResourceManager* resourceManager);
     
     // Apply filter to frame.
     bool apply(const Frame* inputFrame, Frame* outputFrame, IParameterSet* params) override;
@@ -36,4 +36,4 @@ public:
 
 };
 
-#endif /* Blur_hpp */
+#endif /* Copy_hpp */
