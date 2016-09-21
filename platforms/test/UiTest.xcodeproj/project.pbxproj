@@ -1,0 +1,341 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		68AA344E1D908C9D00D54A8D /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF81D907A6300D952BB /* QtCore.framework */; };
+		68AA344F1D908C9D00D54A8D /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF91D907A6300D952BB /* QtGui.framework */; };
+		68AA34521D908D2900D54A8D /* UiMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68524EDF1D8ED95800D952BB /* UiMain.cpp */; };
+		68AA34541D9090C000D54A8D /* QtCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF81D907A6300D952BB /* QtCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		68AA34561D9090C000D54A8D /* QtGui.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF91D907A6300D952BB /* QtGui.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		68AA34571D9090C000D54A8D /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EFA1D907A6300D952BB /* QtWidgets.framework */; };
+		68AA34581D9090C000D54A8D /* QtWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EFA1D907A6300D952BB /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		68AA345C1D91CE2A00D54A8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AA345B1D91CE2A00D54A8D /* main.m */; };
+		68AA345E1D91CE3300D54A8D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68AA345D1D91CE3300D54A8D /* Info.plist */; };
+		68AA34621D91D0FE00D54A8D /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34601D91D0FE00D54A8D /* MainWindow.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXBuildRule section */
+		68AA345A1D91CC9E00D54A8D /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			filePatterns = "*.h";
+			fileType = pattern.proxy;
+			isEditable = 1;
+			outputFiles = (
+				"",
+				"${INPUT_FILE_DIR}/moc_${INPUT_FILE_BASE}.cpp",
+			);
+			script = "/Volumes/DEV/projects/Filters/platforms/test/Qt/moc -o ${INPUT_FILE_DIR}/moc_${INPUT_FILE_BASE}.cpp ${INPUT_FILE_PATH}";
+		};
+/* End PBXBuildRule section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		68AA34591D9090C100D54A8D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				68AA34541D9090C000D54A8D /* QtCore.framework in Embed Frameworks */,
+				68AA34581D9090C000D54A8D /* QtWidgets.framework in Embed Frameworks */,
+				68AA34561D9090C000D54A8D /* QtGui.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		68524EDF1D8ED95800D952BB /* UiMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UiMain.cpp; path = src/UiMain.cpp; sourceTree = SOURCE_ROOT; };
+		68524EF81D907A6300D952BB /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = Qt/QtCore.framework; sourceTree = "<group>"; };
+		68524EF91D907A6300D952BB /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Qt/QtGui.framework; sourceTree = "<group>"; };
+		68524EFA1D907A6300D952BB /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = Qt/QtWidgets.framework; sourceTree = "<group>"; };
+		68AA343C1D908AD400D54A8D /* UiTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UiTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		68AA34511D908CF300D54A8D /* UiTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UiTest.h; path = src/UiTest.h; sourceTree = SOURCE_ROOT; };
+		68AA345B1D91CE2A00D54A8D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = src/main.m; sourceTree = SOURCE_ROOT; };
+		68AA345D1D91CE3300D54A8D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
+		68AA34601D91D0FE00D54A8D /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/Ui/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
+		68AA34611D91D0FE00D54A8D /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/Ui/MainWindow.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		68AA34391D908AD400D54A8D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68AA344E1D908C9D00D54A8D /* QtCore.framework in Frameworks */,
+				68AA34571D9090C000D54A8D /* QtWidgets.framework in Frameworks */,
+				68AA344F1D908C9D00D54A8D /* QtGui.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		68AA34411D908AD400D54A8D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				68AA345D1D91CE3300D54A8D /* Info.plist */,
+				68AA345B1D91CE2A00D54A8D /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		68AA345F1D91D0E700D54A8D /* Ui */ = {
+			isa = PBXGroup;
+			children = (
+				68AA34601D91D0FE00D54A8D /* MainWindow.cpp */,
+				68AA34611D91D0FE00D54A8D /* MainWindow.h */,
+			);
+			name = Ui;
+			sourceTree = "<group>";
+		};
+		68EC29FE1D8ED8EF007C00EF = {
+			isa = PBXGroup;
+			children = (
+				68524EF81D907A6300D952BB /* QtCore.framework */,
+				68524EF91D907A6300D952BB /* QtGui.framework */,
+				68524EFA1D907A6300D952BB /* QtWidgets.framework */,
+				68EC2A091D8ED8EF007C00EF /* UiTest */,
+				68EC2A081D8ED8EF007C00EF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		68EC2A081D8ED8EF007C00EF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				68AA343C1D908AD400D54A8D /* UiTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		68EC2A091D8ED8EF007C00EF /* UiTest */ = {
+			isa = PBXGroup;
+			children = (
+				68AA345F1D91D0E700D54A8D /* Ui */,
+				68AA34411D908AD400D54A8D /* Supporting Files */,
+				68524EDF1D8ED95800D952BB /* UiMain.cpp */,
+				68AA34511D908CF300D54A8D /* UiTest.h */,
+			);
+			path = UiTest;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		68AA343B1D908AD400D54A8D /* UiTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 68AA344A1D908AD400D54A8D /* Build configuration list for PBXNativeTarget "UiTest" */;
+			buildPhases = (
+				68AA34381D908AD400D54A8D /* Sources */,
+				68AA34391D908AD400D54A8D /* Frameworks */,
+				68AA343A1D908AD400D54A8D /* Resources */,
+				68AA34591D9090C100D54A8D /* Embed Frameworks */,
+			);
+			buildRules = (
+				68AA345A1D91CC9E00D54A8D /* PBXBuildRule */,
+			);
+			dependencies = (
+			);
+			name = UiTest;
+			productName = UiTest;
+			productReference = 68AA343C1D908AD400D54A8D /* UiTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		68EC29FF1D8ED8EF007C00EF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Oleg;
+				TargetAttributes = {
+					68AA343B1D908AD400D54A8D = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+				};
+			};
+			buildConfigurationList = 68EC2A021D8ED8EF007C00EF /* Build configuration list for PBXProject "UiTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 68EC29FE1D8ED8EF007C00EF;
+			productRefGroup = 68EC2A081D8ED8EF007C00EF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				68AA343B1D908AD400D54A8D /* UiTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		68AA343A1D908AD400D54A8D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68AA345E1D91CE3300D54A8D /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		68AA34381D908AD400D54A8D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68AA345C1D91CE2A00D54A8D /* main.m in Sources */,
+				68AA34621D91D0FE00D54A8D /* MainWindow.cpp in Sources */,
+				68AA34521D908D2900D54A8D /* UiMain.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		68AA344B1D908AD400D54A8D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Qt",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = UnickSoft.UiTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		68AA344C1D908AD400D54A8D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Qt",
+				);
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = UnickSoft.UiTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		68EC2A0C1D8ED8EF007C00EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		68EC2A0D1D8ED8EF007C00EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		68AA344A1D908AD400D54A8D /* Build configuration list for PBXNativeTarget "UiTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				68AA344B1D908AD400D54A8D /* Debug */,
+				68AA344C1D908AD400D54A8D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		68EC2A021D8ED8EF007C00EF /* Build configuration list for PBXProject "UiTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				68EC2A0C1D8ED8EF007C00EF /* Debug */,
+				68EC2A0D1D8ED8EF007C00EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 68EC29FF1D8ED8EF007C00EF /* Project object */;
+}
