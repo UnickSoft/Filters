@@ -11,19 +11,31 @@
 
 #include <stdio.h>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QLabel>
+#include "ImageControl.h"
+#include "TestApplicationBridge.h"
+#include "BaseResourceManager.h"
 
 
 class MainWindow : public QMainWindow
 {
+    Q_OBJECT
+
 public:
     MainWindow();
 
 
+protected Q_SLOTS:
+
+    void openImage();
+    void applyFilter();
+
 private:
 
-    QLabel* source;
-    QLabel* dest;
+    ImageControl* source;
+    ImageControl* dest;
+    
+    TestApplicationBridge bridge;
+    BaseResourceManager resourceManager;
 
 };
 

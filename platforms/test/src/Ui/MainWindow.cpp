@@ -8,12 +8,17 @@
 
 #include "MainWindow.h"
 #include <QtWidgets/QHBoxLayout>
-
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMenu>
+#include <QtCore/QBuffer>
 
 MainWindow::MainWindow()
 {
-    source = new QLabel("Source (Click to open image)", this);
-    dest   = new QLabel("Dest (Click to open filter)", this);
+    source = new ImageControl("Source (Click to open image)", this);
+    dest   = new ImageControl("Dest (Click to open filter)", this);
+    
+    source->setScaledContents(true);
+    dest->setScaledContents(true);
 
     QHBoxLayout* layout = new QHBoxLayout();
     layout->QLayout::addWidget(source);
@@ -25,4 +30,48 @@ MainWindow::MainWindow()
     
     // Set QWidget as the central layout of the main window
     setCentralWidget(window);
+    
+    connect(source, SIGNAL(onMousePress()), this, SLOT(openImage()));
+    connect(dest, SIGNAL(onMousePress()), this, SLOT(applyFilter()));
+    
+    bridge.setResourceManager(&resourceManager);
 }
+
+
+void MainWindow::openImage()
+{
+    QString fileName = QFileDialog::getOpenFileName(this,
+    tr("Open Image"), "~/Pictures", tr("Image Files (*.png *.jpg *.bmp)"));
+    if (!fileName.isEmpty())
+    {
+        QPixmap pix(fileName);
+        source->setPixmap(pix.scaled(source->width(), source->height(), Qt::KeepAspectRatio));
+    }
+}
+
+void MainWindow::applyFilter()
+{
+    auto filter = bridge.createFilter(0);
+    auto pix = source->pixmap();
+    auto inputImage = pix->toImage().convertToFormat(QImage::Format_RGB888);
+
+    Frame frame;
+    frame.width    = inputImage.width();
+    frame.height   = inputImage.height();
+    frame.byteSpan = inputImage.bytesPerLine();
+    frame.data     = reinterpret_cast<uint8_t*>(inputImage.bits());
+
+    auto outFrame = resourceManager.createFrame(frame);
+    
+    filter->apply(&frame, outFrame, nullptr);
+
+    dest->setPixmap(QPixmap::fromImage(QImage(outFrame->data, outFrame->width, outFrame->height, QImage::Format_RGB888)));
+    
+    resourceManager.releaseFrame(outFrame);
+    
+}
+
+
+
+
+

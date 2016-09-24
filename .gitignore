@@ -3,3 +3,7 @@ baseFilters/._Blur.cpp
 *xcuserdatad
 
 platforms/test/ConsoleTest.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+
+platforms/test/src/Ui/moc_MainWindow.cpp
+
+platforms/test/src/Ui/moc_ImageControl.cpp
