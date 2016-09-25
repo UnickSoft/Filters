@@ -84,7 +84,7 @@ void MainWindow::applyFilter(index_t index)
         
         filter->apply(&frame, outFrame, nullptr);
         
-        dest->setPixmap(QPixmap::fromImage(QImage(outFrame->data, outFrame->width, outFrame->height, QImage::Format_RGB888)));
+        dest->setPixmap(QPixmap::fromImage(QImage(outFrame->data, outFrame->width, outFrame->height, outFrame->byteSpan, QImage::Format_RGB888)));
         
         resourceManager.releaseFrame(outFrame);
     }

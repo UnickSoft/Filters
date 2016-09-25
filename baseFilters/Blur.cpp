@@ -16,19 +16,19 @@ Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceMana
 // Apply filter to frame.
 bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, IParameterSet* params)
 {
-    const unsigned int kernelSize = 5;
-    const unsigned int kernelSizeHalf = kernelSize / 2;
+    const int kernelSize = 5;
+    const int kernelSizeHalf = kernelSize / 2;
     
     unsigned int kernel[kernelSize];
     unsigned int kernelNorm = 0;
     for (int i = 0; i < kernelSizeHalf; i ++)
     {
-        kernel[i] = i;
-        kernel[kernelSize - 1 - i] = i;
-        kernelNorm += 2 * i;
+        kernel[i] = i + 1;
+        kernel[kernelSize - 1 - i] = i + 1;
+        kernelNorm += 2 * (i + 1);
     }
-    kernel[kernelSizeHalf] = kernelSizeHalf;
-    kernelNorm += kernelSizeHalf;
+    kernel[kernelSizeHalf] = kernelSizeHalf + 1;
+    kernelNorm += kernelSizeHalf + 1;
     
     auto sourceData = inputFrame->data;
     auto destData   = outputFrame->data;
@@ -41,9 +41,9 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, IParameterSet* par
             unsigned int value[3] = {};
             for (int k = -kernelSizeHalf; k <= kernelSizeHalf; k++)
             {
-                value[0] += kernel[k + kernelSizeHalf] * sourceRow[k];
-                value[1] += kernel[k + kernelSizeHalf] * sourceRow[k + 1];
-                value[2] += kernel[k + kernelSizeHalf] * sourceRow[k + 2];
+                value[0] += kernel[k + kernelSizeHalf] * sourceRow[k * 3];
+                value[1] += kernel[k + kernelSizeHalf] * sourceRow[k * 3 + 1];
+                value[2] += kernel[k + kernelSizeHalf] * sourceRow[k * 3 + 2];
             }
             
             destRow[0] = value[0] / kernelNorm;
