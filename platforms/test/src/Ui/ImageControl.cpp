@@ -16,5 +16,5 @@ ImageControl::ImageControl (const QString& text, QWidget* parent) : QLabel(text,
 
 void ImageControl::mousePressEvent(QMouseEvent * event)
 {
-    emit onMousePress();
+    emit onMousePress(event);
 }

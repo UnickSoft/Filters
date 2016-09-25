@@ -11,6 +11,7 @@
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMenu>
 #include <QtCore/QBuffer>
+#include <QtGui/QMouseEvent>
 
 MainWindow::MainWindow()
 {
@@ -31,8 +32,8 @@ MainWindow::MainWindow()
     // Set QWidget as the central layout of the main window
     setCentralWidget(window);
     
-    connect(source, SIGNAL(onMousePress()), this, SLOT(openImage()));
-    connect(dest, SIGNAL(onMousePress()), this, SLOT(applyFilter()));
+    connect(source, SIGNAL(onMousePress(QMouseEvent *)), this, SLOT(openImage()));
+    connect(dest, SIGNAL(onMousePress(QMouseEvent *)), this, SLOT(applyFilter(QMouseEvent *)));
     
     bridge.setResourceManager(&resourceManager);
 }
@@ -49,26 +50,44 @@ void MainWindow::openImage()
     }
 }
 
-void MainWindow::applyFilter()
+void MainWindow::applyFilter(QMouseEvent * event)
 {
-    auto filter = bridge.createFilter(0);
+    QMenu filterList;
+    
+    
+    for (index_t i = 0; i < bridge.filtersNumber(); i ++)
+    {
+        filterList.addAction(bridge.createFilter(i)->name(), [=]()
+                             {
+                                 this->applyFilter(i);
+                             });
+    }
+    
+    filterList.exec(event->globalPos());
+}
+
+void MainWindow::applyFilter(index_t index)
+{
+    auto filter = bridge.createFilter(index);
     auto pix = source->pixmap();
-    auto inputImage = pix->toImage().convertToFormat(QImage::Format_RGB888);
-
-    Frame frame;
-    frame.width    = inputImage.width();
-    frame.height   = inputImage.height();
-    frame.byteSpan = inputImage.bytesPerLine();
-    frame.data     = reinterpret_cast<uint8_t*>(inputImage.bits());
-
-    auto outFrame = resourceManager.createFrame(frame);
-    
-    filter->apply(&frame, outFrame, nullptr);
-
-    dest->setPixmap(QPixmap::fromImage(QImage(outFrame->data, outFrame->width, outFrame->height, QImage::Format_RGB888)));
-    
-    resourceManager.releaseFrame(outFrame);
-    
+    if (pix)
+    {
+        auto inputImage = pix->toImage().convertToFormat(QImage::Format_RGB888);
+        
+        Frame frame;
+        frame.width    = inputImage.width();
+        frame.height   = inputImage.height();
+        frame.byteSpan = inputImage.bytesPerLine();
+        frame.data     = reinterpret_cast<uint8_t*>(inputImage.bits());
+        
+        auto outFrame = resourceManager.createFrame(frame);
+        
+        filter->apply(&frame, outFrame, nullptr);
+        
+        dest->setPixmap(QPixmap::fromImage(QImage(outFrame->data, outFrame->width, outFrame->height, QImage::Format_RGB888)));
+        
+        resourceManager.releaseFrame(outFrame);
+    }
 }
 
 

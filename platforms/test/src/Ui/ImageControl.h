@@ -21,7 +21,7 @@ public:
     
 Q_SIGNALS:
 
-    void onMousePress();
+    void onMousePress(QMouseEvent * event);
     
 protected:
 
