@@ -12,6 +12,7 @@
 #include <QtWidgets/QMenu>
 #include <QtCore/QBuffer>
 #include <QtGui/QMouseEvent>
+#include "BaseParameterSet.h"
 
 MainWindow::MainWindow()
 {
@@ -36,6 +37,9 @@ MainWindow::MainWindow()
     connect(dest, SIGNAL(onMousePress(QMouseEvent *)), this, SLOT(applyFilter(QMouseEvent *)));
     
     bridge.setResourceManager(&resourceManager);
+    
+    
+    resize(800, 300);
 }
 
 
@@ -81,8 +85,15 @@ void MainWindow::applyFilter(index_t index)
         frame.data     = reinterpret_cast<uint8_t*>(inputImage.bits());
         
         auto outFrame = resourceManager.createFrame(frame);
+
+        // Fill parameters.
+        BaseParameterSet params;
+        for (index_t i = 0; i < filter->parameterNumber(); i ++)
+        {
+            params.add(filter->parameterInfo(i).defaultValue);
+        }
         
-        filter->apply(&frame, outFrame, nullptr);
+        filter->apply(&frame, outFrame, &params);
         
         dest->setPixmap(QPixmap::fromImage(QImage(outFrame->data, outFrame->width, outFrame->height, outFrame->byteSpan, QImage::Format_RGB888)));
         

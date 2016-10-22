@@ -15,9 +15,10 @@ Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceMana
 {}
 
 // Apply filter to frame.
-bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, IParameterSet* params)
+bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
 {
-    const int kernelSize = 5;
+    const int kernelSize = params ? params->value(0).value.uintNumber : parameterInfo(0).defaultValue.value.uintNumber;
+    
     const int kernelSizeHalf = kernelSize / 2;
     
     unsigned int kernel[kernelSize];
@@ -71,7 +72,7 @@ const ParameterInfo& Blur::parameterInfo(index_t index)
     static ParameterInfo emptyParam;
     if (index == 0)
     {
-        static UintParameterInfo radius("radius", 4, 0, 32);
+        static UintParameterInfo radius("radius", 31, 0, 32);
         return radius;
     }
     return emptyParam;

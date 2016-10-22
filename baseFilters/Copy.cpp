@@ -17,7 +17,7 @@ Copy::Copy (const IPrivateFilterList* filterList, IResourceManager* resourceMana
 {}
 
 // Apply filter to frame.
-bool Copy::apply(const Frame* inputFrame, Frame* outputFrame, IParameterSet* params)
+bool Copy::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
 {
     bool res = false;
     

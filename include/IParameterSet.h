@@ -16,10 +16,10 @@ class IParameterSet : public VirtualDestructor
 public:
 
     // @return parameter from set.
-    virtual const Parameter& value(index_t index) = 0;
+    virtual const Parameter& value(index_t index) const = 0;
     
     // @return parameters number.
-    virtual index_t parametersNumber() = 0;
+    virtual index_t parametersNumber() const = 0;
 };
 
 
