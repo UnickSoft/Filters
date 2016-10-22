@@ -14,9 +14,6 @@
 typedef size_t index_t;
 
 
-// TODO define this classes later.
-struct ParameterInfo {};
-
 struct FrameParams
 {
     uint32_t width;
@@ -29,7 +26,11 @@ struct Frame : FrameParams
     uint8_t* data;
 };
 
-struct Parameter {};
+// Struct to hold any type of parameter.
+struct Parameter;
+
+// This struct hold parameter info.
+struct ParameterInfo;
 
 
 // TODO: we will use COM. But later.

@@ -20,7 +20,6 @@ public:
     
     // @return parameters number.
     virtual index_t parametersNumber() = 0;
-
 };
 
 

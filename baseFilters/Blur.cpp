@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "Blur.h"
+#include "ParameterHelpers.h"
 
 
 Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceManager)
@@ -61,13 +62,19 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, IParameterSet* par
 // @return number of parameters.
 index_t Blur::parameterNumber()
 {
-    return 0;
+    return 1;
 }
 
 // @return parameter info.
-ParameterInfo Blur::parameterInfo(index_t)
+const ParameterInfo& Blur::parameterInfo(index_t index)
 {
-    return ParameterInfo();
+    static ParameterInfo emptyParam;
+    if (index == 0)
+    {
+        static UintParameterInfo radius("radius", 4, 0, 32);
+        return radius;
+    }
+    return emptyParam;
 }
 
 // @return name. Latin only letters.

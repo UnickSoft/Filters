@@ -13,6 +13,7 @@
 		68028C651D9833200058A733 /* JpegImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C601D9833200058A733 /* JpegImage.cpp */; };
 		68028C661D9833200058A733 /* PrivateFilterList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C621D9833200058A733 /* PrivateFilterList.cpp */; };
 		68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C6A1D9834410058A733 /* TestCollection.cpp */; };
+		680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */; };
 		680B2B601D96DC610017F1B2 /* moc_ImageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B5F1D96DC610017F1B2 /* moc_ImageControl.cpp */; };
 		680B2B631D96DE500017F1B2 /* moc_MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B621D96DE500017F1B2 /* moc_MainWindow.cpp */; };
 		680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */; };
@@ -74,6 +75,9 @@
 		68028C681D98333F0058A733 /* Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
 		68028C6A1D9834410058A733 /* TestCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCollection.cpp; sourceTree = "<group>"; };
 		68028C6B1D9834410058A733 /* TestCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCollection.h; sourceTree = "<group>"; };
+		680685301DAAAF5C00937267 /* BaseParameters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseParameters.h; sourceTree = "<group>"; };
+		680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParameterHelpers.cpp; sourceTree = "<group>"; };
+		680918E11DBBA21C008C60C6 /* ParameterHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterHelpers.h; sourceTree = "<group>"; };
 		680B2B5F1D96DC610017F1B2 /* moc_ImageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_ImageControl.cpp; path = src/Ui/moc_ImageControl.cpp; sourceTree = SOURCE_ROOT; };
 		680B2B621D96DE500017F1B2 /* moc_MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_MainWindow.cpp; path = src/Ui/moc_MainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestApplicationBridge.cpp; path = src/TestApplicationBridge.cpp; sourceTree = SOURCE_ROOT; };
@@ -88,6 +92,11 @@
 		68AA345D1D91CE3300D54A8D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		68AA34601D91D0FE00D54A8D /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/Ui/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		68AA34611D91D0FE00D54A8D /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/Ui/MainWindow.h; sourceTree = SOURCE_ROOT; };
+		68DF63C31DA828C700EAF7C9 /* IFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFilter.h; sourceTree = "<group>"; };
+		68DF63C41DA828C700EAF7C9 /* IResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IResourceManager.h; sourceTree = "<group>"; };
+		68DF63C51DA828C700EAF7C9 /* IPrivateFilterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPrivateFilterList.h; sourceTree = "<group>"; };
+		68DF63C61DA828C700EAF7C9 /* IFilterCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFilterCollection.h; sourceTree = "<group>"; };
+		68DF63C71DA828C700EAF7C9 /* IParameterSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParameterSet.h; sourceTree = "<group>"; };
 		68F96A681D9460D4003606E3 /* ImageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageControl.cpp; path = src/Ui/ImageControl.cpp; sourceTree = SOURCE_ROOT; };
 		68F96A691D9460D4003606E3 /* ImageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageControl.h; path = src/Ui/ImageControl.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -109,6 +118,8 @@
 		68028C541D9832E90058A733 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */,
+				680918E11DBBA21C008C60C6 /* ParameterHelpers.h */,
 				68028C5E1D9833200058A733 /* BaseResourceManager.cpp */,
 				68028C5F1D9833200058A733 /* BaseResourceManager.h */,
 				68028C601D9833200058A733 /* JpegImage.cpp */,
@@ -123,7 +134,13 @@
 		68028C671D9833290058A733 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				68DF63C31DA828C700EAF7C9 /* IFilter.h */,
+				68DF63C41DA828C700EAF7C9 /* IResourceManager.h */,
+				68DF63C51DA828C700EAF7C9 /* IPrivateFilterList.h */,
+				68DF63C61DA828C700EAF7C9 /* IFilterCollection.h */,
+				68DF63C71DA828C700EAF7C9 /* IParameterSet.h */,
 				68028C681D98333F0058A733 /* Base.h */,
+				680685301DAAAF5C00937267 /* BaseParameters.h */,
 			);
 			name = include;
 			path = ../../include;
@@ -300,6 +317,7 @@
 				680B2B631D96DE500017F1B2 /* moc_MainWindow.cpp in Sources */,
 				68AA34521D908D2900D54A8D /* UiMain.cpp in Sources */,
 				68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */,
+				680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

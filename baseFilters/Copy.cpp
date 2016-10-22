@@ -10,7 +10,7 @@
 
 
 #include <iostream>
-#include "Blur.h"
+#include "BaseParameters.h"
 
 
 Copy::Copy (const IPrivateFilterList* filterList, IResourceManager* resourceManager)
@@ -38,9 +38,10 @@ index_t Copy::parameterNumber()
 }
 
 // @return parameter info.
-ParameterInfo Copy::parameterInfo(index_t)
+const ParameterInfo& Copy::parameterInfo(index_t)
 {
-    return ParameterInfo();
+    static ParameterInfo emptyParam;
+    return emptyParam;
 }
 
 // @return name. Latin only letters.

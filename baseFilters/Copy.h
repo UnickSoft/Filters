@@ -28,7 +28,7 @@ public:
     index_t parameterNumber() override;
     
     // @return parameter info.
-    ParameterInfo parameterInfo(index_t) override;
+    const ParameterInfo& parameterInfo(index_t) override;
     
     // @return name. Latin only letters.
     const char* const name() override;

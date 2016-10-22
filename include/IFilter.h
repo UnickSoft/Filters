@@ -24,7 +24,7 @@ class IFilter : public VirtualDestructor
         virtual index_t parameterNumber() = 0;
     
         // @return parameter info.
-        virtual ParameterInfo parameterInfo(index_t) = 0;
+        virtual const ParameterInfo& parameterInfo(index_t) = 0;
     
         // @return name. Latin only letters.
         virtual const char* const name() = 0;
