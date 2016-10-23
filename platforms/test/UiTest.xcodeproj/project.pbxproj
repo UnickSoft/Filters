@@ -15,8 +15,8 @@
 		68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C6A1D9834410058A733 /* TestCollection.cpp */; };
 		680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */; };
 		680918E51DBBAF02008C60C6 /* BaseParameterSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E31DBBAF01008C60C6 /* BaseParameterSet.cpp */; };
-		680B2B601D96DC610017F1B2 /* moc_ImageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B5F1D96DC610017F1B2 /* moc_ImageControl.cpp */; };
-		680B2B631D96DE500017F1B2 /* moc_MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B621D96DE500017F1B2 /* moc_MainWindow.cpp */; };
+		680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34611D91D0FE00D54A8D /* MainWindow.h */; };
+		680918E71DBCDB0F008C60C6 /* ImageControl.h in Sources */ = {isa = PBXBuildFile; fileRef = 68F96A691D9460D4003606E3 /* ImageControl.h */; };
 		680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */; };
 		68AA344E1D908C9D00D54A8D /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF81D907A6300D952BB /* QtCore.framework */; };
 		68AA344F1D908C9D00D54A8D /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF91D907A6300D952BB /* QtGui.framework */; };
@@ -81,8 +81,6 @@
 		680918E11DBBA21C008C60C6 /* ParameterHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterHelpers.h; sourceTree = "<group>"; };
 		680918E31DBBAF01008C60C6 /* BaseParameterSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseParameterSet.cpp; sourceTree = "<group>"; };
 		680918E41DBBAF02008C60C6 /* BaseParameterSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseParameterSet.h; sourceTree = "<group>"; };
-		680B2B5F1D96DC610017F1B2 /* moc_ImageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_ImageControl.cpp; path = src/Ui/moc_ImageControl.cpp; sourceTree = SOURCE_ROOT; };
-		680B2B621D96DE500017F1B2 /* moc_MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_MainWindow.cpp; path = src/Ui/moc_MainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestApplicationBridge.cpp; path = src/TestApplicationBridge.cpp; sourceTree = SOURCE_ROOT; };
 		680B2B651D96DFA80017F1B2 /* TestApplicationBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestApplicationBridge.h; path = src/TestApplicationBridge.h; sourceTree = SOURCE_ROOT; };
 		68524EDF1D8ED95800D952BB /* UiMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UiMain.cpp; path = src/UiMain.cpp; sourceTree = SOURCE_ROOT; };
@@ -161,15 +159,6 @@
 			path = ../../collections/test;
 			sourceTree = SOURCE_ROOT;
 		};
-		680B2B611D96DE3E0017F1B2 /* Generated */ = {
-			isa = PBXGroup;
-			children = (
-				680B2B621D96DE500017F1B2 /* moc_MainWindow.cpp */,
-				680B2B5F1D96DC610017F1B2 /* moc_ImageControl.cpp */,
-			);
-			name = Generated;
-			sourceTree = "<group>";
-		};
 		680B2B671D96E0930017F1B2 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,7 +183,6 @@
 		68AA345F1D91D0E700D54A8D /* Ui */ = {
 			isa = PBXGroup;
 			children = (
-				680B2B611D96DE3E0017F1B2 /* Generated */,
 				68AA34601D91D0FE00D54A8D /* MainWindow.cpp */,
 				68AA34611D91D0FE00D54A8D /* MainWindow.h */,
 				68F96A681D9460D4003606E3 /* ImageControl.cpp */,
@@ -309,6 +297,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */,
+				680918E71DBCDB0F008C60C6 /* ImageControl.h in Sources */,
 				68028C651D9833200058A733 /* JpegImage.cpp in Sources */,
 				68AA345C1D91CE2A00D54A8D /* main.m in Sources */,
 				680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */,
@@ -318,9 +308,7 @@
 				68028C531D9832D80058A733 /* Copy.cpp in Sources */,
 				68AA34621D91D0FE00D54A8D /* MainWindow.cpp in Sources */,
 				68028C641D9833200058A733 /* BaseResourceManager.cpp in Sources */,
-				680B2B601D96DC610017F1B2 /* moc_ImageControl.cpp in Sources */,
 				680918E51DBBAF02008C60C6 /* BaseParameterSet.cpp in Sources */,
-				680B2B631D96DE500017F1B2 /* moc_MainWindow.cpp in Sources */,
 				68AA34521D908D2900D54A8D /* UiMain.cpp in Sources */,
 				68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */,
 				680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */,
