@@ -12,33 +12,27 @@
 #include <stdio.h>
 #include <QtWidgets/QMainWindow>
 #include "ImageControl.h"
-#include "TestApplicationBridge.h"
-#include "BaseResourceManager.h"
-
+#include "Controller.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow();
+    MainWindow(Controller& controller);
 
 
 protected Q_SLOTS:
 
     void openImage();
     void applyFilter(QMouseEvent * event);
+    void applyFilter(index_t index);
 
 private:
 
-    void applyFilter(index_t index);
-
     ImageControl* source;
     ImageControl* dest;
-    
-    TestApplicationBridge bridge;
-    BaseResourceManager resourceManager;
-
+    Controller& controller;
 };
 
 #endif /* MainWindow_h */

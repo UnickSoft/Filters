@@ -12,9 +12,8 @@
 #include <QtWidgets/QMenu>
 #include <QtCore/QBuffer>
 #include <QtGui/QMouseEvent>
-#include "BaseParameterSet.h"
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(Controller& controller) : controller(controller)
 {
     source = new ImageControl("Source (Click to open image)", this);
     dest   = new ImageControl("Dest (Click to open filter)", this);
@@ -36,9 +35,6 @@ MainWindow::MainWindow()
     connect(source, SIGNAL(onMousePress(QMouseEvent *)), this, SLOT(openImage()));
     connect(dest, SIGNAL(onMousePress(QMouseEvent *)), this, SLOT(applyFilter(QMouseEvent *)));
     
-    bridge.setResourceManager(&resourceManager);
-    
-    
     resize(800, 300);
 }
 
@@ -58,10 +54,11 @@ void MainWindow::applyFilter(QMouseEvent * event)
 {
     QMenu filterList;
     
+    auto filters = controller.filters();
     
-    for (index_t i = 0; i < bridge.filtersNumber(); i ++)
+    for (index_t i = 0; i < filters.size(); i ++)
     {
-        filterList.addAction(bridge.createFilter(i)->name(), [=]()
+        filterList.addAction(filters[i], [=]()
                              {
                                  this->applyFilter(i);
                              });
@@ -72,32 +69,15 @@ void MainWindow::applyFilter(QMouseEvent * event)
 
 void MainWindow::applyFilter(index_t index)
 {
-    auto filter = bridge.createFilter(index);
-    auto pix = source->pixmap();
-    if (pix)
+    auto sourcePix = source->pixmap();
+    if (sourcePix)
     {
-        auto inputImage = pix->toImage().convertToFormat(QImage::Format_RGB888);
+        QImage destImage(sourcePix->width(), sourcePix->height(), QImage::Format_RGB888);
         
-        Frame frame;
-        frame.width    = inputImage.width();
-        frame.height   = inputImage.height();
-        frame.byteSpan = inputImage.bytesPerLine();
-        frame.data     = reinterpret_cast<uint8_t*>(inputImage.bits());
+        auto sourceImage = sourcePix->toImage().convertToFormat(QImage::Format_RGB888);
+        controller.applyFilter(index, sourceImage, destImage);
         
-        auto outFrame = resourceManager.createFrame(frame);
-
-        // Fill parameters.
-        BaseParameterSet params;
-        for (index_t i = 0; i < filter->parameterNumber(); i ++)
-        {
-            params.add(filter->parameterInfo(i).defaultValue);
-        }
-        
-        filter->apply(&frame, outFrame, &params);
-        
-        dest->setPixmap(QPixmap::fromImage(QImage(outFrame->data, outFrame->width, outFrame->height, outFrame->byteSpan, QImage::Format_RGB888)));
-        
-        resourceManager.releaseFrame(outFrame);
+        dest->setPixmap(QPixmap::fromImage(destImage));
     }
 }
 

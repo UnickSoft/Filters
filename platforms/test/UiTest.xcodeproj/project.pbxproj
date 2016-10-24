@@ -13,6 +13,7 @@
 		68028C651D9833200058A733 /* JpegImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C601D9833200058A733 /* JpegImage.cpp */; };
 		68028C661D9833200058A733 /* PrivateFilterList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C621D9833200058A733 /* PrivateFilterList.cpp */; };
 		68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C6A1D9834410058A733 /* TestCollection.cpp */; };
+		6803D9FE1DBEB740008F5895 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6803D9FC1DBEB740008F5895 /* Controller.cpp */; };
 		680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */; };
 		680918E51DBBAF02008C60C6 /* BaseParameterSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E31DBBAF01008C60C6 /* BaseParameterSet.cpp */; };
 		680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34611D91D0FE00D54A8D /* MainWindow.h */; };
@@ -76,6 +77,8 @@
 		68028C681D98333F0058A733 /* Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
 		68028C6A1D9834410058A733 /* TestCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCollection.cpp; sourceTree = "<group>"; };
 		68028C6B1D9834410058A733 /* TestCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCollection.h; sourceTree = "<group>"; };
+		6803D9FC1DBEB740008F5895 /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Controller.cpp; path = src/Ui/Controller.cpp; sourceTree = SOURCE_ROOT; };
+		6803D9FD1DBEB740008F5895 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = src/Ui/Controller.h; sourceTree = SOURCE_ROOT; };
 		680685301DAAAF5C00937267 /* BaseParameters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseParameters.h; sourceTree = "<group>"; };
 		680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParameterHelpers.cpp; sourceTree = "<group>"; };
 		680918E11DBBA21C008C60C6 /* ParameterHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParameterHelpers.h; sourceTree = "<group>"; };
@@ -187,6 +190,8 @@
 				68AA34611D91D0FE00D54A8D /* MainWindow.h */,
 				68F96A681D9460D4003606E3 /* ImageControl.cpp */,
 				68F96A691D9460D4003606E3 /* ImageControl.h */,
+				6803D9FC1DBEB740008F5895 /* Controller.cpp */,
+				6803D9FD1DBEB740008F5895 /* Controller.h */,
 			);
 			name = Ui;
 			sourceTree = "<group>";
@@ -300,6 +305,7 @@
 				680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */,
 				680918E71DBCDB0F008C60C6 /* ImageControl.h in Sources */,
 				68028C651D9833200058A733 /* JpegImage.cpp in Sources */,
+				6803D9FE1DBEB740008F5895 /* Controller.cpp in Sources */,
 				68AA345C1D91CE2A00D54A8D /* main.m in Sources */,
 				680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */,
 				68028C661D9833200058A733 /* PrivateFilterList.cpp in Sources */,

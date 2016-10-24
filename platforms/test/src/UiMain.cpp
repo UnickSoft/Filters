@@ -14,7 +14,8 @@ extern "C" int runQtApp(int argc, const char * argv[])
 {
     QApplication app(argc, (char**)argv);
     
-    MainWindow mainWindow;
+    Controller controller;
+    MainWindow mainWindow(controller);
     mainWindow.show();
     
     return app.exec();
