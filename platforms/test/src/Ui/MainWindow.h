@@ -27,6 +27,7 @@ protected Q_SLOTS:
     void openImage();
     void applyFilter(QMouseEvent * event);
     void applyFilter(index_t index);
+    void addFilter(int index);
 
 private:
 

@@ -7,35 +7,63 @@
 //
 
 #include "MainWindow.h"
-#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QFileDialog>
 #include <QtWidgets/QMenu>
 #include <QtCore/QBuffer>
 #include <QtGui/QMouseEvent>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QApplication>
 
 MainWindow::MainWindow(Controller& controller) : controller(controller)
 {
+    QHBoxLayout* mainLayout = new QHBoxLayout();
+    
+    // Set layout in QWidget
+    QWidget *window = new QWidget();
+    window->setLayout(mainLayout);
+    
+    // Left and right parts of main window.
+    QWidget* leftPart  = new QWidget();
+    QWidget* rightPart = new QWidget();
+
+    QVBoxLayout* preview = new QVBoxLayout();
+    rightPart->setLayout(preview);
+
+    QVBoxLayout* controls = new QVBoxLayout();
+    leftPart->setLayout(controls);
+
+    mainLayout->addWidget(leftPart);
+    mainLayout->addWidget(rightPart);
+    
+    // Create effect controls.
+    QComboBox* filterList = new QComboBox();
+    auto filters = controller.filters();
+    for (auto filter : filters)
+    {
+        filterList->addItem(filter);
+    }
+    
+    controls->addWidget(filterList);
+    controls->addStretch();
+
+    // Setup preview outputs.
     source = new ImageControl("Source (Click to open image)", this);
     dest   = new ImageControl("Dest (Click to open filter)", this);
     
     source->setScaledContents(true);
     dest->setScaledContents(true);
-
-    QHBoxLayout* layout = new QHBoxLayout();
-    layout->QLayout::addWidget(source);
-    layout->QLayout::addWidget(dest);
     
-    // Set layout in QWidget
-    QWidget *window = new QWidget();
-    window->setLayout(layout);
+    preview->addWidget(source);
+    preview->addWidget(dest);
     
     // Set QWidget as the central layout of the main window
     setCentralWidget(window);
+
+    connect(filterList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::addFilter);
+    connect(source, &ImageControl::onMousePress, this, &MainWindow::openImage);
     
-    connect(source, SIGNAL(onMousePress(QMouseEvent *)), this, SLOT(openImage()));
-    connect(dest, SIGNAL(onMousePress(QMouseEvent *)), this, SLOT(applyFilter(QMouseEvent *)));
-    
-    resize(800, 300);
+    resize(600, 600);
 }
 
 
@@ -79,6 +107,11 @@ void MainWindow::applyFilter(index_t index)
         
         dest->setPixmap(QPixmap::fromImage(destImage));
     }
+}
+
+void MainWindow::addFilter(int index)
+{
+    applyFilter(index);
 }
 
 

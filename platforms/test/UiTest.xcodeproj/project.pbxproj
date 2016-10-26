@@ -19,6 +19,7 @@
 		680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34611D91D0FE00D54A8D /* MainWindow.h */; };
 		680918E71DBCDB0F008C60C6 /* ImageControl.h in Sources */ = {isa = PBXBuildFile; fileRef = 68F96A691D9460D4003606E3 /* ImageControl.h */; };
 		680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */; };
+		6890A4631DC15E520016EE2C /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 6890A4621DC15E520016EE2C /* resources */; };
 		68AA344E1D908C9D00D54A8D /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF81D907A6300D952BB /* QtCore.framework */; };
 		68AA344F1D908C9D00D54A8D /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF91D907A6300D952BB /* QtGui.framework */; };
 		68AA34521D908D2900D54A8D /* UiMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68524EDF1D8ED95800D952BB /* UiMain.cpp */; };
@@ -90,6 +91,7 @@
 		68524EF81D907A6300D952BB /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = Qt/QtCore.framework; sourceTree = "<group>"; };
 		68524EF91D907A6300D952BB /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Qt/QtGui.framework; sourceTree = "<group>"; };
 		68524EFA1D907A6300D952BB /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = Qt/QtWidgets.framework; sourceTree = "<group>"; };
+		6890A4621DC15E520016EE2C /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = SOURCE_ROOT; };
 		68AA343C1D908AD400D54A8D /* UiTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UiTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68AA34511D908CF300D54A8D /* UiTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UiTest.h; path = src/UiTest.h; sourceTree = SOURCE_ROOT; };
 		68AA345B1D91CE2A00D54A8D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = src/main.m; sourceTree = SOURCE_ROOT; };
@@ -218,6 +220,7 @@
 		68EC2A091D8ED8EF007C00EF /* UiTest */ = {
 			isa = PBXGroup;
 			children = (
+				6890A4621DC15E520016EE2C /* resources */,
 				68028C691D98342C0058A733 /* collection */,
 				68028C671D9833290058A733 /* include */,
 				68028C541D9832E90058A733 /* common */,
@@ -291,6 +294,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6890A4631DC15E520016EE2C /* resources in Resources */,
 				68AA345E1D91CE3300D54A8D /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
