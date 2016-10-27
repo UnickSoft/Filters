@@ -34,11 +34,11 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
     
     auto sourceData = inputFrame->data;
     auto destData   = outputFrame->data;
-    for (int i = kernelSize; i < inputFrame->height; i++)
+    for (int i = 0; i < inputFrame->height; i++)
     {
-        auto sourceRow = sourceData + inputFrame->byteSpan * i;
-        auto destRow   = destData   + outputFrame->byteSpan * i;
-        for (int j = 0; j < inputFrame->width; j++)
+        auto sourceRow = sourceData + inputFrame->byteSpan * i   + kernelSizeHalf * 3;
+        auto destRow   = destData   + outputFrame->byteSpan * i  + kernelSizeHalf * 3;
+        for (int j = kernelSizeHalf; j < inputFrame->width - kernelSizeHalf - 1; j++)
         {
             unsigned int value[3] = {};
             for (int k = -kernelSizeHalf; k <= kernelSizeHalf; k++)

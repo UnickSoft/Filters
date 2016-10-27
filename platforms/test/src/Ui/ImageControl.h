@@ -18,6 +18,8 @@ class ImageControl : public QLabel
 public:
 
     ImageControl (const QString& text, QWidget* parent);
+    void setImage(const QPixmap& pixmap);
+    const QPixmap& image();
     
 Q_SIGNALS:
 
@@ -26,6 +28,9 @@ Q_SIGNALS:
 protected:
 
     void mousePressEvent(QMouseEvent * event) override;
+    void paintEvent(QPaintEvent * event) override;
+    
+    QPixmap _image;
 
 
 };

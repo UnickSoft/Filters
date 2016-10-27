@@ -51,9 +51,6 @@ MainWindow::MainWindow(Controller& controller) : controller(controller)
     source = new ImageControl("Source (Click to open image)", this);
     dest   = new ImageControl("Dest (Click to open filter)", this);
     
-    source->setScaledContents(true);
-    dest->setScaledContents(true);
-    
     preview->addWidget(source);
     preview->addWidget(dest);
     
@@ -64,6 +61,11 @@ MainWindow::MainWindow(Controller& controller) : controller(controller)
     connect(source, &ImageControl::onMousePress, this, &MainWindow::openImage);
     
     resize(600, 600);
+
+    // TODO.
+    source->setImage(QPixmap(QApplication::applicationDirPath() + "/../Resources/resources/Lenna.png"));
+    
+    applyFilter((index_t)0);
 }
 
 
@@ -73,8 +75,7 @@ void MainWindow::openImage()
     tr("Open Image"), "~/Pictures", tr("Image Files (*.png *.jpg *.bmp)"));
     if (!fileName.isEmpty())
     {
-        QPixmap pix(fileName);
-        source->setPixmap(pix.scaled(source->width(), source->height(), Qt::KeepAspectRatio));
+        source->setImage(QPixmap(fileName));
     }
 }
 
@@ -97,15 +98,15 @@ void MainWindow::applyFilter(QMouseEvent * event)
 
 void MainWindow::applyFilter(index_t index)
 {
-    auto sourcePix = source->pixmap();
-    if (sourcePix)
+    auto sourcePix = source->image();
+    if (!sourcePix.isNull())
     {
-        QImage destImage(sourcePix->width(), sourcePix->height(), QImage::Format_RGB888);
+        QImage destImage(sourcePix.width(), sourcePix.height(), QImage::Format_RGB888);
         
-        auto sourceImage = sourcePix->toImage().convertToFormat(QImage::Format_RGB888);
+        auto sourceImage = sourcePix.toImage().convertToFormat(QImage::Format_RGB888);
         controller.applyFilter(index, sourceImage, destImage);
         
-        dest->setPixmap(QPixmap::fromImage(destImage));
+        dest->setImage(QPixmap::fromImage(destImage));
     }
 }
 
@@ -113,8 +114,4 @@ void MainWindow::addFilter(int index)
 {
     applyFilter(index);
 }
-
-
-
-
 

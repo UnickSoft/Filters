@@ -34,6 +34,7 @@ private:
     ImageControl* source;
     ImageControl* dest;
     Controller& controller;
+    QPixmap     currentImage;
 };
 
 #endif /* MainWindow_h */
