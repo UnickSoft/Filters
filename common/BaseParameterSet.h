@@ -13,22 +13,15 @@
 #include "IParameterSet.h"
 #include "BaseParameters.h"
 
-class BaseParameterSet : public IParameterSet
+class BaseParameterSet : public std::vector<Parameter>, public IParameterSet
 {
 public:
-    
-    // added new parameter.
-    void add(const Parameter& parameter);
     
     // @return parameter from set.
     virtual const Parameter& value(index_t index) const override;
     
     // @return parameters number.
     virtual index_t parametersNumber() const override;
-    
-protected:
-
-    std::vector<Parameter> parameters;
 };
 
 #endif /* BaseParameterSet_hpp */

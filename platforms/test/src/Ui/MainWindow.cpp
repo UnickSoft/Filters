@@ -15,7 +15,7 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QApplication>
 
-MainWindow::MainWindow(Controller& controller) : controller(controller)
+MainWindow::MainWindow(Controller& controller) : controller(controller), filterIndex(0)
 {
     QHBoxLayout* mainLayout = new QHBoxLayout();
     
@@ -30,23 +30,24 @@ MainWindow::MainWindow(Controller& controller) : controller(controller)
     QVBoxLayout* preview = new QVBoxLayout();
     rightPart->setLayout(preview);
 
-    QVBoxLayout* controls = new QVBoxLayout();
-    leftPart->setLayout(controls);
+    QVBoxLayout* controlsLayout = new QVBoxLayout();
+    leftPart->setLayout(controlsLayout);
 
     mainLayout->addWidget(leftPart);
     mainLayout->addWidget(rightPart);
     
     // Create effect controls.
-    QComboBox* filterList = new QComboBox();
+    filterList = new QComboBox();
     auto filters = controller.filters();
     for (auto filter : filters)
     {
         filterList->addItem(filter);
     }
     
-    controls->addWidget(filterList);
-    controls->addStretch();
-
+    controlsLayout->addWidget(filterList);
+    controlsLayout->addWidget(&controls);
+    controlsLayout->addStretch();
+    
     // Setup preview outputs.
     source = new ImageControl("Source (Click to open image)", this);
     dest   = new ImageControl("Dest (Click to open filter)", this);
@@ -59,13 +60,14 @@ MainWindow::MainWindow(Controller& controller) : controller(controller)
 
     connect(filterList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::addFilter);
     connect(source, &ImageControl::onMousePress, this, &MainWindow::openImage);
+    connect(&controls, &FilterControls::paramChanged, this, &MainWindow::paramChanged);
     
     resize(600, 600);
 
     // TODO.
     source->setImage(QPixmap(QApplication::applicationDirPath() + "/../Resources/resources/Lenna.png"));
     
-    applyFilter((index_t)0);
+    addFilter((index_t)0);
 }
 
 
@@ -104,7 +106,7 @@ void MainWindow::applyFilter(index_t index)
         QImage destImage(sourcePix.width(), sourcePix.height(), QImage::Format_RGB888);
         
         auto sourceImage = sourcePix.toImage().convertToFormat(QImage::Format_RGB888);
-        controller.applyFilter(index, sourceImage, destImage);
+        controller.applyFilter(index, &parameters, sourceImage, destImage);
         
         dest->setImage(QPixmap::fromImage(destImage));
     }
@@ -112,6 +114,30 @@ void MainWindow::applyFilter(index_t index)
 
 void MainWindow::addFilter(int index)
 {
+    filterIndex = index;
+    auto parameterInfo = controller.parameterList(index);
+    
+    fillDefaultParameters(parameterInfo);
+
+    controls.setFilter(filterList->currentText(), parameterInfo);
+    
     applyFilter(index);
+}
+
+void MainWindow::paramChanged(index_t index, const Parameter& value)
+{
+    parameters[index] = value;
+    
+    applyFilter(filterIndex);
+}
+
+void MainWindow::fillDefaultParameters(const QVector<ParameterInfo>& parameterInfo)
+{
+    parameters.clear();
+    
+    for (auto paramInfo : parameterInfo)
+    {
+        parameters.push_back(paramInfo.defaultValue);
+    }
 }
 

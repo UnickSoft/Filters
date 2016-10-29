@@ -17,16 +17,20 @@
 #include <QtCore/QList>
 #include <QtGui/QImage>
 
-class Controller
+class Controller : public QObject
 {
+    Q_OBJECT
+
 public:
 
     Controller ();
 
     QList<QString> filters();
     
-    void applyFilter(index_t index, QImage& source, QImage& dest);
-
+    void applyFilter(index_t index, const IParameterSet* parameters, QImage& source, QImage& dest);
+    
+    QVector<ParameterInfo> parameterList(index_t index);
+    
 protected:
 
     TestApplicationBridge bridge;

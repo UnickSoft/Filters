@@ -9,18 +9,13 @@
 #include "BaseParameterSet.h"
 #include <assert.h>
 
-void BaseParameterSet::add(const Parameter& parameter)
-{
-    parameters.push_back(parameter);
-}
-
 const Parameter& BaseParameterSet::value(index_t index) const
 {
-    assert(index >= 0 && index < parameters.size());
-    return parameters.at(index);
+    assert(index >= 0 && index < size());
+    return at(index);
 }
 
 index_t BaseParameterSet::parametersNumber() const
 {
-    return parameters.size();
+    return size();
 }

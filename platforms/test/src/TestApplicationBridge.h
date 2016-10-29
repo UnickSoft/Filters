@@ -15,6 +15,9 @@
 #include <memory>
 #include "IFilterCollection.h"
 
+typedef std::shared_ptr<IFilter> FilterPtr;
+
+
 class TestApplicationBridge
 {
 public:
@@ -23,7 +26,7 @@ public:
     ~TestApplicationBridge();
     
     index_t filtersNumber();
-    std::shared_ptr<IFilter> createFilter(index_t index);
+    FilterPtr createFilter(index_t index);
     
     void setResourceManager(IResourceManager*);
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		680206C41DC3E5BA00E855B6 /* FilterControls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680206C21DC3E5BA00E855B6 /* FilterControls.cpp */; };
 		68028C521D9832D80058A733 /* Blur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C4E1D9832D80058A733 /* Blur.cpp */; };
 		68028C531D9832D80058A733 /* Copy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C501D9832D80058A733 /* Copy.cpp */; };
 		68028C641D9833200058A733 /* BaseResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C5E1D9833200058A733 /* BaseResourceManager.cpp */; };
@@ -18,6 +19,8 @@
 		680918E51DBBAF02008C60C6 /* BaseParameterSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E31DBBAF01008C60C6 /* BaseParameterSet.cpp */; };
 		680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34611D91D0FE00D54A8D /* MainWindow.h */; };
 		680918E71DBCDB0F008C60C6 /* ImageControl.h in Sources */ = {isa = PBXBuildFile; fileRef = 68F96A691D9460D4003606E3 /* ImageControl.h */; };
+		6809A6D91DC4F40E008C6962 /* FilterControls.h in Sources */ = {isa = PBXBuildFile; fileRef = 680206C31DC3E5BA00E855B6 /* FilterControls.h */; };
+		6809A6DA1DC4F549008C6962 /* Controller.h in Sources */ = {isa = PBXBuildFile; fileRef = 6803D9FD1DBEB740008F5895 /* Controller.h */; };
 		680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */; };
 		6890A4631DC15E520016EE2C /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 6890A4621DC15E520016EE2C /* resources */; };
 		68AA344E1D908C9D00D54A8D /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF81D907A6300D952BB /* QtCore.framework */; };
@@ -65,6 +68,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		680206C21DC3E5BA00E855B6 /* FilterControls.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FilterControls.cpp; path = src/Ui/FilterControls.cpp; sourceTree = SOURCE_ROOT; };
+		680206C31DC3E5BA00E855B6 /* FilterControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterControls.h; path = src/Ui/FilterControls.h; sourceTree = SOURCE_ROOT; };
 		68028C4E1D9832D80058A733 /* Blur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Blur.cpp; sourceTree = "<group>"; };
 		68028C4F1D9832D80058A733 /* Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blur.h; sourceTree = "<group>"; };
 		68028C501D9832D80058A733 /* Copy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Copy.cpp; sourceTree = "<group>"; };
@@ -194,6 +199,8 @@
 				68F96A691D9460D4003606E3 /* ImageControl.h */,
 				6803D9FC1DBEB740008F5895 /* Controller.cpp */,
 				6803D9FD1DBEB740008F5895 /* Controller.h */,
+				680206C21DC3E5BA00E855B6 /* FilterControls.cpp */,
+				680206C31DC3E5BA00E855B6 /* FilterControls.h */,
 			);
 			name = Ui;
 			sourceTree = "<group>";
@@ -306,11 +313,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6809A6DA1DC4F549008C6962 /* Controller.h in Sources */,
+				6809A6D91DC4F40E008C6962 /* FilterControls.h in Sources */,
 				680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */,
 				680918E71DBCDB0F008C60C6 /* ImageControl.h in Sources */,
 				68028C651D9833200058A733 /* JpegImage.cpp in Sources */,
 				6803D9FE1DBEB740008F5895 /* Controller.cpp in Sources */,
 				68AA345C1D91CE2A00D54A8D /* main.m in Sources */,
+				680206C41DC3E5BA00E855B6 /* FilterControls.cpp in Sources */,
 				680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */,
 				68028C661D9833200058A733 /* PrivateFilterList.cpp in Sources */,
 				68028C521D9832D80058A733 /* Blur.cpp in Sources */,

@@ -13,7 +13,6 @@
 Controller::Controller ()
 {
     bridge.setResourceManager(&resourceManager);
-    
 }
 
 QList<QString> Controller::filters()
@@ -27,7 +26,7 @@ QList<QString> Controller::filters()
     return res;
 }
 
-void Controller::applyFilter(index_t index, QImage& source, QImage& dest)
+void Controller::applyFilter(index_t index, const IParameterSet* parameters, QImage& source, QImage& dest)
 {
     auto filter = bridge.createFilter(index);
     if (filter)
@@ -44,14 +43,25 @@ void Controller::applyFilter(index_t index, QImage& source, QImage& dest)
         destFrame.byteSpan = dest.bytesPerLine();
         destFrame.data     = reinterpret_cast<uint8_t*>(dest.bits());
         
-        // Fill parameters.
-        BaseParameterSet params;
-        for (index_t i = 0; i < filter->parameterNumber(); i ++)
-        {
-            params.add(filter->parameterInfo(i).defaultValue);
-        }
-        
-        filter->apply(&sourceFrame, &destFrame, &params);
+        filter->apply(&sourceFrame, &destFrame, parameters);
     }
 }
+
+QVector<ParameterInfo> Controller::parameterList(index_t index)
+{
+    QVector<ParameterInfo> res;
+    
+    auto filter = bridge.createFilter(index);
+
+    if (filter)
+    {
+        for (index_t i = 0; i < filter->parameterNumber(); i ++)
+        {
+            res.push_back(filter->parameterInfo(i));
+        }
+    }
+    
+    return res;
+}
+
 

@@ -40,6 +40,10 @@ template <typename T> struct NumberParameterInfo : public ParameterInfo
 
 
 // Typedef for each number parameter
+typedef NumberParameter<int32_t>  IntParameter;
+typedef NumberParameter<uint32_t> UintParameter;
+typedef NumberParameter<float>    FloatParameter;
+
 typedef NumberParameterInfo<int32_t>  IntParameterInfo;
 typedef NumberParameterInfo<uint32_t> UintParameterInfo;
 typedef NumberParameterInfo<float>    FloatParameterInfo;

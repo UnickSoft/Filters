@@ -29,8 +29,11 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         kernel[kernelSize - 1 - i] = i + 1;
         kernelNorm += 2 * (i + 1);
     }
-    kernel[kernelSizeHalf] = kernelSizeHalf + 1;
-    kernelNorm += kernelSizeHalf + 1;
+    if (kernelSize % 2 == 1)
+    {
+        kernel[kernelSizeHalf] = kernelSizeHalf + 1;
+        kernelNorm += kernelSizeHalf + 1;
+    }
     
     auto sourceData = inputFrame->data;
     auto destData   = outputFrame->data;
@@ -72,7 +75,7 @@ const ParameterInfo& Blur::parameterInfo(index_t index)
     static ParameterInfo emptyParam;
     if (index == 0)
     {
-        static UintParameterInfo radius("radius", 31, 0, 32);
+        static UintParameterInfo radius("radius", 16, 0, 32);
         return radius;
     }
     return emptyParam;

@@ -13,6 +13,9 @@
 #include <QtWidgets/QMainWindow>
 #include "ImageControl.h"
 #include "Controller.h"
+#include "FilterControls.h"
+#include <QtWidgets/QComboBox>
+#include "BaseParameterSet.h"
 
 class MainWindow : public QMainWindow
 {
@@ -20,21 +23,27 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(Controller& controller);
-
-
-protected Q_SLOTS:
+    
+protected slots:
 
     void openImage();
     void applyFilter(QMouseEvent * event);
     void applyFilter(index_t index);
     void addFilter(int index);
+    void paramChanged(index_t index, const Parameter& value);
 
 private:
+
+    void fillDefaultParameters(const QVector<ParameterInfo>& parameterInfo);
 
     ImageControl* source;
     ImageControl* dest;
     Controller& controller;
     QPixmap     currentImage;
+    FilterControls  controls;
+    QComboBox*  filterList;
+    BaseParameterSet parameters;
+    index_t filterIndex;
 };
 
 #endif /* MainWindow_h */

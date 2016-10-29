@@ -1,0 +1,93 @@
+//
+//  FilterControls.cpp
+//  UiTest
+//
+//  Created by Олег on 28.10.16.
+//  Copyright © 2016 Oleg. All rights reserved.
+//
+
+#include "FilterControls.h"
+#include <QtWidgets/QLayoutItem>
+#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QSlider>
+#include <QtWidgets/QSizePolicy>
+#include <cassert>
+#include "ParameterHelpers.h"
+
+FilterControls::FilterControls ()
+{
+    setLayout(new QVBoxLayout());
+}
+
+void FilterControls::setFilter(const QString& title, const QVector<ParameterInfo>& parameters)
+{
+    removeOldControls();
+    
+    auto vLayout  = qobject_cast<QVBoxLayout*>(layout());
+    
+    vLayout->addWidget(new QLabel(title));
+    
+    for (ParameterInfo param : parameters)
+    {
+        auto control = createControl(param);
+        if (control)
+        {
+            vLayout->addWidget(control);
+        }
+    }
+    
+    vLayout->addStretch();
+}
+
+QWidget* FilterControls::createControl(const ParameterInfo& parameterInfo)
+{
+    QWidget* res = nullptr;
+    switch (parameterInfo.type)
+    {
+        case BS_UINT: res = createUintControl(parameterInfo); break;
+        default: assert(false && "Unknown parameter");
+    }
+    
+    return res;
+}
+
+
+QWidget* FilterControls::createUintControl(const ParameterInfo& parameterInfo)
+{
+    QWidget* res = new QWidget();
+    auto layout = new QVBoxLayout();
+    res->setLayout(layout);
+    
+    layout->addWidget(new QLabel(parameterInfo.title));
+    auto slider = new QSlider(Qt::Horizontal);
+    slider->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    slider->setMaximum(parameterInfo.values.range.max.value.uintNumber);
+    slider->setMinimum(parameterInfo.values.range.min.value.uintNumber);
+    slider->setValue(parameterInfo.defaultValue.value.uintNumber);
+    connect(slider, &QSlider::valueChanged, [=]()
+    {
+        emit paramChanged(0, UintParameter(slider->value()));
+    });
+    
+    layout->addWidget(slider);
+    layout->addStretch();
+    
+    return res;
+}
+
+void FilterControls::removeOldControls()
+{
+    while (QWidget* w = findChild<QWidget*>())
+    {
+        delete w;
+    }
+    
+    while (QLayoutItem *wItem = layout()->takeAt(0))
+    {
+        delete wItem;
+    }
+}
+
+
+//void paramChanged(index_t index, const QVariant& value);
