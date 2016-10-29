@@ -69,8 +69,8 @@ QWidget* FilterControls::createUintControl(const ParameterInfo& parameterInfo)
     
     auto slider = new QSlider(Qt::Horizontal);
     slider->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    slider->setMaximum(parameterInfo.values.range.max.value.uintNumber);
-    slider->setMinimum(parameterInfo.values.range.min.value.uintNumber);
+    slider->setMaximum(UintParameter::field(&parameterInfo.values.range.max));
+    slider->setMinimum(UintParameter::field(&parameterInfo.values.range.min));
 
     connect(slider, &QSlider::valueChanged, [=]()
     {
@@ -78,7 +78,7 @@ QWidget* FilterControls::createUintControl(const ParameterInfo& parameterInfo)
         emit paramChanged(0, UintParameter(slider->value()));
     });
     
-    slider->setValue(parameterInfo.defaultValue.value.uintNumber);
+    slider->setValue(UintParameter::field(&parameterInfo.defaultValue));
     
     layout->addWidget(slider);
     layout->addStretch();

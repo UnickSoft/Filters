@@ -21,6 +21,18 @@ template <> uint32_t& NumberParameter<uint32_t>::field(Parameter* parameter)
     return parameter->value.uintNumber;
 }
 
+template <> const float& NumberParameter<float>::field(const Parameter* parameter)
+{
+    return parameter->value.floatNumber;
+}
+template <> const int32_t& NumberParameter<int32_t>::field(const Parameter* parameter)
+{
+    return parameter->value.intNumber;
+}
+template <> const uint32_t& NumberParameter<uint32_t>::field(const Parameter* parameter)
+{
+    return parameter->value.uintNumber;
+}
 
 template <> BaseParameters NumberParameterInfo<float>::paramType()
 {

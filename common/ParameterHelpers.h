@@ -21,6 +21,7 @@ template <typename T> struct NumberParameter : public Parameter
     }
     
     static T& field(Parameter* parameter);
+    static const T& field(const Parameter* parameter);
 };
 
 // Parameter Info Helper
