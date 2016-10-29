@@ -20,6 +20,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
     const int kernelSize = params ? params->value(0).value.uintNumber : parameterInfo(0).defaultValue.value.uintNumber;
     
     const int kernelSizeHalf = kernelSize / 2;
+    const int kernelRightEdge = (kernelSize % 2 == 1) ? kernelSizeHalf : kernelSizeHalf - 1 ;
     
     unsigned int kernel[kernelSize];
     unsigned int kernelNorm = 0;
@@ -44,7 +45,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         for (int j = kernelSizeHalf; j < inputFrame->width - kernelSizeHalf - 1; j++)
         {
             unsigned int value[3] = {};
-            for (int k = -kernelSizeHalf; k <= kernelSizeHalf; k++)
+            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
             {
                 value[0] += kernel[k + kernelSizeHalf] * sourceRow[k * 3];
                 value[1] += kernel[k + kernelSizeHalf] * sourceRow[k * 3 + 1];
@@ -55,7 +56,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
             destRow[1] = value[1] / kernelNorm;
             destRow[2] = value[2] / kernelNorm;
             
-            destRow += 3;
+            destRow   += 3;
             sourceRow += 3;
         }
     }
@@ -75,7 +76,7 @@ const ParameterInfo& Blur::parameterInfo(index_t index)
     static ParameterInfo emptyParam;
     if (index == 0)
     {
-        static UintParameterInfo radius("radius", 16, 0, 32);
+        static UintParameterInfo radius("radius", 16, 2, 32);
         return radius;
     }
     return emptyParam;

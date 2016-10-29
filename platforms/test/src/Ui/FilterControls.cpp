@@ -59,16 +59,26 @@ QWidget* FilterControls::createUintControl(const ParameterInfo& parameterInfo)
     auto layout = new QVBoxLayout();
     res->setLayout(layout);
     
-    layout->addWidget(new QLabel(parameterInfo.title));
+    QLabel* currentValue = new QLabel("0");
+    QHBoxLayout* titleLayout = new QHBoxLayout();
+    
+    titleLayout->addWidget(new QLabel(parameterInfo.title));
+    titleLayout->addWidget(currentValue);
+    
+    layout->addLayout(titleLayout);
+    
     auto slider = new QSlider(Qt::Horizontal);
     slider->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
     slider->setMaximum(parameterInfo.values.range.max.value.uintNumber);
     slider->setMinimum(parameterInfo.values.range.min.value.uintNumber);
-    slider->setValue(parameterInfo.defaultValue.value.uintNumber);
+
     connect(slider, &QSlider::valueChanged, [=]()
     {
+        currentValue->setText(QString::number(slider->value()));
         emit paramChanged(0, UintParameter(slider->value()));
     });
+    
+    slider->setValue(parameterInfo.defaultValue.value.uintNumber);
     
     layout->addWidget(slider);
     layout->addStretch();
