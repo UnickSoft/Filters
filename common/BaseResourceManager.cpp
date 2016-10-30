@@ -28,7 +28,15 @@ Frame* BaseResourceManager::createFrame(const FrameParams& params)
     if (res)
     {
         *(dynamic_cast<FrameParams*>(res)) = params;
-        res->byteSpan = res->width * 3;
+        uint32_t pixelByteSize = 0;
+        switch (res->format)
+        {
+            case FrameParams::Alpha8: pixelByteSize = 1; break;
+            case FrameParams::RGB8:   pixelByteSize = 3; break;
+            case FrameParams::RGBA8:  pixelByteSize = 4; break;
+            default: assert("Wrong pixel format");
+        }
+        res->byteSpan = res->width * pixelByteSize;
         res->data = new uint8_t[res->byteSpan * res->height];
         
         currentFrameNumber++;

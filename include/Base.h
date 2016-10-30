@@ -16,14 +16,17 @@ typedef size_t index_t;
 
 struct FrameParams
 {
+    enum PixelFormat {RGBA8, RGB8, Alpha8};
+
     uint32_t width;
     uint32_t height;
+    PixelFormat format;
 };
 
 struct Frame : FrameParams
 {
-    uint32_t byteSpan;
     uint8_t* data;
+    uint32_t byteSpan;
 };
 
 // Struct to hold any type of parameter.

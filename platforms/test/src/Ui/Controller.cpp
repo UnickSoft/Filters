@@ -34,12 +34,14 @@ void Controller::applyFilter(index_t index, const IParameterSet* parameters, QIm
         Frame sourceFrame;
         sourceFrame.width    = source.width();
         sourceFrame.height   = source.height();
+        sourceFrame.format   = FrameParams::RGB8;
         sourceFrame.byteSpan = source.bytesPerLine();
         sourceFrame.data     = reinterpret_cast<uint8_t*>(source.bits());
     
         Frame destFrame;
         destFrame.width    = dest.width();
         destFrame.height   = dest.height();
+        destFrame.format   = FrameParams::RGB8;
         destFrame.byteSpan = dest.bytesPerLine();
         destFrame.data     = reinterpret_cast<uint8_t*>(dest.bits());
         
