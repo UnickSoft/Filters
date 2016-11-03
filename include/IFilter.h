@@ -28,6 +28,9 @@ class IFilter : public VirtualDestructor
     
         // @return name. Latin only letters.
         virtual const char* const name() = 0;
+    
+        // Is support given format.
+        //virtual bool isSupportFormat() = 0;
 };
 
 #endif /* IFilter_h */

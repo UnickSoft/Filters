@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		680004401DCBE16400CE6C28 /* FrameEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6800043E1DCBE16400CE6C28 /* FrameEx.cpp */; };
 		680206C41DC3E5BA00E855B6 /* FilterControls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680206C21DC3E5BA00E855B6 /* FilterControls.cpp */; };
 		68028C521D9832D80058A733 /* Blur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C4E1D9832D80058A733 /* Blur.cpp */; };
 		68028C531D9832D80058A733 /* Copy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C501D9832D80058A733 /* Copy.cpp */; };
@@ -68,6 +69,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6800043E1DCBE16400CE6C28 /* FrameEx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FrameEx.cpp; sourceTree = "<group>"; };
+		6800043F1DCBE16400CE6C28 /* FrameEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameEx.h; sourceTree = "<group>"; };
 		680206C21DC3E5BA00E855B6 /* FilterControls.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FilterControls.cpp; path = src/Ui/FilterControls.cpp; sourceTree = SOURCE_ROOT; };
 		680206C31DC3E5BA00E855B6 /* FilterControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterControls.h; path = src/Ui/FilterControls.h; sourceTree = SOURCE_ROOT; };
 		68028C4E1D9832D80058A733 /* Blur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Blur.cpp; sourceTree = "<group>"; };
@@ -110,6 +113,8 @@
 		68DF63C71DA828C700EAF7C9 /* IParameterSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParameterSet.h; sourceTree = "<group>"; };
 		68F96A681D9460D4003606E3 /* ImageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageControl.cpp; path = src/Ui/ImageControl.cpp; sourceTree = SOURCE_ROOT; };
 		68F96A691D9460D4003606E3 /* ImageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageControl.h; path = src/Ui/ImageControl.h; sourceTree = SOURCE_ROOT; };
+		68FE8E5D1DCA84CA00A2A8A7 /* FilterTemplatesImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterTemplatesImpl.h; sourceTree = "<group>"; };
+		68FE8E5E1DCA84CA00A2A8A7 /* FilterTemplates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterTemplates.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +144,10 @@
 				68028C631D9833200058A733 /* PrivateFilterList.h */,
 				680918E31DBBAF01008C60C6 /* BaseParameterSet.cpp */,
 				680918E41DBBAF02008C60C6 /* BaseParameterSet.h */,
+				68FE8E5D1DCA84CA00A2A8A7 /* FilterTemplatesImpl.h */,
+				68FE8E5E1DCA84CA00A2A8A7 /* FilterTemplates.h */,
+				6800043E1DCBE16400CE6C28 /* FrameEx.cpp */,
+				6800043F1DCBE16400CE6C28 /* FrameEx.h */,
 			);
 			name = common;
 			path = ../../common;
@@ -326,6 +335,7 @@
 				68028C521D9832D80058A733 /* Blur.cpp in Sources */,
 				68F96A6A1D9460D4003606E3 /* ImageControl.cpp in Sources */,
 				68028C531D9832D80058A733 /* Copy.cpp in Sources */,
+				680004401DCBE16400CE6C28 /* FrameEx.cpp in Sources */,
 				68AA34621D91D0FE00D54A8D /* MainWindow.cpp in Sources */,
 				68028C641D9833200058A733 /* BaseResourceManager.cpp in Sources */,
 				680918E51DBBAF02008C60C6 /* BaseParameterSet.cpp in Sources */,

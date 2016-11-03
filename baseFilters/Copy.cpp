@@ -21,11 +21,19 @@ bool Copy::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
 {
     bool res = false;
     
-    if (inputFrame->byteSpan == outputFrame->byteSpan && inputFrame->width == outputFrame->width
-        && inputFrame->width == outputFrame->width)
+    if (inputFrame->width  == outputFrame->width
+        && inputFrame->height == outputFrame->height
+        && inputFrame->format == outputFrame->format)
     {
-        memcpy(outputFrame->data, inputFrame->data, inputFrame->height * inputFrame->byteSpan);
-        res = true;
+        if (inputFrame->byteSpan  == outputFrame->byteSpan)
+        {
+            memcpy(outputFrame->data, inputFrame->data, inputFrame->height * inputFrame->byteSpan);
+            res = true;
+        }
+        else
+        {
+            
+        }
     }
     
     return res;

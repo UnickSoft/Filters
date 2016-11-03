@@ -9,6 +9,7 @@
 #include <iostream>
 #include "Blur.h"
 #include "ParameterHelpers.h"
+#include "FilterTemplates.h"
 
 
 Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceManager)
@@ -19,6 +20,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
 {
     const int kernelSize = params ? params->value(0).value.uintNumber : parameterInfo(0).defaultValue.value.uintNumber;
     
+    // Fill kernel
     const int kernelSizeHalf = kernelSize / 2;
     const int kernelRightEdge = (kernelSize % 2 == 1) ? kernelSizeHalf : kernelSizeHalf - 1 ;
     
@@ -36,6 +38,32 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         kernelNorm += kernelSizeHalf + 1;
     }
     
+    ROI roi  = {static_cast<uint32_t>(kernelSizeHalf), 0, inputFrame->width - 2 * kernelSizeHalf, inputFrame->height};
+ 
+    FrameEx inputFrameEx  = *inputFrame;
+    FrameEx outputFrameEx = *outputFrame;
+    
+    // Process function.
+    auto processRGB8 = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+    {
+        unsigned int value[3] = {};
+        for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+        {
+            auto ck = kernel[k + kernelSizeHalf];
+            value[0] += ck * inputRow[k * 3];
+            value[1] += ck * inputRow[k * 3 + 1];
+            value[2] += ck * inputRow[k * 3 + 2];
+        }
+        
+        outputRow[0] = value[0] / kernelNorm;
+        outputRow[1] = value[1] / kernelNorm;
+        outputRow[2] = value[2] / kernelNorm;
+    };
+    
+
+    return processFrameToFramePixel(processRGB8, inputFrameEx, outputFrameEx, &roi, &roi);
+    
+    /*
     auto sourceData = inputFrame->data;
     auto destData   = outputFrame->data;
     for (int i = 0; i < inputFrame->height; i++)
@@ -62,6 +90,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
     }
     
     return true;
+    */
 }
 
 // @return number of parameters.
