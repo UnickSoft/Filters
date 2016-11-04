@@ -21,6 +21,12 @@
 template <typename T> bool processFrameToFramePixel(T function, FrameEx& inputFrame, FrameEx& outputFrame, const ROI* inputROI = nullptr, const ROI* outputROI = nullptr);
 
 
+/**
+ * Call function for each row.
+ * ROIs should be the same.
+ * You can pass nullptr ROI for full images.
+ */
+template <typename T> bool processFrameToFrameRow(T function, FrameEx& inputFrame, FrameEx& outputFrame, const ROI* inputROI = nullptr, const ROI* outputROI = nullptr);
 
 
 #include "FilterTemplatesImpl.h"

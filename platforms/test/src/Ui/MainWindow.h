@@ -31,10 +31,12 @@ protected slots:
     void applyFilter(index_t index);
     void addFilter(int index);
     void paramChanged(index_t index, const Parameter& value);
+    void renderFormatChanged(int index);
 
 private:
 
     void fillDefaultParameters(const QVector<ParameterInfo>& parameterInfo);
+    QWidget* createRenderSetup();
 
     ImageControl* source;
     ImageControl* dest;
@@ -44,6 +46,7 @@ private:
     QComboBox*  filterList;
     BaseParameterSet parameters;
     index_t filterIndex;
+    QComboBox* renderFormats;
 };
 
 #endif /* MainWindow_h */

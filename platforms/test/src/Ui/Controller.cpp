@@ -13,6 +13,9 @@
 Controller::Controller ()
 {
     bridge.setResourceManager(&resourceManager);
+    formatMap[QImage::Format_RGB888]   = FrameParams::RGB8;
+    formatMap[QImage::Format_RGBA8888] = FrameParams::RGBA8;
+    formatMap[QImage::Format_Alpha8]   = FrameParams::Alpha8;
 }
 
 QList<QString> Controller::filters()
@@ -34,14 +37,14 @@ void Controller::applyFilter(index_t index, const IParameterSet* parameters, QIm
         Frame sourceFrame;
         sourceFrame.width    = source.width();
         sourceFrame.height   = source.height();
-        sourceFrame.format   = FrameParams::RGB8;
+        sourceFrame.format   = formatMap.value(source.format());
         sourceFrame.byteSpan = source.bytesPerLine();
         sourceFrame.data     = reinterpret_cast<uint8_t*>(source.bits());
     
         Frame destFrame;
         destFrame.width    = dest.width();
         destFrame.height   = dest.height();
-        destFrame.format   = FrameParams::RGB8;
+        destFrame.format   = formatMap.value(dest.format());
         destFrame.byteSpan = dest.bytesPerLine();
         destFrame.data     = reinterpret_cast<uint8_t*>(dest.bits());
         

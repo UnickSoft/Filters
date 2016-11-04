@@ -16,6 +16,7 @@
 #include <QtCore/QString>
 #include <QtCore/QList>
 #include <QtGui/QImage>
+#include <QtCore/QMap>
 
 class Controller : public QObject
 {
@@ -35,6 +36,7 @@ protected:
 
     TestApplicationBridge bridge;
     BaseResourceManager resourceManager;
+    QMap<QImage::Format, FrameParams::PixelFormat> formatMap;
 };
 
 

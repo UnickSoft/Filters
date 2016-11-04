@@ -43,25 +43,72 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
     FrameEx inputFrameEx  = *inputFrame;
     FrameEx outputFrameEx = *outputFrame;
     
-    // Process function.
-    auto processRGB8 = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
-    {
-        unsigned int value[3] = {};
-        for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
-        {
-            auto ck = kernel[k + kernelSizeHalf];
-            value[0] += ck * inputRow[k * 3];
-            value[1] += ck * inputRow[k * 3 + 1];
-            value[2] += ck * inputRow[k * 3 + 2];
-        }
-        
-        outputRow[0] = value[0] / kernelNorm;
-        outputRow[1] = value[1] / kernelNorm;
-        outputRow[2] = value[2] / kernelNorm;
-    };
+    int pixelDepth = inputFrameEx.pixelDepth();
     
-
-    return processFrameToFramePixel(processRGB8, inputFrameEx, outputFrameEx, &roi, &roi);
+    // Process function.
+    if (inputFrame->format == FrameParams::RGB8)
+    {
+        auto processRGB8 = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        {
+            unsigned int value[3] = {};
+            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            {
+                auto ck = kernel[k + kernelSizeHalf];
+                value[0] += ck * inputRow[k * pixelDepth];
+                value[1] += ck * inputRow[k * pixelDepth + 1];
+                value[2] += ck * inputRow[k * pixelDepth + 2];
+            }
+            
+            outputRow[0] = value[0] / kernelNorm;
+            outputRow[1] = value[1] / kernelNorm;
+            outputRow[2] = value[2] / kernelNorm;
+        };
+        
+        
+        return processFrameToFramePixel(processRGB8, inputFrameEx, outputFrameEx, &roi, &roi);
+    }
+    else if (inputFrame->format == FrameParams::RGBA8)
+    {
+        auto processRGBA8 = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        {
+            unsigned int value[4] = {};
+            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            {
+                auto ck = kernel[k + kernelSizeHalf];
+                value[0] += ck * inputRow[k * pixelDepth];
+                value[1] += ck * inputRow[k * pixelDepth + 1];
+                value[2] += ck * inputRow[k * pixelDepth + 2];
+                value[3] += ck * inputRow[k * pixelDepth + 3];
+            }
+            
+            outputRow[0] = value[0] / kernelNorm;
+            outputRow[1] = value[1] / kernelNorm;
+            outputRow[2] = value[2] / kernelNorm;
+            outputRow[3] = value[3] / kernelNorm;
+        };
+        
+        
+        return processFrameToFramePixel(processRGBA8, inputFrameEx, outputFrameEx, &roi, &roi);
+    }
+    else if (inputFrame->format == FrameParams::Alpha8)
+    {
+        auto processAlpha8 = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        {
+            unsigned int value = 0;
+            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            {
+                auto ck = kernel[k + kernelSizeHalf];
+                value += ck * inputRow[k * pixelDepth];
+            }
+            
+            outputRow[0] = value / kernelNorm;
+        };
+        
+        
+        return processFrameToFramePixel(processAlpha8, inputFrameEx, outputFrameEx, &roi, &roi);
+    }
+    
+    return false;
     
     /*
     auto sourceData = inputFrame->data;

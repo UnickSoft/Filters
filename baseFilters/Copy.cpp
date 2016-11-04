@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include "BaseParameters.h"
+#include "FrameEx.h"
+#include "FilterTemplates.h"
 
 
 Copy::Copy (const IPrivateFilterList* filterList, IResourceManager* resourceManager)
@@ -32,7 +34,16 @@ bool Copy::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         }
         else
         {
+            FrameEx inputFrameEx  = *inputFrame;
+            FrameEx outputFrameEx = *outputFrame;
+    
+            // Process function.
+            auto processRGB8 = [](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i)
+            {
+                memcpy(outputRow, inputRow, std::min(inputFrame.byteSpan, outputFrame.byteSpan));
+            };
             
+            res = processFrameToFrameRow(processRGB8, inputFrameEx, outputFrameEx);
         }
     }
     

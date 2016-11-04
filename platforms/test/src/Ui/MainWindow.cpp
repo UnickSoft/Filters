@@ -46,6 +46,7 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     
     controlsLayout->addWidget(filterList);
     controlsLayout->addWidget(&controls);
+    controlsLayout->addWidget(createRenderSetup());
     controlsLayout->addStretch();
     
     // Setup preview outputs.
@@ -61,6 +62,7 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     connect(filterList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::addFilter);
     connect(source, &ImageControl::onMousePress, this, &MainWindow::openImage);
     connect(&controls, &FilterControls::paramChanged, this, &MainWindow::paramChanged);
+    connect(renderFormats, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::renderFormatChanged);
     
     resize(600, 600);
 
@@ -103,12 +105,13 @@ void MainWindow::applyFilter(index_t index)
     auto sourcePix = source->image();
     if (!sourcePix.isNull())
     {
-        QImage destImage(sourcePix.width(), sourcePix.height(), QImage::Format_RGB888);
+        QImage::Format renderFormat = (QImage::Format)renderFormats->itemData(renderFormats->currentIndex()).toInt();
+        QImage destImage(sourcePix.width(), sourcePix.height(), renderFormat);
         
-        auto sourceImage = sourcePix.toImage().convertToFormat(QImage::Format_RGB888);
+        auto sourceImage = sourcePix.toImage().convertToFormat(renderFormat);
         controller.applyFilter(index, &parameters, sourceImage, destImage);
         
-        dest->setImage(QPixmap::fromImage(destImage));
+        dest->setImage(QPixmap::fromImage(destImage.convertToFormat(QImage::Format_RGBA8888)));
     }
 }
 
@@ -140,4 +143,30 @@ void MainWindow::fillDefaultParameters(const QVector<ParameterInfo>& parameterIn
         parameters.push_back(paramInfo.defaultValue);
     }
 }
+
+QWidget* MainWindow::createRenderSetup()
+{
+    auto res = new QWidget();
+    QVBoxLayout* setupLayout = new QVBoxLayout();
+    res->setLayout(setupLayout);
+    
+    auto title = new QLabel("Render setup");
+    setupLayout->addWidget(title);
+    
+    renderFormats = new QComboBox();
+    renderFormats->addItem("RGBA8",  QImage::Format_RGBA8888);
+    renderFormats->addItem("RGB8",   QImage::Format_RGB888);
+    renderFormats->addItem("Alpha8", QImage::Format_Alpha8);
+    
+    setupLayout->addWidget(renderFormats);
+    
+    return res;
+}
+
+void MainWindow::renderFormatChanged(int index)
+{
+    applyFilter(filterIndex);
+}
+
+
 
