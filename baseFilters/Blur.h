@@ -32,7 +32,13 @@ public:
     
     // @return name. Latin only letters.
     const char* const name() override;
+    
+protected:
 
+    template <typename HFunc, typename VFunc> bool process(HFunc hFunc, VFunc vFunc, const Frame& inputFrame, Frame& outputFrame, int kernelSizeHalf);
+
+
+    IResourceManager& resourceManager;
 
 };
 

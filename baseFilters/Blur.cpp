@@ -12,13 +12,13 @@
 #include "FilterTemplates.h"
 
 
-Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceManager)
+Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceManager) : resourceManager(*resourceManager)
 {}
 
 // Apply filter to frame.
 bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
 {
-    const int kernelSize = params ? params->value(0).value.uintNumber : parameterInfo(0).defaultValue.value.uintNumber;
+    const int kernelSize = (params ? params->value(0).value.uintNumber : parameterInfo(0).defaultValue.value.uintNumber) * 2 + 1;
     
     // Fill kernel
     const int kernelSizeHalf = kernelSize / 2;
@@ -38,17 +38,14 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         kernelNorm += kernelSizeHalf + 1;
     }
     
-    ROI roi  = {static_cast<uint32_t>(kernelSizeHalf), 0, inputFrame->width - 2 * kernelSizeHalf, inputFrame->height};
- 
     FrameEx inputFrameEx  = *inputFrame;
-    FrameEx outputFrameEx = *outputFrame;
     
     int pixelDepth = inputFrameEx.pixelDepth();
     
     // Process function.
     if (inputFrame->format == FrameParams::RGB8)
     {
-        auto processRGB8 = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        auto processRGB8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
             unsigned int value[3] = {};
             for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
@@ -64,12 +61,30 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
             outputRow[2] = value[2] / kernelNorm;
         };
         
+        auto processRGB8V = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        {
+            unsigned int value[3] = {};
+            int32_t byteSpan = inputFrame.byteSpan;
+            
+            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            {
+                auto ck = kernel[k + kernelSizeHalf];
+                value[0] += ck * inputRow[k * byteSpan];
+                value[1] += ck * inputRow[k * byteSpan + 1];
+                value[2] += ck * inputRow[k * byteSpan + 2];
+            }
+            
+            outputRow[0] = value[0] / kernelNorm;
+            outputRow[1] = value[1] / kernelNorm;
+            outputRow[2] = value[2] / kernelNorm;
+        };
         
-        return processFrameToFramePixel(processRGB8, inputFrameEx, outputFrameEx, &roi, &roi);
+        
+        return process(processRGB8H, processRGB8V, *inputFrame, *outputFrame, kernelSizeHalf);
     }
     else if (inputFrame->format == FrameParams::RGBA8)
     {
-        auto processRGBA8 = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        auto processRGBA8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
             unsigned int value[4] = {};
             for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
@@ -87,12 +102,32 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
             outputRow[3] = value[3] / kernelNorm;
         };
         
+        auto processRGBA8V = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        {
+            unsigned int value[4] = {};
+            int32_t byteSpan = inputFrame.byteSpan;
+            
+            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            {
+                auto ck = kernel[k + kernelSizeHalf];
+                value[0] += ck * inputRow[k * byteSpan];
+                value[1] += ck * inputRow[k * byteSpan + 1];
+                value[2] += ck * inputRow[k * byteSpan + 2];
+                value[3] += ck * inputRow[k * byteSpan + 3];
+            }
+            
+            outputRow[0] = value[0] / kernelNorm;
+            outputRow[1] = value[1] / kernelNorm;
+            outputRow[2] = value[2] / kernelNorm;
+            outputRow[3] = value[3] / kernelNorm;
+        };
         
-        return processFrameToFramePixel(processRGBA8, inputFrameEx, outputFrameEx, &roi, &roi);
+        
+        return process(processRGBA8H, processRGBA8V, *inputFrame, *outputFrame, kernelSizeHalf);
     }
     else if (inputFrame->format == FrameParams::Alpha8)
     {
-        auto processAlpha8 = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        auto processAlpha8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
             unsigned int value = 0;
             for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
@@ -104,8 +139,22 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
             outputRow[0] = value / kernelNorm;
         };
         
+        auto processAlpha8V = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        {
+            unsigned int value = 0;
+            int32_t byteSpan = inputFrame.byteSpan;
+            
+            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            {
+                auto ck = kernel[k + kernelSizeHalf];
+                value += ck * inputRow[k * byteSpan];
+            }
+            
+            outputRow[0] = value / kernelNorm;
+        };
         
-        return processFrameToFramePixel(processAlpha8, inputFrameEx, outputFrameEx, &roi, &roi);
+        
+        return process(processAlpha8H, processAlpha8V, *inputFrame, *outputFrame, kernelSizeHalf);
     }
     
     return false;
@@ -152,7 +201,7 @@ const ParameterInfo& Blur::parameterInfo(index_t index)
     static ParameterInfo emptyParam;
     if (index == 0)
     {
-        static UintParameterInfo radius("radius", 16, 2, 32);
+        static UintParameterInfo radius("radius", 16, 1, 32);
         return radius;
     }
     return emptyParam;
@@ -162,5 +211,26 @@ const ParameterInfo& Blur::parameterInfo(index_t index)
 const char* const Blur::name()
 {
     return "Blur";
+}
+
+
+template <typename HFunc, typename VFunc> bool Blur::process(HFunc hFunc, VFunc vFunc, const Frame& inputFrame, Frame& outputFrame, int kernelSizeHalf)
+{
+    bool res = false;
+    auto tempFrame = resourceManager.createFrame(inputFrame);
+    
+    ROI roi  = {static_cast<uint32_t>(kernelSizeHalf), static_cast<uint32_t>(kernelSizeHalf), inputFrame.width - 2 * kernelSizeHalf, inputFrame.height - 2 * kernelSizeHalf};
+ 
+    FrameEx inputFrameEx  = inputFrame;
+    FrameEx outputFrameEx = outputFrame;
+    FrameEx tempFrameFrameEx = *tempFrame;
+    
+    res = processFrameToFramePixel(hFunc, inputFrameEx, tempFrameFrameEx, &roi, &roi);
+    
+    res = res && processFrameToFramePixel(vFunc, tempFrameFrameEx, outputFrameEx, &roi, &roi);
+    
+    resourceManager.releaseFrame(tempFrame);
+    
+    return true;
 }
 

@@ -20,7 +20,7 @@ public:
     TestCollection ();
 
     // Empty for now.
-    virtual void setResourceManager(IResourceManager*) {;}
+    virtual void setResourceManager(IResourceManager* resourceManager);
     
     // Create filter by index.
     virtual IFilter* createFilter(index_t);
@@ -36,6 +36,8 @@ private:
 
     PrivateFilterList privateFilters;
     PrivateFilterList publicFilters;
+    
+    IResourceManager* resourceManager;
     
 };
 

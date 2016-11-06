@@ -107,6 +107,7 @@ void MainWindow::applyFilter(index_t index)
     {
         QImage::Format renderFormat = (QImage::Format)renderFormats->itemData(renderFormats->currentIndex()).toInt();
         QImage destImage(sourcePix.width(), sourcePix.height(), renderFormat);
+        destImage.fill(0);
         
         auto sourceImage = sourcePix.toImage().convertToFormat(renderFormat);
         controller.applyFilter(index, &parameters, sourceImage, destImage);
