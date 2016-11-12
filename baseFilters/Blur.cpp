@@ -18,7 +18,8 @@ Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceMana
 // Apply filter to frame.
 bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
 {
-    const int kernelSizeHalf = (params ? params->value(0).value.uintNumber: parameterInfo(0).defaultValue.value.uintNumber);
+    const int kernelSizeHalf = UintParameter::field(params ? &params->value(0) : &parameterInfo(0).defaultValue);
+    
     const int kernelSize = kernelSizeHalf * 2 + 1;
     
     unsigned int kernel[kernelSize];

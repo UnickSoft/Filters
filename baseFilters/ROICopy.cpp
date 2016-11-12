@@ -1,4 +1,4 @@
-//
+    //
 //  Copy.cpp
 //  test
 //
@@ -22,30 +22,30 @@ ROICopy::ROICopy (const IPrivateFilterList* filterList, IResourceManager* resour
 // Apply filter to frame.
 bool ROICopy::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
 {
+    const ROI srcROI = ROIParameter::field(params ? &params->value(0) : &parameterInfo(0).defaultValue);
+
+    const ROI dstROI = ROIParameter::field(params ? &params->value(1) : &parameterInfo(1).defaultValue);
+    
     bool res = false;
     
-    if (inputFrame->width  == outputFrame->width
-        && inputFrame->height == outputFrame->height
-        && inputFrame->format == outputFrame->format)
+    // TODO out of border
+    if (srcROI.width  == dstROI.width &&
+        srcROI.height == dstROI.height &&
+        srcROI.width > 0 && srcROI.height > 0 &&
+        dstROI.width > 0 && dstROI.height > 0 &&
+        inputFrame->format == outputFrame->format)
     {
-        if (inputFrame->byteSpan  == outputFrame->byteSpan)
+        FrameEx inputFrameEx  = *inputFrame;
+        FrameEx outputFrameEx = *outputFrame;
+        auto pixelDepth = inputFrameEx.pixelDepth();
+        
+        // Process function.
+        auto processRGB8 = [=](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i)
         {
-            memcpy(outputFrame->data, inputFrame->data, inputFrame->height * inputFrame->byteSpan);
-            res = true;
-        }
-        else
-        {
-            FrameEx inputFrameEx  = *inputFrame;
-            FrameEx outputFrameEx = *outputFrame;
-    
-            // Process function.
-            auto processRGB8 = [](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i)
-            {
-                memcpy(outputRow, inputRow, std::min(inputFrame.byteSpan, outputFrame.byteSpan));
-            };
-            
-            res = processFrameToFrameRow(processRGB8, inputFrameEx, outputFrameEx);
-        }
+            memcpy(outputRow, inputRow, srcROI.width * pixelDepth);
+        };
+        
+        res = processFrameToFrameRow(processRGB8, inputFrameEx, outputFrameEx, &srcROI, &dstROI);
     }
     
     return res;

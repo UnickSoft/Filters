@@ -30,10 +30,10 @@ signals:
 protected:
     void removeOldControls();
 
-    QWidget* createControl(const ParameterInfo& parameterInfo);
+    QWidget* createControl(const ParameterInfo& parameterInfo, index_t index);
 
-    QWidget* createUintControl(const ParameterInfo& parameterInfo);
-    QWidget* createROIControl(const ParameterInfo& parameterInfo);
+    QWidget* createUintControl(const ParameterInfo& parameterInfo, index_t index);
+    QWidget* createROIControl(const ParameterInfo& parameterInfo, index_t index);
     
     FilterControls* controls;
 };

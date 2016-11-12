@@ -29,25 +29,27 @@ void FilterControls::setFilter(const QString& title, const QVector<ParameterInfo
     
     vLayout->addWidget(new QLabel(title));
     
+    index_t index = 0;
     for (ParameterInfo param : parameters)
     {
-        auto control = createControl(param);
+        auto control = createControl(param, index);
         if (control)
         {
             vLayout->addWidget(control);
         }
+        index++;
     }
     
     vLayout->addStretch();
 }
 
-QWidget* FilterControls::createControl(const ParameterInfo& parameterInfo)
+QWidget* FilterControls::createControl(const ParameterInfo& parameterInfo, index_t index)
 {
     QWidget* res = nullptr;
     switch (parameterInfo.type)
     {
-        case BS_UINT: res = createUintControl(parameterInfo); break;
-        case BS_ROI:  res = createROIControl(parameterInfo); break;
+        case BS_UINT: res = createUintControl(parameterInfo, index); break;
+        case BS_ROI:  res = createROIControl(parameterInfo, index); break;
         
         default: assert(false && "Unknown parameter");
     }
@@ -56,7 +58,7 @@ QWidget* FilterControls::createControl(const ParameterInfo& parameterInfo)
 }
 
 
-QWidget* FilterControls::createUintControl(const ParameterInfo& parameterInfo)
+QWidget* FilterControls::createUintControl(const ParameterInfo& parameterInfo, index_t index)
 {
     QWidget* res = new QWidget();
     auto layout = new QVBoxLayout();
@@ -78,7 +80,7 @@ QWidget* FilterControls::createUintControl(const ParameterInfo& parameterInfo)
     connect(slider, &QSlider::valueChanged, [=]()
     {
         currentValue->setText(QString::number(slider->value()));
-        emit paramChanged(0, UintParameter(slider->value()));
+        emit paramChanged(index, UintParameter(slider->value()));
     });
     
     slider->setValue(UintParameter::field(&parameterInfo.defaultValue));
@@ -104,7 +106,7 @@ void FilterControls::removeOldControls()
     }
 }
 
-QWidget* FilterControls::createROIControl(const ParameterInfo& parameterInfo)
+QWidget* FilterControls::createROIControl(const ParameterInfo& parameterInfo, index_t index)
 {
     QWidget* res = new QWidget();
     auto layout = new QVBoxLayout();
@@ -132,6 +134,13 @@ QWidget* FilterControls::createROIControl(const ParameterInfo& parameterInfo)
     controls->setLayout(controlsLayout);
     
     layout->addWidget(controls);
+    layout->addStretch();
+
+    auto roi = ROIParameter::field(&parameterInfo.defaultValue);
+    x->setText(QString::number(roi.x));
+    y->setText(QString::number(roi.y));
+    width->setText(QString::number(roi.width));
+    height->setText(QString::number(roi.height));
     
     layout->setContentsMargins(0, 0, 0, 0);
 
@@ -139,38 +148,20 @@ QWidget* FilterControls::createROIControl(const ParameterInfo& parameterInfo)
     {
         bool bOk = true;
         ROI param = {};
-        param.x = bOk && x->text().toUInt(&bOk);
-        param.y = bOk && x->text().toUInt(&bOk);
-        param.width  = bOk && x->text().toUInt(&bOk);
-        param.height = bOk && x->text().toUInt(&bOk);
+        param.x = bOk ? x->text().toUInt(&bOk) : 0;
+        param.y = bOk ? y->text().toUInt(&bOk) : 0;
+        param.width  = bOk ? width->text().toUInt(&bOk)  : 0;
+        param.height = bOk ? height->text().toUInt(&bOk) : 0;
         
         if (bOk)
         {
-            emit paramChanged(0, ROIParameter(param));
+            emit paramChanged(index, ROIParameter(param));
         }
     };
     connect(x, &QLineEdit::textChanged, eventHandler);
     connect(y, &QLineEdit::textChanged, eventHandler);
     connect(width, &QLineEdit::textChanged, eventHandler);
     connect(height, &QLineEdit::textChanged, eventHandler);
-
-    /*
-    auto slider = new QSlider(Qt::Horizontal);
-    slider->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-    slider->setMaximum(UintParameter::field(&parameterInfo.values.range.max));
-    slider->setMinimum(UintParameter::field(&parameterInfo.values.range.min));
-
-    connect(slider, &QSlider::valueChanged, [=]()
-    {
-        currentValue->setText(QString::number(slider->value()));
-        emit paramChanged(0, UintParameter(slider->value()));
-    });
-    
-    slider->setValue(UintParameter::field(&parameterInfo.defaultValue));
-    
-    layout->addWidget(slider);
-    layout->addStretch();
-    */
     
     return res;
 }
