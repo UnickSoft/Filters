@@ -16,6 +16,7 @@ enum BaseParameters {
     BS_FLOAT,       // Float parameter. It is float32 type.
     BS_INT,         // Int parameter. It is int32 type.
     BS_UINT,        // Int parameter. It is uint32 type.
+    BS_ROI,         // ROI paraneter. Struct with 4 uint32.
     BS_MAX = 32};
 
 
@@ -28,6 +29,7 @@ struct Parameter
         float    floatNumber;
         int32_t  intNumber;
         uint32_t uintNumber;
+        ROI      roi;
     } value;
 };
 

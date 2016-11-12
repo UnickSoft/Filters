@@ -44,8 +44,9 @@ template <typename T> struct NumberParameterInfo : public ParameterInfo
 typedef NumberParameter<int32_t>  IntParameter;
 typedef NumberParameter<uint32_t> UintParameter;
 typedef NumberParameter<float>    FloatParameter;
+typedef NumberParameter<ROI>    ROIParameter;
 
 typedef NumberParameterInfo<int32_t>  IntParameterInfo;
 typedef NumberParameterInfo<uint32_t> UintParameterInfo;
 typedef NumberParameterInfo<float>    FloatParameterInfo;
-
+typedef NumberParameterInfo<ROI>    ROIParameterInfo;

@@ -20,6 +20,10 @@ template <> uint32_t& NumberParameter<uint32_t>::field(Parameter* parameter)
 {
     return parameter->value.uintNumber;
 }
+template <> ROI& NumberParameter<ROI>::field(Parameter* parameter)
+{
+    return parameter->value.roi;
+}
 
 template <> const float& NumberParameter<float>::field(const Parameter* parameter)
 {
@@ -33,6 +37,10 @@ template <> const uint32_t& NumberParameter<uint32_t>::field(const Parameter* pa
 {
     return parameter->value.uintNumber;
 }
+template <> const ROI& NumberParameter<ROI>::field(const Parameter* parameter)
+{
+    return parameter->value.roi;
+}
 
 template <> BaseParameters NumberParameterInfo<float>::paramType()
 {
@@ -45,4 +53,8 @@ template <> BaseParameters NumberParameterInfo<int32_t>::paramType()
 template <> BaseParameters NumberParameterInfo<uint32_t>::paramType()
 {
     return BS_UINT;
+}
+template <> BaseParameters NumberParameterInfo<ROI>::paramType()
+{
+    return BS_ROI;
 }

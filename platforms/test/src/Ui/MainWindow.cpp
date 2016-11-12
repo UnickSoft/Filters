@@ -33,8 +33,8 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     QVBoxLayout* controlsLayout = new QVBoxLayout();
     leftPart->setLayout(controlsLayout);
 
-    mainLayout->addWidget(leftPart);
-    mainLayout->addWidget(rightPart);
+    mainLayout->addWidget(leftPart, 1);
+    mainLayout->addWidget(rightPart, 1);
     
     // Create effect controls.
     filterList = new QComboBox();

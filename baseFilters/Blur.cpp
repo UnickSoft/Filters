@@ -18,11 +18,8 @@ Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceMana
 // Apply filter to frame.
 bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
 {
-    const int kernelSize = (params ? params->value(0).value.uintNumber : parameterInfo(0).defaultValue.value.uintNumber) * 2 + 1;
-    
-    // Fill kernel
-    const int kernelSizeHalf = kernelSize / 2;
-    const int kernelRightEdge = (kernelSize % 2 == 1) ? kernelSizeHalf : kernelSizeHalf - 1 ;
+    const int kernelSizeHalf = (params ? params->value(0).value.uintNumber: parameterInfo(0).defaultValue.value.uintNumber);
+    const int kernelSize = kernelSizeHalf * 2 + 1;
     
     unsigned int kernel[kernelSize];
     unsigned int kernelNorm = 0;
@@ -32,11 +29,9 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         kernel[kernelSize - 1 - i] = i + 1;
         kernelNorm += 2 * (i + 1);
     }
-    if (kernelSize % 2 == 1)
-    {
-        kernel[kernelSizeHalf] = kernelSizeHalf + 1;
-        kernelNorm += kernelSizeHalf + 1;
-    }
+    
+    kernel[kernelSizeHalf] = kernelSizeHalf + 1;
+    kernelNorm += kernelSizeHalf + 1;
     
     FrameEx inputFrameEx  = *inputFrame;
     
@@ -48,7 +43,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         auto processRGB8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
             unsigned int value[3] = {};
-            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            for (int k = -kernelSizeHalf; k <= kernelSizeHalf; k++)
             {
                 auto ck = kernel[k + kernelSizeHalf];
                 value[0] += ck * inputRow[k * pixelDepth];
@@ -66,7 +61,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
             unsigned int value[3] = {};
             int32_t byteSpan = inputFrame.byteSpan;
             
-            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            for (int k = -kernelSizeHalf; k <= kernelSizeHalf; k++)
             {
                 auto ck = kernel[k + kernelSizeHalf];
                 value[0] += ck * inputRow[k * byteSpan];
@@ -87,7 +82,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         auto processRGBA8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
             unsigned int value[4] = {};
-            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            for (int k = -kernelSizeHalf; k <= kernelSizeHalf; k++)
             {
                 auto ck = kernel[k + kernelSizeHalf];
                 value[0] += ck * inputRow[k * pixelDepth];
@@ -107,7 +102,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
             unsigned int value[4] = {};
             int32_t byteSpan = inputFrame.byteSpan;
             
-            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            for (int k = -kernelSizeHalf; k <= kernelSizeHalf; k++)
             {
                 auto ck = kernel[k + kernelSizeHalf];
                 value[0] += ck * inputRow[k * byteSpan];
@@ -130,7 +125,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         auto processAlpha8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
             unsigned int value = 0;
-            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            for (int k = -kernelSizeHalf; k <= kernelSizeHalf; k++)
             {
                 auto ck = kernel[k + kernelSizeHalf];
                 value += ck * inputRow[k * pixelDepth];
@@ -144,7 +139,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
             unsigned int value = 0;
             int32_t byteSpan = inputFrame.byteSpan;
             
-            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
+            for (int k = -kernelSizeHalf; k <= kernelSizeHalf; k++)
             {
                 auto ck = kernel[k + kernelSizeHalf];
                 value += ck * inputRow[k * byteSpan];

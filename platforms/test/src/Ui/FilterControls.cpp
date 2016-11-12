@@ -14,6 +14,7 @@
 #include <QtWidgets/QSizePolicy>
 #include <cassert>
 #include "ParameterHelpers.h"
+#include <QtWidgets/QLineEdit>
 
 FilterControls::FilterControls ()
 {
@@ -46,6 +47,8 @@ QWidget* FilterControls::createControl(const ParameterInfo& parameterInfo)
     switch (parameterInfo.type)
     {
         case BS_UINT: res = createUintControl(parameterInfo); break;
+        case BS_ROI:  res = createROIControl(parameterInfo); break;
+        
         default: assert(false && "Unknown parameter");
     }
     
@@ -83,6 +86,8 @@ QWidget* FilterControls::createUintControl(const ParameterInfo& parameterInfo)
     layout->addWidget(slider);
     layout->addStretch();
     
+    layout->setContentsMargins(0, 0, 0, 0);
+    
     return res;
 }
 
@@ -97,6 +102,77 @@ void FilterControls::removeOldControls()
     {
         delete wItem;
     }
+}
+
+QWidget* FilterControls::createROIControl(const ParameterInfo& parameterInfo)
+{
+    QWidget* res = new QWidget();
+    auto layout = new QVBoxLayout();
+    res->setLayout(layout);
+    
+    layout->addWidget(new QLabel(parameterInfo.title));
+    
+    QWidget* controls = new QWidget(this);
+    auto controlsLayout = new QHBoxLayout();
+    controlsLayout->addWidget(new QLabel("x"));
+    auto x = new QLineEdit("0", this);
+    controlsLayout->addWidget(x);
+    controlsLayout->addWidget(new QLabel("y"));
+    auto y = new QLineEdit("0", this);
+    controlsLayout->addWidget(y);
+    controlsLayout->addWidget(new QLabel("w"));
+    auto width = new QLineEdit("0", this);
+    controlsLayout->addWidget(width);
+    controlsLayout->addWidget(new QLabel("h"));
+    auto height = new QLineEdit("0", this);
+    controlsLayout->addWidget(height);
+    
+    controlsLayout->setContentsMargins(0, 0, 0, 0);
+
+    controls->setLayout(controlsLayout);
+    
+    layout->addWidget(controls);
+    
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    auto eventHandler = [=](const QString & text)
+    {
+        bool bOk = true;
+        ROI param = {};
+        param.x = bOk && x->text().toUInt(&bOk);
+        param.y = bOk && x->text().toUInt(&bOk);
+        param.width  = bOk && x->text().toUInt(&bOk);
+        param.height = bOk && x->text().toUInt(&bOk);
+        
+        if (bOk)
+        {
+            emit paramChanged(0, ROIParameter(param));
+        }
+    };
+    connect(x, &QLineEdit::textChanged, eventHandler);
+    connect(y, &QLineEdit::textChanged, eventHandler);
+    connect(width, &QLineEdit::textChanged, eventHandler);
+    connect(height, &QLineEdit::textChanged, eventHandler);
+
+    /*
+    auto slider = new QSlider(Qt::Horizontal);
+    slider->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+    slider->setMaximum(UintParameter::field(&parameterInfo.values.range.max));
+    slider->setMinimum(UintParameter::field(&parameterInfo.values.range.min));
+
+    connect(slider, &QSlider::valueChanged, [=]()
+    {
+        currentValue->setText(QString::number(slider->value()));
+        emit paramChanged(0, UintParameter(slider->value()));
+    });
+    
+    slider->setValue(UintParameter::field(&parameterInfo.defaultValue));
+    
+    layout->addWidget(slider);
+    layout->addStretch();
+    */
+    
+    return res;
 }
 
 

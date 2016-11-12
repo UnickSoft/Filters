@@ -33,6 +33,7 @@ protected:
     QWidget* createControl(const ParameterInfo& parameterInfo);
 
     QWidget* createUintControl(const ParameterInfo& parameterInfo);
+    QWidget* createROIControl(const ParameterInfo& parameterInfo);
     
     FilterControls* controls;
 };
