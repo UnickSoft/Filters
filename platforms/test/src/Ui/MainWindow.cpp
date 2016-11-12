@@ -15,7 +15,9 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QApplication>
 
-MainWindow::MainWindow(Controller& controller) : controller(controller), filterIndex(0)
+static const QString previewImageKey = "testImage";
+
+MainWindow::MainWindow(Controller& controller) : controller(controller), filterIndex(0), settings("UnickSoft", "TestUI")
 {
     QHBoxLayout* mainLayout = new QHBoxLayout();
     
@@ -66,8 +68,14 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     
     resize(600, 600);
 
-    // TODO.
-    source->setImage(QPixmap(QApplication::applicationDirPath() + "/../Resources/resources/Lenna.png"));
+    if (settings.contains(previewImageKey))
+    {
+        loadImage(settings.value(previewImageKey).toString());
+    }
+    else
+    {
+        loadImage(QApplication::applicationDirPath() + "/../Resources/resources/Lenna.png");
+    }
     
     addFilter((index_t)0);
 }
@@ -75,11 +83,17 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
 
 void MainWindow::openImage()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-    tr("Open Image"), "~/Pictures", tr("Image Files (*.png *.jpg *.bmp)"));
-    if (!fileName.isEmpty())
+    QString filename = QFileDialog::getOpenFileName(this,
+        tr("Open Image"), "~/Pictures", tr("Image Files (*.png *.jpg *.bmp)"));
+    loadImage(filename);
+}
+
+void MainWindow::loadImage(const QString& filename)
+{
+    if (!filename.isEmpty())
     {
-        source->setImage(QPixmap(fileName));
+        settings.setValue(previewImageKey, filename);
+        source->setImage(QPixmap(filename));
     }
 }
 

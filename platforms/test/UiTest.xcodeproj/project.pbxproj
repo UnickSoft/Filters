@@ -35,6 +35,7 @@
 		68AA345C1D91CE2A00D54A8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AA345B1D91CE2A00D54A8D /* main.m */; };
 		68AA345E1D91CE3300D54A8D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68AA345D1D91CE3300D54A8D /* Info.plist */; };
 		68AA34621D91D0FE00D54A8D /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34601D91D0FE00D54A8D /* MainWindow.cpp */; };
+		68F793A31DD79205003E93EE /* Dilate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F793A11DD79205003E93EE /* Dilate.cpp */; };
 		68F96A6A1D9460D4003606E3 /* ImageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F96A681D9460D4003606E3 /* ImageControl.cpp */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,8 @@
 		68DF63C51DA828C700EAF7C9 /* IPrivateFilterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPrivateFilterList.h; sourceTree = "<group>"; };
 		68DF63C61DA828C700EAF7C9 /* IFilterCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFilterCollection.h; sourceTree = "<group>"; };
 		68DF63C71DA828C700EAF7C9 /* IParameterSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParameterSet.h; sourceTree = "<group>"; };
+		68F793A11DD79205003E93EE /* Dilate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dilate.cpp; sourceTree = "<group>"; };
+		68F793A21DD79205003E93EE /* Dilate.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Dilate.hpp; sourceTree = "<group>"; };
 		68F96A681D9460D4003606E3 /* ImageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageControl.cpp; path = src/Ui/ImageControl.cpp; sourceTree = SOURCE_ROOT; };
 		68F96A691D9460D4003606E3 /* ImageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageControl.h; path = src/Ui/ImageControl.h; sourceTree = SOURCE_ROOT; };
 		68FE8E5D1DCA84CA00A2A8A7 /* FilterTemplatesImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterTemplatesImpl.h; sourceTree = "<group>"; };
@@ -190,6 +193,8 @@
 				68028C4F1D9832D80058A733 /* Blur.h */,
 				68028C501D9832D80058A733 /* Copy.cpp */,
 				68028C511D9832D80058A733 /* Copy.h */,
+				68F793A11DD79205003E93EE /* Dilate.cpp */,
+				68F793A21DD79205003E93EE /* Dilate.hpp */,
 			);
 			name = Filters;
 			path = ../../baseFilters;
@@ -335,6 +340,7 @@
 				688F5CDD1DD6802B00243A5E /* ROICopy.cpp in Sources */,
 				6803D9FE1DBEB740008F5895 /* Controller.cpp in Sources */,
 				68AA345C1D91CE2A00D54A8D /* main.m in Sources */,
+				68F793A31DD79205003E93EE /* Dilate.cpp in Sources */,
 				680206C41DC3E5BA00E855B6 /* FilterControls.cpp in Sources */,
 				680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */,
 				68028C661D9833200058A733 /* PrivateFilterList.cpp in Sources */,

@@ -16,6 +16,7 @@
 #include "FilterControls.h"
 #include <QtWidgets/QComboBox>
 #include "BaseParameterSet.h"
+#include <QtCore/QSettings>
 
 class MainWindow : public QMainWindow
 {
@@ -37,6 +38,7 @@ private:
 
     void fillDefaultParameters(const QVector<ParameterInfo>& parameterInfo);
     QWidget* createRenderSetup();
+    void loadImage(const QString& filename);
 
     ImageControl* source;
     ImageControl* dest;
@@ -47,6 +49,7 @@ private:
     BaseParameterSet parameters;
     index_t filterIndex;
     QComboBox* renderFormats;
+    QSettings settings;
 };
 
 #endif /* MainWindow_h */
