@@ -10,9 +10,11 @@
 #include "Blur.h"
 #include "ParameterHelpers.h"
 #include "FilterTemplates.h"
+#include <memory>
+#include "BaseParameterSet.h"
 
 
-Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceManager) : resourceManager(*resourceManager)
+Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceManager) : resourceManager(*resourceManager), filterList(*filterList)
 {}
 
 // Apply filter to frame.
@@ -221,9 +223,49 @@ template <typename HFunc, typename VFunc> bool Blur::process(HFunc hFunc, VFunc 
     FrameEx outputFrameEx = outputFrame;
     FrameEx tempFrameFrameEx = *tempFrame;
     
+    // Horizontal filter
     res = processFrameToFramePixel(hFunc, inputFrameEx, tempFrameFrameEx, &roi, &roi);
     
+    // Copy border
+    auto copyROIFilter = std::unique_ptr<IFilter>(filterList.createFilter("ROI Copy", &filterList, &resourceManager));
+    
+    auto copyBorderFunction = [&](const Frame* input, Frame* output)
+    {
+        if (copyROIFilter)
+        {
+            BaseParameterSet border;
+            
+            // Top
+            border.push_back(ROIParameter({roi.x, 0, roi.width, roi.y}));
+            border.push_back(border.front());
+            copyROIFilter->apply(input, output, &border);
+            border.clear();
+            
+            // Bottom
+            border.push_back(ROIParameter({roi.x, roi.y + roi.height, roi.width, roi.y}));
+            border.push_back(border.front());
+            copyROIFilter->apply(input, output, &border);
+            border.clear();
+            
+            // Left
+            border.push_back(ROIParameter({0, roi.y, roi.x, roi.height}));
+            border.push_back(border.front());
+            copyROIFilter->apply(input, output, &border);
+            border.clear();
+            
+            // Right
+            border.push_back(ROIParameter({roi.x + roi.width, roi.y, roi.x, roi.height}));
+            border.push_back(border.front());
+            copyROIFilter->apply(input, output, &border);
+        }
+    };
+    
+    copyBorderFunction(&inputFrameEx, tempFrame);
+    
+    // Vertical filter
     res = res && processFrameToFramePixel(vFunc, tempFrameFrameEx, outputFrameEx, &roi, &roi);
+    
+    copyBorderFunction(tempFrame, &outputFrame);
     
     resourceManager.releaseFrame(tempFrame);
     

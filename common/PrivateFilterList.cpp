@@ -21,7 +21,7 @@ void PrivateFilterList::addFilter(const FilterFactory& factory)
 }
 
 // Create filter by index.
-IFilter* PrivateFilterList::createFilter(index_t index, const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager)
+IFilter* PrivateFilterList::createFilter(index_t index, const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager) const
 {
     if (index < factoryList.size())
     {
@@ -32,18 +32,18 @@ IFilter* PrivateFilterList::createFilter(index_t index, const IPrivateFilterList
 }
 
 // Create filter by name.
-IFilter* PrivateFilterList::createFilter(const char* const name, const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager)
+IFilter* PrivateFilterList::createFilter(const char* const name, const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager) const
 {
     if (nameToIndex.count(name) > 0)
     {
-        return createFilter(nameToIndex[name], privateFilterList, resourceManager);
+        return createFilter(nameToIndex.at(name), privateFilterList, resourceManager);
     }
     
     return nullptr;
 }
 
 // @return number of filters in list.
-index_t PrivateFilterList::filtersNumber()
+index_t PrivateFilterList::filtersNumber() const
 {
     return factoryList.size();
 }

@@ -23,13 +23,13 @@ public:
     void addFilter(const FilterFactory& factory);
     
     // Create filter by index.
-    virtual IFilter* createFilter(index_t, const IPrivateFilterList*, IResourceManager* ) override;
+    virtual IFilter* createFilter(index_t, const IPrivateFilterList*, IResourceManager* ) const override;
     
     // Create filter by name.
-    virtual IFilter* createFilter(const char* const name, const IPrivateFilterList*, IResourceManager* ) override;
+    virtual IFilter* createFilter(const char* const name, const IPrivateFilterList*, IResourceManager* ) const override;
     
     // @return number of filters in list.
-    virtual index_t filtersNumber() override;
+    virtual index_t filtersNumber() const override;
     
 private:
 

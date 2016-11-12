@@ -39,6 +39,7 @@ protected:
 
 
     IResourceManager& resourceManager;
+    const IPrivateFilterList& filterList;
 
 };
 

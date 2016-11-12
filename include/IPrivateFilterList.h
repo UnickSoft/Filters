@@ -19,13 +19,13 @@ class IPrivateFilterList : public VirtualDestructor
 public:
 
     // Create filter by index.
-    virtual IFilter* createFilter(index_t, const IPrivateFilterList*, IResourceManager* ) = 0;
+    virtual IFilter* createFilter(index_t, const IPrivateFilterList*, IResourceManager* ) const = 0;
     
     // Create filter by name.
-    virtual IFilter* createFilter(const char* const name, const IPrivateFilterList*, IResourceManager* ) = 0;
+    virtual IFilter* createFilter(const char* const name, const IPrivateFilterList*, IResourceManager* ) const = 0;
     
     // @return number of filters in list.
-    virtual index_t filtersNumber() = 0;
+    virtual index_t filtersNumber() const = 0;
 };
 
 typedef std::function<IFilter*(const IPrivateFilterList*, IResourceManager*)> FilterFactory;
