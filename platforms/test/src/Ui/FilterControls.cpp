@@ -15,6 +15,10 @@
 #include <cassert>
 #include "ParameterHelpers.h"
 #include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
+#include "ImageControl.h"
+#include <QtWidgets/QFileDialog>
+#include <QtCore/QByteArray.h>
 
 FilterControls::FilterControls ()
 {
@@ -50,6 +54,7 @@ QWidget* FilterControls::createControl(const ParameterInfo& parameterInfo, index
     {
         case BS_UINT: res = createUintControl(parameterInfo, index); break;
         case BS_ROI:  res = createROIControl(parameterInfo, index); break;
+        case BS_MASK: res = createMaskControl(parameterInfo, index); break;
         
         default: assert(false && "Unknown parameter");
     }
@@ -167,4 +172,75 @@ QWidget* FilterControls::createROIControl(const ParameterInfo& parameterInfo, in
 }
 
 
-//void paramChanged(index_t index, const QVariant& value);
+QWidget* FilterControls::createMaskControl(const ParameterInfo& parameterInfo, index_t index)
+{
+    QWidget* res = new QWidget();
+
+    auto layout = new QVBoxLayout();
+    res->setLayout(layout);
+    
+    auto openButton   = new QPushButton("Open mask", this);
+    auto imagePreview = new ImageControl("Mask", this);
+    
+    imagePreview->setFixedSize(64, 64);
+
+    layout->addWidget(openButton);
+    layout->addWidget(imagePreview);
+
+    auto displayMask = [=](const MaskBitmap& mask)
+    {
+        QImage maskImage(mask.data, mask.width, mask.height, mask.byteSpan, QImage::Format_Indexed8);
+        
+        // White for 0 and black for othres.
+        QVector<QRgb> colors;
+        colors.push_back(0xFFFFFFFF);
+        for (int i = 0; i < 256; i++)
+        {
+            colors.push_back(0xFF000000);
+        }
+        maskImage.setColorTable(colors);
+        
+        imagePreview->setImage(QPixmap::fromImage(maskImage));
+    };
+
+    auto openMaskFromFile = [=]()
+    {
+        QString filename = QFileDialog::getOpenFileName(this,
+            tr("Open Image"), "~/Pictures", tr("Image Files (*.png *.jpg *.bmp)"));
+        
+        QPixmap pixmap(filename);
+        
+        auto image = pixmap.toImage().convertToFormat(QImage::Format_Grayscale8);
+        
+        auto maxImage = MaskParameter::field(&parameterInfo.values.range.max);
+        if (image.width() > maxImage.width)
+        {
+            image = image.scaledToWidth(maxImage.width);
+        }
+        if (image.height() > maxImage.height)
+        {
+            image = image.scaledToHeight(maxImage.height);
+        }
+        
+        // Hold mask arrays. Todo: release old.
+        static QByteArray maskBuffer;
+        
+        maskBuffer = QByteArray((const char *)image.constBits(), image.byteCount());
+        
+        MaskBitmap mask = {(uint8_t*)(maskBuffer.data()), static_cast<uint32_t>(image.width()), static_cast<uint32_t>(image.height()),
+            static_cast<uint32_t>(image.bytesPerLine())};
+        
+        displayMask(mask);
+        
+        emit paramChanged(index, MaskParameter(mask));
+    };
+
+    auto mask = MaskParameter::field(&parameterInfo.defaultValue);
+    
+    displayMask(mask);
+    
+    connect(openButton, &QPushButton::clicked, openMaskFromFile);
+
+    return res;
+}
+

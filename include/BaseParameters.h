@@ -17,8 +17,17 @@ enum BaseParameters {
     BS_INT,         // Int parameter. It is int32 type.
     BS_UINT,        // Int parameter. It is uint32 type.
     BS_ROI,         // ROI paraneter. Struct with 4 uint32.
+    BS_MASK,        // Mask paraneter. Bitmap with one channel and 8 bit bepth.
     BS_MAX = 32};
 
+// Bitmap mask as parameter. It is Alpha8 format.
+struct MaskBitmap
+{
+    uint8_t* data;
+    uint32_t width;
+    uint32_t height;
+    uint32_t byteSpan;
+};
 
 // Struct to hold any type of parameter.
 // We will use helper to write/read parameter from this struct.
@@ -30,6 +39,7 @@ struct Parameter
         int32_t  intNumber;
         uint32_t uintNumber;
         ROI      roi;
+        MaskBitmap mask;
     } value;
 };
 

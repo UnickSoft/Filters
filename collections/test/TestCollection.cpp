@@ -10,6 +10,7 @@
 #include "Blur.h"
 #include "Copy.h"
 #include "ROICopy.h"
+#include "Dilate.h"
 
 // Create this collection.
 IFilterCollection* createCollection()
@@ -22,6 +23,7 @@ TestCollection::TestCollection () : resourceManager(nullptr)
     addFilter<Copy>();
     addFilter<Blur>();
     addFilter<ROICopy>();
+    addFilter<Dilate>();
 }
 
 // Create filter by index.

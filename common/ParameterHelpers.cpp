@@ -24,6 +24,10 @@ template <> ROI& NumberParameter<ROI>::field(Parameter* parameter)
 {
     return parameter->value.roi;
 }
+template <> MaskBitmap& NumberParameter<MaskBitmap>::field(Parameter* parameter)
+{
+    return parameter->value.mask;
+}
 
 template <> const float& NumberParameter<float>::field(const Parameter* parameter)
 {
@@ -41,6 +45,10 @@ template <> const ROI& NumberParameter<ROI>::field(const Parameter* parameter)
 {
     return parameter->value.roi;
 }
+template <> const MaskBitmap& NumberParameter<MaskBitmap>::field(const Parameter* parameter)
+{
+    return parameter->value.mask;
+}
 
 template <> BaseParameters NumberParameterInfo<float>::paramType()
 {
@@ -57,4 +65,8 @@ template <> BaseParameters NumberParameterInfo<uint32_t>::paramType()
 template <> BaseParameters NumberParameterInfo<ROI>::paramType()
 {
     return BS_ROI;
+}
+template <> BaseParameters NumberParameterInfo<MaskBitmap>::paramType()
+{
+    return BS_MASK;
 }
