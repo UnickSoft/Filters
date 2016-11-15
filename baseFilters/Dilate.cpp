@@ -21,28 +21,57 @@ Dilate::Dilate (const IPrivateFilterList* filterList, IResourceManager* resource
 // Apply filter to frame.
 bool Dilate::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
 {
-/*
-    const int kernelSizeHalf = UintParameter::field(params ? &params->value(0) : &parameterInfo(0).defaultValue);
-    
-    const int kernelSize = kernelSizeHalf * 2 + 1;
-    
-    unsigned int kernel[kernelSize];
-    unsigned int kernelNorm = 0;
-    for (int i = 0; i < kernelSizeHalf; i ++)
-    {
-        kernel[i] = i + 1;
-        kernel[kernelSize - 1 - i] = i + 1;
-        kernelNorm += 2 * (i + 1);
-    }
-    
-    kernel[kernelSizeHalf] = kernelSizeHalf + 1;
-    kernelNorm += kernelSizeHalf + 1;
+    const MaskBitmap mask = MaskParameter::field(params ? &params->value(0) : &parameterInfo(0).defaultValue);
     
     FrameEx inputFrameEx  = *inputFrame;
     
     int pixelDepth = inputFrameEx.pixelDepth();
     
+    if (inputFrame->format == FrameParams::Alpha8)
+    {
+        int kernelSizeHalfH = mask.width  / 2;
+        int kernelSizeHalfV = mask.height / 2;
+        int kernelSizeHalfHEnd = kernelSizeHalfH - ((mask.width % 2 == 0) ? 1 : 0);
+        int kernelSizeHalfVEnd = kernelSizeHalfV - ((mask.height % 2 == 0) ? 1 : 0);
+        
+        auto processAlpha8 = [=, &mask](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        {
+            uint8_t value = 0;
+            auto maskCenterData = mask.data + (int32_t)mask.byteSpan * kernelSizeHalfV;
+            
+            for (int l = -kernelSizeHalfV; l <= kernelSizeHalfVEnd; l++)
+            {
+                auto maskLine  = maskCenterData + (int32_t)mask.byteSpan       * l;
+                auto inputLine = inputRow  + (int32_t)inputFrame.byteSpan * l - kernelSizeHalfH;
+                for (int k = -kernelSizeHalfH; k <= kernelSizeHalfHEnd; k++)
+                {
+                    if (*maskLine > 0)
+                    {
+                        if (value < *inputLine)
+                        {
+                            value = *inputLine;
+                        }
+                    }
+                    
+                    ++inputLine;
+                    ++maskLine;
+                }
+            }
+            
+            *outputRow = value;//(value != *inputRow) ? value : 0;
+        };
+        
+        ROI roi  = {static_cast<uint32_t>(kernelSizeHalfH), static_cast<uint32_t>(kernelSizeHalfV), inputFrame->width - 2 * kernelSizeHalfH, inputFrame->height - 2 * kernelSizeHalfV};
+        
+        FrameEx inputFrameEx  = *inputFrame;
+        FrameEx outputFrameEx = *outputFrame;
+        
+        // Horizontal filter
+        return processFrameToFramePixel(processAlpha8, inputFrameEx, outputFrameEx, &roi, &roi);
+    }
+    
     // Process function.
+    /*
     if (inputFrame->format == FrameParams::RGB8)
     {
         auto processRGB8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
