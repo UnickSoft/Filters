@@ -65,6 +65,7 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     connect(source, &ImageControl::onMousePress, this, &MainWindow::openImage);
     connect(&controls, &FilterControls::paramChanged, this, &MainWindow::paramChanged);
     connect(renderFormats, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::renderFormatChanged);
+    connect(dest, &ImageControl::onMousePress, this, &MainWindow::saveImage);
     
     resize(600, 600);
 
@@ -183,5 +184,13 @@ void MainWindow::renderFormatChanged(int index)
     applyFilter(filterIndex);
 }
 
-
+void MainWindow::saveImage()
+{
+    QString filename = QFileDialog::getSaveFileName(this,
+        tr("Save Image"), "~/Pictures/result.png", tr("Image Files (*.png *.jpg *.bmp)"));
+    if (!filename.isEmpty())
+    {
+        dest->image().toImage().convertToFormat(QImage::Format_RGBA8888).save(filename);
+    }
+}
 

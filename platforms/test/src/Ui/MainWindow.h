@@ -33,7 +33,8 @@ protected slots:
     void addFilter(int index);
     void paramChanged(index_t index, const Parameter& value);
     void renderFormatChanged(int index);
-
+    void saveImage();
+    
 private:
 
     void fillDefaultParameters(const QVector<ParameterInfo>& parameterInfo);
