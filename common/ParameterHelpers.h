@@ -20,7 +20,11 @@ template <typename T> struct NumberParameter : public Parameter
         field(this) = value;
     }
     
-    static T& field(Parameter* parameter);
+    static T& field(Parameter* parameter)
+    {
+        return const_cast<T&>(NumberParameter<T>::field(static_cast<const Parameter*>(parameter)));
+    }
+
     static const T& field(const Parameter* parameter);
 };
 
@@ -46,9 +50,11 @@ typedef NumberParameter<uint32_t> UintParameter;
 typedef NumberParameter<float>    FloatParameter;
 typedef NumberParameter<ROI>      ROIParameter;
 typedef NumberParameter<MaskBitmap>    MaskParameter;
+typedef NumberParameter<bool>    BoolParameter;
 
 typedef NumberParameterInfo<int32_t>  IntParameterInfo;
 typedef NumberParameterInfo<uint32_t> UintParameterInfo;
 typedef NumberParameterInfo<float>    FloatParameterInfo;
 typedef NumberParameterInfo<ROI>      ROIParameterInfo;
 typedef NumberParameterInfo<MaskBitmap>      MaskParameterInfo;
+typedef NumberParameterInfo<bool>      BoolParameterInfo;

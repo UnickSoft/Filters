@@ -18,6 +18,7 @@ enum BaseParameters {
     BS_UINT,        // Int parameter. It is uint32 type.
     BS_ROI,         // ROI paraneter. Struct with 4 uint32.
     BS_MASK,        // Mask paraneter. Bitmap with one channel and 8 bit bepth.
+    BS_BOOL,        // True or false. Live or dead.
     BS_MAX = 32};
 
 // Bitmap mask as parameter. It is Alpha8 format.
@@ -40,6 +41,7 @@ struct Parameter
         uint32_t uintNumber;
         ROI      roi;
         MaskBitmap mask;
+        bool     boolean;
     } value;
 };
 

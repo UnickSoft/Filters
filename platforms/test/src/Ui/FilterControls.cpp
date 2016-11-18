@@ -19,6 +19,8 @@
 #include "ImageControl.h"
 #include <QtWidgets/QFileDialog>
 #include <QtCore/QByteArray.h>
+#include <QtWidgets/QCheckBox.h>
+
 
 FilterControls::FilterControls ()
 {
@@ -55,6 +57,7 @@ QWidget* FilterControls::createControl(const ParameterInfo& parameterInfo, index
         case BS_UINT: res = createUintControl(parameterInfo, index); break;
         case BS_ROI:  res = createROIControl(parameterInfo, index); break;
         case BS_MASK: res = createMaskControl(parameterInfo, index); break;
+        case BS_BOOL: res = createBoolControl(parameterInfo, index); break;
         
         default: assert(false && "Unknown parameter");
     }
@@ -241,6 +244,30 @@ QWidget* FilterControls::createMaskControl(const ParameterInfo& parameterInfo, i
     
     connect(openButton, &QPushButton::clicked, openMaskFromFile);
 
+    return res;
+}
+
+
+QWidget* FilterControls::createBoolControl(const ParameterInfo& parameterInfo, index_t index)
+{
+    QWidget* res = new QWidget();
+    auto layout = new QVBoxLayout();
+    res->setLayout(layout);
+    
+    auto* control = new QCheckBox(parameterInfo.title);
+    layout->addWidget(control);
+    
+    connect(control, &QCheckBox::stateChanged, [=](int state)
+    {
+        emit paramChanged(index, BoolParameter(state > 0));
+    });
+    
+    control->setCheckState(UintParameter::field(&parameterInfo.defaultValue) ? Qt::Checked : Qt::Unchecked);
+    
+    layout->addStretch();
+    
+    layout->setContentsMargins(0, 0, 0, 0);
+    
     return res;
 }
 

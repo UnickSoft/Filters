@@ -22,10 +22,11 @@ Dilate::Dilate (const IPrivateFilterList* filterList, IResourceManager* resource
 bool Dilate::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
 {
     const MaskBitmap mask = MaskParameter::field(params ? &params->value(0) : &parameterInfo(0).defaultValue);
+    const bool bResultOnly = BoolParameter::field(params ? &params->value(1) : &parameterInfo(1).defaultValue);
     
     FrameEx inputFrameEx  = *inputFrame;
     
-    int pixelDepth = inputFrameEx.pixelDepth();
+    //int pixelDepth = inputFrameEx.pixelDepth();
     
     if (inputFrame->format == FrameParams::Alpha8)
     {
@@ -58,7 +59,8 @@ bool Dilate::apply(const Frame* inputFrame, Frame* outputFrame, const IParameter
                 }
             }
             
-            *outputRow = value;//(value != *inputRow) ? value : 0;
+            // Todo create separate function for bResultOnly true/false.
+            *outputRow = (bResultOnly ? ((value != *inputRow) ? value : 0) : value);
         };
         
         ROI roi  = {static_cast<uint32_t>(kernelSizeHalfH), static_cast<uint32_t>(kernelSizeHalfV), inputFrame->width - 2 * kernelSizeHalfH, inputFrame->height - 2 * kernelSizeHalfV};
@@ -192,7 +194,7 @@ bool Dilate::apply(const Frame* inputFrame, Frame* outputFrame, const IParameter
 // @return number of parameters.
 index_t Dilate::parameterNumber()
 {
-    return 1;
+    return 2;
 }
 
 // @return parameter info.
@@ -213,6 +215,11 @@ const ParameterInfo& Dilate::parameterInfo(index_t index)
         
         static MaskParameterInfo mask("mask", bitmap, minBitmap, maxBitmap);
         return mask;
+    }
+    else if (index == 1)
+    {
+        static BoolParameterInfo resOnly("Result only", false, false, true);
+        return resOnly;
     }
     return emptyParam;
 }

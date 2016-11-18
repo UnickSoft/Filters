@@ -7,7 +7,7 @@
 //
 
 #include "ParameterHelpers.h"
-
+/*
 template <> float& NumberParameter<float>::field(Parameter* parameter)
 {
     return parameter->value.floatNumber;
@@ -28,6 +28,18 @@ template <> MaskBitmap& NumberParameter<MaskBitmap>::field(Parameter* parameter)
 {
     return parameter->value.mask;
 }
+template <> bool& NumberParameter<bool>::field(Parameter* parameter)
+{
+    return parameter->value.boolean;
+}
+*/
+/*
+template <typename T> T& NumberParameter<T>::field(Parameter* parameter)
+{
+    return const_cast<T&>(NumberParameter<T>::field(static_cast<const Parameter*>(parameter)));
+}
+*/
+
 
 template <> const float& NumberParameter<float>::field(const Parameter* parameter)
 {
@@ -49,6 +61,11 @@ template <> const MaskBitmap& NumberParameter<MaskBitmap>::field(const Parameter
 {
     return parameter->value.mask;
 }
+template <> const bool& NumberParameter<bool>::field(const Parameter* parameter)
+{
+    return parameter->value.boolean;
+}
+
 
 template <> BaseParameters NumberParameterInfo<float>::paramType()
 {
@@ -69,4 +86,8 @@ template <> BaseParameters NumberParameterInfo<ROI>::paramType()
 template <> BaseParameters NumberParameterInfo<MaskBitmap>::paramType()
 {
     return BS_MASK;
+}
+template <> BaseParameters NumberParameterInfo<bool>::paramType()
+{
+    return BS_BOOL;
 }

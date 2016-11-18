@@ -35,6 +35,7 @@ protected:
     QWidget* createUintControl(const ParameterInfo& parameterInfo, index_t index);
     QWidget* createROIControl(const ParameterInfo& parameterInfo, index_t index);
     QWidget* createMaskControl(const ParameterInfo& parameterInfo, index_t index);
+    QWidget* createBoolControl(const ParameterInfo& parameterInfo, index_t index);
     
     FilterControls* controls;
 };
