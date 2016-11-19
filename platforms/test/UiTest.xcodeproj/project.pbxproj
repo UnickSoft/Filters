@@ -137,7 +137,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		68028C541D9832E90058A733 /* common */ = {
+		68028C541D9832E90058A733 /* core */ = {
 			isa = PBXGroup;
 			children = (
 				680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */,
@@ -155,8 +155,8 @@
 				6800043E1DCBE16400CE6C28 /* FrameEx.cpp */,
 				6800043F1DCBE16400CE6C28 /* FrameEx.h */,
 			);
-			name = common;
-			path = ../../common;
+			name = core;
+			path = ../../core;
 			sourceTree = SOURCE_ROOT;
 		};
 		68028C671D9833290058A733 /* include */ = {
@@ -249,7 +249,7 @@
 				6890A4621DC15E520016EE2C /* resources */,
 				68028C691D98342C0058A733 /* collection */,
 				68028C671D9833290058A733 /* include */,
-				68028C541D9832E90058A733 /* common */,
+				68028C541D9832E90058A733 /* core */,
 				680B2B671D96E0930017F1B2 /* Filters */,
 				680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */,
 				680B2B651D96DFA80017F1B2 /* TestApplicationBridge.h */,
