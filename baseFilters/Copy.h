@@ -19,10 +19,10 @@ class Copy : public IFilter
 {
 public:
 
-    Copy (const IPrivateFilterList* filterList, IResourceManager* resourceManager);
+    Copy (const IPrivateFilterList& filterList, IResourceManager& resourceManager);
     
     // Apply filter to frame.
-    bool apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params) override;
+    bool apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params) override;
     
     // @return number of parameters.
     index_t parameterNumber() override;

@@ -15,20 +15,20 @@
 #include "BaseParameterSet.h"
 
 
-Dilate::Dilate (const IPrivateFilterList* filterList, IResourceManager* resourceManager) : resourceManager(*resourceManager), filterList(*filterList)
+Dilate::Dilate (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : resourceManager(resourceManager), filterList(filterList)
 {}
 
 // Apply filter to frame.
-bool Dilate::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
+bool Dilate::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params)
 {
-    const MaskBitmap mask = MaskParameter::field(params ? &params->value(0) : &parameterInfo(0).defaultValue);
-    const bool bResultOnly = BoolParameter::field(params ? &params->value(1) : &parameterInfo(1).defaultValue);
+    const MaskBitmap mask = MaskParameter::field(&params.value(0));
+    const bool bResultOnly = BoolParameter::field(&params.value(1));
     
-    FrameEx inputFrameEx  = *inputFrame;
+    FrameEx inputFrameEx  = inputFrame;
     
     //int pixelDepth = inputFrameEx.pixelDepth();
     
-    if (inputFrame->format == FrameParams::Alpha8)
+    if (inputFrame.format == FrameParams::Alpha8)
     {
         int kernelSizeHalfH = mask.width  / 2;
         int kernelSizeHalfV = mask.height / 2;
@@ -63,10 +63,10 @@ bool Dilate::apply(const Frame* inputFrame, Frame* outputFrame, const IParameter
             *outputRow = (bResultOnly ? ((value != *inputRow) ? value : 0) : value);
         };
         
-        ROI roi  = {static_cast<uint32_t>(kernelSizeHalfH), static_cast<uint32_t>(kernelSizeHalfV), inputFrame->width - 2 * kernelSizeHalfH, inputFrame->height - 2 * kernelSizeHalfV};
+        ROI roi  = {static_cast<uint32_t>(kernelSizeHalfH), static_cast<uint32_t>(kernelSizeHalfV), inputFrame.width - 2 * kernelSizeHalfH, inputFrame.height - 2 * kernelSizeHalfV};
         
-        FrameEx inputFrameEx  = *inputFrame;
-        FrameEx outputFrameEx = *outputFrame;
+        FrameEx inputFrameEx  = inputFrame;
+        FrameEx outputFrameEx = outputFrame;
         
         // Horizontal filter
         return processFrameToFramePixel(processAlpha8, inputFrameEx, outputFrameEx, &roi, &roi);

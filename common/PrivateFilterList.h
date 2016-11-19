@@ -23,10 +23,10 @@ public:
     void addFilter(const FilterFactory& factory);
     
     // Create filter by index.
-    virtual IFilter* createFilter(index_t, const IPrivateFilterList*, IResourceManager* ) const override;
+    virtual IFilter* createFilter(index_t, const IPrivateFilterList&, IResourceManager& ) const override;
     
     // Create filter by name.
-    virtual IFilter* createFilter(const char* const name, const IPrivateFilterList*, IResourceManager* ) const override;
+    virtual IFilter* createFilter(const char* const name, const IPrivateFilterList&, IResourceManager& ) const override;
     
     // @return number of filters in list.
     virtual index_t filtersNumber() const override;
@@ -36,7 +36,7 @@ private:
     // Factory list.
     std::vector<FilterFactory> factoryList;
     // Filter name to index.
-    std::unordered_map<std::string, index_t> nameToIndex;
+    mutable std::unordered_map<std::string, index_t> nameToIndex;
     
 };
 

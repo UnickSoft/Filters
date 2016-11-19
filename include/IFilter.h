@@ -18,7 +18,7 @@ class IFilter : public VirtualDestructor
     public:
     
         // Apply filter to frame.
-        virtual bool apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params) = 0;
+        virtual bool apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params) = 0;
     
         // @return number of parameters.
         virtual index_t parameterNumber() = 0;

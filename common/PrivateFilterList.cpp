@@ -12,16 +12,11 @@
 // Add factory function for filter.
 void PrivateFilterList::addFilter(const FilterFactory& factory)
 {
-    std::unique_ptr<IFilter> filter = std::unique_ptr<IFilter>(factory(nullptr, nullptr));
-    if (filter)
-    {
-        factoryList.push_back(factory);
-        nameToIndex[filter->name()] = factoryList.size() - 1;
-    }
+    factoryList.push_back(factory);
 }
 
 // Create filter by index.
-IFilter* PrivateFilterList::createFilter(index_t index, const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager) const
+IFilter* PrivateFilterList::createFilter(index_t index, const IPrivateFilterList& privateFilterList, IResourceManager& resourceManager) const
 {
     if (index < factoryList.size())
     {
@@ -32,11 +27,25 @@ IFilter* PrivateFilterList::createFilter(index_t index, const IPrivateFilterList
 }
 
 // Create filter by name.
-IFilter* PrivateFilterList::createFilter(const char* const name, const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager) const
+IFilter* PrivateFilterList::createFilter(const char* const name, const IPrivateFilterList& privateFilterList, IResourceManager& resourceManager) const
 {
     if (nameToIndex.count(name) > 0)
     {
         return createFilter(nameToIndex.at(name), privateFilterList, resourceManager);
+    }
+    else
+    {
+        for (auto& factory : factoryList)
+        {
+            std::unique_ptr<IFilter> filter = std::unique_ptr<IFilter>(factory(privateFilterList, resourceManager));
+            
+            nameToIndex[filter->name()] = factoryList.size() - 1;
+        }
+        
+        if (nameToIndex.count(name) > 0)
+        {
+            return createFilter(nameToIndex.at(name), privateFilterList, resourceManager);
+        }
     }
     
     return nullptr;

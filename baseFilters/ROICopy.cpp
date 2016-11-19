@@ -16,15 +16,15 @@
 #include "ParameterHelpers.h"
 
 
-ROICopy::ROICopy (const IPrivateFilterList* filterList, IResourceManager* resourceManager)
+ROICopy::ROICopy (const IPrivateFilterList& filterList, IResourceManager& resourceManager)
 {}
 
 // Apply filter to frame.
-bool ROICopy::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
+bool ROICopy::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params)
 {
-    const ROI srcROI = ROIParameter::field(params ? &params->value(0) : &parameterInfo(0).defaultValue);
+    const ROI srcROI = ROIParameter::field(&params.value(0));
 
-    const ROI dstROI = ROIParameter::field(params ? &params->value(1) : &parameterInfo(1).defaultValue);
+    const ROI dstROI = ROIParameter::field(&params.value(1));
     
     bool res = false;
     
@@ -33,10 +33,10 @@ bool ROICopy::apply(const Frame* inputFrame, Frame* outputFrame, const IParamete
         srcROI.height == dstROI.height &&
         srcROI.width > 0 && srcROI.height > 0 &&
         dstROI.width > 0 && dstROI.height > 0 &&
-        inputFrame->format == outputFrame->format)
+        inputFrame.format == outputFrame.format)
     {
-        FrameEx inputFrameEx  = *inputFrame;
-        FrameEx outputFrameEx = *outputFrame;
+        FrameEx inputFrameEx  = inputFrame;
+        FrameEx outputFrameEx = outputFrame;
         auto pixelDepth = inputFrameEx.pixelDepth();
         
         // Process function.

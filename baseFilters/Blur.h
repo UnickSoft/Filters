@@ -19,10 +19,10 @@ class Blur : public IFilter
 {
 public:
 
-    Blur (const IPrivateFilterList* filterList, IResourceManager* resourceManager);
+    Blur (const IPrivateFilterList& filterList, IResourceManager& resourceManager);
     
     // Apply filter to frame.
-    bool apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params) override;
+    bool apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params) override;
     
     // @return number of parameters.
     index_t parameterNumber() override;

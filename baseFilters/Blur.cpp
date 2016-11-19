@@ -14,13 +14,13 @@
 #include "BaseParameterSet.h"
 
 
-Blur::Blur (const IPrivateFilterList* filterList, IResourceManager* resourceManager) : resourceManager(*resourceManager), filterList(*filterList)
+Blur::Blur (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : resourceManager(resourceManager), filterList(filterList)
 {}
 
 // Apply filter to frame.
-bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
+bool Blur::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params)
 {
-    const int kernelSizeHalf = UintParameter::field(params ? &params->value(0) : &parameterInfo(0).defaultValue);
+    const int kernelSizeHalf = UintParameter::field(&params.value(0));
     
     const int kernelSize = kernelSizeHalf * 2 + 1;
     
@@ -36,12 +36,12 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
     kernel[kernelSizeHalf] = kernelSizeHalf + 1;
     kernelNorm += kernelSizeHalf + 1;
     
-    FrameEx inputFrameEx  = *inputFrame;
+    FrameEx inputFrameEx  = inputFrame;
     
     int pixelDepth = inputFrameEx.pixelDepth();
     
     // Process function.
-    if (inputFrame->format == FrameParams::RGB8)
+    if (inputFrame.format == FrameParams::RGB8)
     {
         auto processRGB8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
@@ -78,9 +78,9 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         };
         
         
-        return process(processRGB8H, processRGB8V, *inputFrame, *outputFrame, kernelSizeHalf);
+        return process(processRGB8H, processRGB8V, inputFrame, outputFrame, kernelSizeHalf);
     }
-    else if (inputFrame->format == FrameParams::RGBA8)
+    else if (inputFrame.format == FrameParams::RGBA8)
     {
         auto processRGBA8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
@@ -121,9 +121,9 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         };
         
         
-        return process(processRGBA8H, processRGBA8V, *inputFrame, *outputFrame, kernelSizeHalf);
+        return process(processRGBA8H, processRGBA8V, inputFrame, outputFrame, kernelSizeHalf);
     }
-    else if (inputFrame->format == FrameParams::Alpha8)
+    else if (inputFrame.format == FrameParams::Alpha8)
     {
         auto processAlpha8H = [=, &kernel](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
@@ -152,7 +152,7 @@ bool Blur::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSe
         };
         
         
-        return process(processAlpha8H, processAlpha8V, *inputFrame, *outputFrame, kernelSizeHalf);
+        return process(processAlpha8H, processAlpha8V, inputFrame, outputFrame, kernelSizeHalf);
     }
     
     return false;
@@ -227,9 +227,9 @@ template <typename HFunc, typename VFunc> bool Blur::process(HFunc hFunc, VFunc 
     res = processFrameToFramePixel(hFunc, inputFrameEx, tempFrameFrameEx, &roi, &roi);
     
     // Copy border
-    auto copyROIFilter = std::unique_ptr<IFilter>(filterList.createFilter("ROI Copy", &filterList, &resourceManager));
+    auto copyROIFilter = std::unique_ptr<IFilter>(filterList.createFilter("ROI Copy", filterList, resourceManager));
     
-    auto copyBorderFunction = [&](const Frame* input, Frame* output)
+    auto copyBorderFunction = [&](const Frame& input, Frame& output)
     {
         if (copyROIFilter)
         {
@@ -238,34 +238,34 @@ template <typename HFunc, typename VFunc> bool Blur::process(HFunc hFunc, VFunc 
             // Top
             border.push_back(ROIParameter({roi.x, 0, roi.width, roi.y}));
             border.push_back(border.front());
-            copyROIFilter->apply(input, output, &border);
+            copyROIFilter->apply(input, output, border);
             border.clear();
             
             // Bottom
             border.push_back(ROIParameter({roi.x, roi.y + roi.height, roi.width, roi.y}));
             border.push_back(border.front());
-            copyROIFilter->apply(input, output, &border);
+            copyROIFilter->apply(input, output, border);
             border.clear();
             
             // Left
             border.push_back(ROIParameter({0, roi.y, roi.x, roi.height}));
             border.push_back(border.front());
-            copyROIFilter->apply(input, output, &border);
+            copyROIFilter->apply(input, output, border);
             border.clear();
             
             // Right
             border.push_back(ROIParameter({roi.x + roi.width, roi.y, roi.x, roi.height}));
             border.push_back(border.front());
-            copyROIFilter->apply(input, output, &border);
+            copyROIFilter->apply(input, output, border);
         }
     };
     
-    copyBorderFunction(&inputFrameEx, tempFrame);
+    copyBorderFunction(inputFrameEx, *tempFrame);
     
     // Vertical filter
     res = res && processFrameToFramePixel(vFunc, tempFrameFrameEx, outputFrameEx, &roi, &roi);
     
-    copyBorderFunction(tempFrame, &outputFrame);
+    copyBorderFunction(*tempFrame, outputFrame);
     
     resourceManager.releaseFrame(tempFrame);
     

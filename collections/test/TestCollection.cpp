@@ -29,13 +29,13 @@ TestCollection::TestCollection () : resourceManager(nullptr)
 // Create filter by index.
 IFilter* TestCollection::createFilter(index_t index)
 {
-    return publicFilters.createFilter(index, &privateFilters, resourceManager);
+    return publicFilters.createFilter(index, privateFilters, *resourceManager);
 }
     
 // Create filter by name.
 IFilter* TestCollection::createFilter(const char* const name)
 {
-    return publicFilters.createFilter(name, &privateFilters, resourceManager);
+    return publicFilters.createFilter(name, privateFilters, *resourceManager);
 }
 
 // @return number of filters in list.
@@ -52,12 +52,12 @@ void TestCollection::setResourceManager(IResourceManager* resourceManager)
 
 template <class T> void TestCollection::addFilter()
 {
-        privateFilters.addFilter ([](const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager)
+        privateFilters.addFilter ([](const IPrivateFilterList& privateFilterList, IResourceManager& resourceManager)
     {
         return new T(privateFilterList, resourceManager);
     });
     
-    publicFilters.addFilter ([](const IPrivateFilterList* privateFilterList, IResourceManager* resourceManager)
+    publicFilters.addFilter ([](const IPrivateFilterList& privateFilterList, IResourceManager& resourceManager)
     {
         return new T(privateFilterList, resourceManager);
     });

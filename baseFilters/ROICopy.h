@@ -18,10 +18,10 @@ class ROICopy : public IFilter
 {
 public:
 
-    ROICopy (const IPrivateFilterList* filterList, IResourceManager* resourceManager);
+    ROICopy (const IPrivateFilterList& filterList, IResourceManager& resourceManager);
     
     // Apply filter to frame.
-    bool apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params) override;
+    bool apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params) override;
     
     // @return number of parameters.
     index_t parameterNumber() override;

@@ -48,7 +48,7 @@ void Controller::applyFilter(index_t index, const IParameterSet* parameters, QIm
         destFrame.byteSpan = dest.bytesPerLine();
         destFrame.data     = reinterpret_cast<uint8_t*>(dest.bits());
         
-        filter->apply(&sourceFrame, &destFrame, parameters);
+        filter->apply(sourceFrame, destFrame, *parameters);
     }
 }
 

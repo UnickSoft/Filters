@@ -18,10 +18,10 @@ class Dilate : public IFilter
 {
 public:
 
-    Dilate (const IPrivateFilterList* filterList, IResourceManager* resourceManager);
+    Dilate (const IPrivateFilterList& filterList, IResourceManager& resourceManager);
     
     // Apply filter to frame.
-    bool apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params) override;
+    bool apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params) override;
     
     // @return number of parameters.
     index_t parameterNumber() override;

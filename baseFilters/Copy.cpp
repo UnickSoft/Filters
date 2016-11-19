@@ -15,27 +15,27 @@
 #include "FilterTemplates.h"
 
 
-Copy::Copy (const IPrivateFilterList* filterList, IResourceManager* resourceManager)
+Copy::Copy (const IPrivateFilterList& filterList, IResourceManager& resourceManager)
 {}
 
 // Apply filter to frame.
-bool Copy::apply(const Frame* inputFrame, Frame* outputFrame, const IParameterSet* params)
+bool Copy::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params)
 {
     bool res = false;
     
-    if (inputFrame->width  == outputFrame->width
-        && inputFrame->height == outputFrame->height
-        && inputFrame->format == outputFrame->format)
+    if (inputFrame.width  == outputFrame.width
+        && inputFrame.height == outputFrame.height
+        && inputFrame.format == outputFrame.format)
     {
-        if (inputFrame->byteSpan  == outputFrame->byteSpan)
+        if (inputFrame.byteSpan  == outputFrame.byteSpan)
         {
-            memcpy(outputFrame->data, inputFrame->data, inputFrame->height * inputFrame->byteSpan);
+            memcpy(outputFrame.data, inputFrame.data, inputFrame.height * inputFrame.byteSpan);
             res = true;
         }
         else
         {
-            FrameEx inputFrameEx  = *inputFrame;
-            FrameEx outputFrameEx = *outputFrame;
+            FrameEx inputFrameEx  = inputFrame;
+            FrameEx outputFrameEx = outputFrame;
     
             // Process function.
             auto processRGB8 = [](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i)
