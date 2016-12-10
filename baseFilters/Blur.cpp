@@ -272,3 +272,16 @@ template <typename HFunc, typename VFunc> bool Blur::process(HFunc hFunc, VFunc 
     return true;
 }
 
+
+// @return output frame params for input frame.
+FrameParams Blur::outputFrameParams(const FrameParams& inputFrame)
+{
+    FrameParams res = {0, 0, FrameParams::Unsupported};
+    if (inputFrame.format == FrameParams::RGB8  ||
+        inputFrame.format == FrameParams::RGBA8 ||
+        inputFrame.format == FrameParams::Alpha8)
+    {
+        res = inputFrame;
+    }
+    return res;
+}

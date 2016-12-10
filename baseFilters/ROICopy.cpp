@@ -81,3 +81,9 @@ const char* const ROICopy::name()
 {
     return "ROI Copy";
 }
+
+// @return output frame params for input frame.
+FrameParams ROICopy::outputFrameParams(const FrameParams& inputFrame)
+{
+    return inputFrame;
+}

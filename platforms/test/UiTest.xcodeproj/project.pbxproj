@@ -32,10 +32,10 @@
 		68AA34571D9090C000D54A8D /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EFA1D907A6300D952BB /* QtWidgets.framework */; };
 		68AA34581D9090C000D54A8D /* QtWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EFA1D907A6300D952BB /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		68AA345C1D91CE2A00D54A8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AA345B1D91CE2A00D54A8D /* main.m */; };
-		68AA345E1D91CE3300D54A8D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 68AA345D1D91CE3300D54A8D /* Info.plist */; };
 		68AA34621D91D0FE00D54A8D /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34601D91D0FE00D54A8D /* MainWindow.cpp */; };
 		68F793A31DD79205003E93EE /* Dilate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F793A11DD79205003E93EE /* Dilate.cpp */; };
 		68F96A6A1D9460D4003606E3 /* ImageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F96A681D9460D4003606E3 /* ImageControl.cpp */; };
+		68FFCE8C1DE0C0A20007DE9A /* SolidColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68FFCE8A1DE0C0A20007DE9A /* SolidColor.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -94,6 +94,7 @@
 		680918E41DBBAF02008C60C6 /* BaseParameterSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseParameterSet.h; sourceTree = "<group>"; };
 		680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestApplicationBridge.cpp; path = src/TestApplicationBridge.cpp; sourceTree = SOURCE_ROOT; };
 		680B2B651D96DFA80017F1B2 /* TestApplicationBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestApplicationBridge.h; path = src/TestApplicationBridge.h; sourceTree = SOURCE_ROOT; };
+		680B41431DFC561A0025FB65 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		68524EDF1D8ED95800D952BB /* UiMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UiMain.cpp; path = src/UiMain.cpp; sourceTree = SOURCE_ROOT; };
 		68524EF81D907A6300D952BB /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = Qt/QtCore.framework; sourceTree = "<group>"; };
 		68524EF91D907A6300D952BB /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Qt/QtGui.framework; sourceTree = "<group>"; };
@@ -118,6 +119,8 @@
 		68F96A691D9460D4003606E3 /* ImageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageControl.h; path = src/Ui/ImageControl.h; sourceTree = SOURCE_ROOT; };
 		68FE8E5D1DCA84CA00A2A8A7 /* FilterTemplatesImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterTemplatesImpl.h; sourceTree = "<group>"; };
 		68FE8E5E1DCA84CA00A2A8A7 /* FilterTemplates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterTemplates.h; sourceTree = "<group>"; };
+		68FFCE8A1DE0C0A20007DE9A /* SolidColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SolidColor.cpp; sourceTree = "<group>"; };
+		68FFCE8B1DE0C0A20007DE9A /* SolidColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolidColor.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +193,8 @@
 				68028C511D9832D80058A733 /* Copy.h */,
 				68F793A11DD79205003E93EE /* Dilate.cpp */,
 				68F793A21DD79205003E93EE /* Dilate.h */,
+				68FFCE8A1DE0C0A20007DE9A /* SolidColor.cpp */,
+				68FFCE8B1DE0C0A20007DE9A /* SolidColor.h */,
 			);
 			name = Filters;
 			path = ../../baseFilters;
@@ -241,6 +246,7 @@
 		68EC2A091D8ED8EF007C00EF /* UiTest */ = {
 			isa = PBXGroup;
 			children = (
+				680B41431DFC561A0025FB65 /* Info.plist */,
 				6890A4621DC15E520016EE2C /* resources */,
 				68028C691D98342C0058A733 /* collection */,
 				68028C671D9833290058A733 /* include */,
@@ -316,7 +322,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6890A4631DC15E520016EE2C /* resources in Resources */,
-				68AA345E1D91CE3300D54A8D /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,6 +351,7 @@
 				68028C641D9833200058A733 /* BaseResourceManager.cpp in Sources */,
 				680918E51DBBAF02008C60C6 /* BaseParameterSet.cpp in Sources */,
 				68AA34521D908D2900D54A8D /* UiMain.cpp in Sources */,
+				68FFCE8C1DE0C0A20007DE9A /* SolidColor.cpp in Sources */,
 				68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */,
 				680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */,
 			);

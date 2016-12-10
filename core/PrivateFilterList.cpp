@@ -35,11 +35,12 @@ IFilter* PrivateFilterList::createFilter(const char* const name, const IPrivateF
     }
     else
     {
+        index_t index = 0;
         for (auto& factory : factoryList)
         {
             std::unique_ptr<IFilter> filter = std::unique_ptr<IFilter>(factory(privateFilterList, resourceManager));
             
-            nameToIndex[filter->name()] = factoryList.size() - 1;
+            nameToIndex[filter->name()] = index++;
         }
         
         if (nameToIndex.count(name) > 0)

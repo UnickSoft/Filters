@@ -24,7 +24,7 @@ struct ROI
 
 struct FrameParams
 {
-    enum PixelFormat {RGBA8, RGB8, Alpha8};
+    enum PixelFormat {Unsupported, RGBA8, RGB8, Alpha8};
 
     uint32_t width;
     uint32_t height;

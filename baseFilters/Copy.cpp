@@ -68,3 +68,9 @@ const char* const Copy::name()
 {
     return "Copy";
 }
+
+// @return output frame params for input frame.
+FrameParams Copy::outputFrameParams(const FrameParams& inputFrame)
+{
+    return inputFrame;
+}

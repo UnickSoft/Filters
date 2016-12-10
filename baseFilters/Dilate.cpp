@@ -24,8 +24,6 @@ bool Dilate::apply(const Frame& inputFrame, Frame& outputFrame, const IParameter
     const MaskBitmap mask = MaskParameter::field(&params.value(0));
     const bool bResultOnly = BoolParameter::field(&params.value(1));
     
-    FrameEx inputFrameEx  = inputFrame;
-    
     //int pixelDepth = inputFrameEx.pixelDepth();
     
     if (inputFrame.format == FrameParams::Alpha8)
@@ -228,4 +226,15 @@ const ParameterInfo& Dilate::parameterInfo(index_t index)
 const char* const Dilate::name()
 {
     return "Dilate";
+}
+
+// @return output frame params for input frame.
+FrameParams Dilate::outputFrameParams(const FrameParams& inputFrame)
+{
+    FrameParams res = {0, 0, FrameParams::Unsupported};
+    if (inputFrame.format == FrameParams::Alpha8)
+    {
+        res = inputFrame;
+    }
+    return res;
 }

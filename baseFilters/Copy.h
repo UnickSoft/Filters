@@ -32,8 +32,9 @@ public:
     
     // @return name. Latin only letters.
     const char* const name() override;
-
-
+    
+    // @return output frame params for input frame.
+    FrameParams outputFrameParams(const FrameParams& inputFrame) override;
 };
 
 #endif /* Copy_hpp */

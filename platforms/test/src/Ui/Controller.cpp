@@ -8,6 +8,7 @@
 
 #include "Controller.h"
 #include "BaseParameterSet.h"
+#include <QTGui/QPainter>
 
 
 Controller::Controller ()
@@ -41,14 +42,29 @@ void Controller::applyFilter(index_t index, const IParameterSet* parameters, QIm
         sourceFrame.byteSpan = source.bytesPerLine();
         sourceFrame.data     = reinterpret_cast<uint8_t*>(source.bits());
     
-        Frame destFrame;
-        destFrame.width    = dest.width();
-        destFrame.height   = dest.height();
-        destFrame.format   = formatMap.value(dest.format());
-        destFrame.byteSpan = dest.bytesPerLine();
-        destFrame.data     = reinterpret_cast<uint8_t*>(dest.bits());
+        auto outputFrameParams = filter->outputFrameParams(sourceFrame);
         
-        filter->apply(sourceFrame, destFrame, *parameters);
+        if (outputFrameParams.format != FrameParams::Unsupported)
+        {
+            dest = QImage(outputFrameParams.width, outputFrameParams.height, formatMap.key(outputFrameParams.format));
+            
+            Frame destFrame;
+            destFrame.width    = dest.width();
+            destFrame.height   = dest.height();
+            destFrame.format   = formatMap.value(dest.format());
+            destFrame.byteSpan = dest.bytesPerLine();
+            destFrame.data     = reinterpret_cast<uint8_t*>(dest.bits());
+            
+            filter->apply(sourceFrame, destFrame, *parameters);
+        }
+        else
+        {
+            dest = QImage(source.width(), source.height(), source.format());
+
+            QPainter painter(&dest);
+            painter.setFont(QFont("Arial", 30));
+            painter.drawText(QRect(QPoint(0, 0), dest.size()), Qt::AlignCenter, "Unsupported format");
+        }
     }
 }
 

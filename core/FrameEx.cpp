@@ -23,7 +23,7 @@ uint32_t FrameEx::pixelDepth() const
         case RGBA8:  res = 4; break;
         case RGB8:   res = 3; break;
         case Alpha8: res = 1; break;
-
+        default:     res = 0;
     }
     
     return res;

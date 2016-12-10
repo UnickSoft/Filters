@@ -106,7 +106,7 @@ void MainWindow::applyFilter(QMouseEvent * event)
     
     for (index_t i = 0; i < filters.size(); i ++)
     {
-        filterList.addAction(filters[i], [=]()
+        filterList.addAction(filters[(int)i], [=]()
                              {
                                  this->applyFilter(i);
                              });
@@ -121,8 +121,7 @@ void MainWindow::applyFilter(index_t index)
     if (!sourcePix.isNull())
     {
         QImage::Format renderFormat = (QImage::Format)renderFormats->itemData(renderFormats->currentIndex()).toInt();
-        QImage destImage(sourcePix.width(), sourcePix.height(), renderFormat);
-        destImage.fill(0);
+        QImage destImage;
         
         auto sourceImage = sourcePix.toImage().convertToFormat(renderFormat);
         controller.applyFilter(index, &parameters, sourceImage, destImage);
