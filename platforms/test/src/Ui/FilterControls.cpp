@@ -294,7 +294,7 @@ QWidget* FilterControls::createColorControl(const ParameterInfo& parameterInfo, 
 
     auto openColorDialog = [=]()
     {
-        auto color = QColorDialog::getColor(QColor(), this);
+        auto color = QColorDialog::getColor(QColor(), this, "Color", QColorDialog::ShowAlphaChannel);
         if (color.isValid())
         {
             Color newColor = {(uint8_t)color.red(), (uint8_t)color.green(), (uint8_t)color.blue(), (uint8_t)color.alpha()};

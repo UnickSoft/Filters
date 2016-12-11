@@ -21,7 +21,40 @@ SolidColor::SolidColor (const IPrivateFilterList& filterList, IResourceManager& 
 // Apply filter to frame.
 bool SolidColor::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params)
 {
-     return false;
+    const Color color = ColorParameter::field(&params.value(0));
+    
+    if (inputFrame.format == FrameParams::Alpha8 && outputFrame.format == FrameParams::RGBA8)
+    {
+        auto processFullAlphaBGRA8 = [=](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        {
+            outputRow[0] = color.red;
+            outputRow[1] = color.green;
+            outputRow[2] = color.blue;
+            outputRow[3] = *inputRow;
+        };
+        
+        auto processAlphaBGRA8 = [=](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
+        {
+            outputRow[0] = color.red;
+            outputRow[1] = color.green;
+            outputRow[2] = color.blue;
+            outputRow[3] = int(*inputRow * color.alpha) / 255;
+        };
+        
+        FrameEx inputFrameEx  = inputFrame;
+        FrameEx outputFrameEx = outputFrame;
+        
+        if (color.alpha == 255)
+        {
+            return processFrameToFramePixel(processFullAlphaBGRA8, inputFrameEx, outputFrameEx);
+        }
+        else
+        {
+            return processFrameToFramePixel(processAlphaBGRA8, inputFrameEx, outputFrameEx);
+        }
+    }
+    
+    return false;
 }
 
 // @return number of parameters.
