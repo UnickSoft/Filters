@@ -20,6 +20,8 @@
 #include <QtWidgets/QFileDialog>
 #include <QtCore/QByteArray.h>
 #include <QtWidgets/QCheckBox.h>
+#include <QtGui/QColor.h>
+#include <QtWidgets/QColorDialog.h>
 
 
 FilterControls::FilterControls ()
@@ -54,11 +56,12 @@ QWidget* FilterControls::createControl(const ParameterInfo& parameterInfo, index
     QWidget* res = nullptr;
     switch (parameterInfo.type)
     {
-        case BS_UINT: res = createUintControl(parameterInfo, index); break;
-        case BS_ROI:  res = createROIControl(parameterInfo, index); break;
-        case BS_MASK: res = createMaskControl(parameterInfo, index); break;
-        case BS_BOOL: res = createBoolControl(parameterInfo, index); break;
-        
+        case BS_UINT:  res = createUintControl(parameterInfo, index); break;
+        case BS_ROI:   res = createROIControl(parameterInfo, index); break;
+        case BS_MASK:  res = createMaskControl(parameterInfo, index); break;
+        case BS_BOOL:  res = createBoolControl(parameterInfo, index); break;
+        case BS_COLOR: res = createColorControl(parameterInfo, index); break;
+            
         default: assert(false && "Unknown parameter");
     }
     
@@ -269,5 +272,43 @@ QWidget* FilterControls::createBoolControl(const ParameterInfo& parameterInfo, i
     layout->setContentsMargins(0, 0, 0, 0);
     
     return res;
+}
+
+
+QWidget* FilterControls::createColorControl(const ParameterInfo& parameterInfo, index_t index)
+{
+    QWidget* res = new QWidget();
+
+    auto layout = new QVBoxLayout();
+    res->setLayout(layout);
+    
+    auto openButton   = new QPushButton("Color", this);
+
+    layout->addWidget(openButton);
+    
+    auto displayColor = [=](const Color& color)
+    {
+        QString qss = QString("background-color: %1").arg(QColor(color.red, color.green, color.blue, color.alpha).name());
+        openButton->setStyleSheet(qss);
+    };
+
+    auto openColorDialog = [=]()
+    {
+        auto color = QColorDialog::getColor(QColor(), this);
+        if (color.isValid())
+        {
+            Color newColor = {(uint8_t)color.red(), (uint8_t)color.green(), (uint8_t)color.blue(), (uint8_t)color.alpha()};
+            displayColor(newColor);
+            emit paramChanged(index, ColorParameter(newColor));
+        }
+    };
+
+    auto color = ColorParameter::field(&parameterInfo.defaultValue);
+    displayColor(color);
+    
+    connect(openButton, &QPushButton::clicked, openColorDialog);
+
+    return res;
+
 }
 

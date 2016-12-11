@@ -11,6 +11,7 @@
 #include "Copy.h"
 #include "ROICopy.h"
 #include "Dilate.h"
+#include "SolidColor.h"
 
 // Create this collection.
 IFilterCollection* createCollection()
@@ -24,6 +25,7 @@ TestCollection::TestCollection () : resourceManager(nullptr)
     addFilter<Blur>();
     addFilter<ROICopy>();
     addFilter<Dilate>();
+    addFilter<SolidColor>();
 }
 
 // Create filter by index.

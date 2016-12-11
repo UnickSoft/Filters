@@ -51,6 +51,7 @@ typedef NumberParameter<float>    FloatParameter;
 typedef NumberParameter<ROI>      ROIParameter;
 typedef NumberParameter<MaskBitmap>    MaskParameter;
 typedef NumberParameter<bool>    BoolParameter;
+typedef NumberParameter<Color>    ColorParameter;
 
 typedef NumberParameterInfo<int32_t>  IntParameterInfo;
 typedef NumberParameterInfo<uint32_t> UintParameterInfo;
@@ -58,3 +59,4 @@ typedef NumberParameterInfo<float>    FloatParameterInfo;
 typedef NumberParameterInfo<ROI>      ROIParameterInfo;
 typedef NumberParameterInfo<MaskBitmap>      MaskParameterInfo;
 typedef NumberParameterInfo<bool>      BoolParameterInfo;
+typedef NumberParameterInfo<Color>     ColorParameterInfo;

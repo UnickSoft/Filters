@@ -19,6 +19,7 @@ enum BaseParameters {
     BS_ROI,         // ROI paraneter. Struct with 4 uint32.
     BS_MASK,        // Mask paraneter. Bitmap with one channel and 8 bit bepth.
     BS_BOOL,        // True or false. Live or dead.
+    BS_COLOR,       // RGBA color. 4-bytes type.
     BS_MAX = 32};
 
 // Bitmap mask as parameter. It is Alpha8 format.
@@ -28,6 +29,15 @@ struct MaskBitmap
     uint32_t width;
     uint32_t height;
     uint32_t byteSpan;
+};
+
+// Color parameter.
+struct Color
+{
+    uint8_t red;
+    uint8_t green;
+    uint8_t blue;
+    uint8_t alpha;
 };
 
 // Struct to hold any type of parameter.
@@ -42,6 +52,7 @@ struct Parameter
         ROI      roi;
         MaskBitmap mask;
         bool     boolean;
+        Color    color;
     } value;
 };
 

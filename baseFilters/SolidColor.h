@@ -6,9 +6,38 @@
 //  Copyright © 2016 Oleg. All rights reserved.
 //
 
-#ifndef SolidColor_hpp
-#define SolidColor_hpp
+#pragma once
 
 #include <stdio.h>
+#include "IFilter.h"
+#include "IPrivateFilterList.h"
+#include "IResourceManager.h"
 
-#endif /* SolidColor_hpp */
+class SolidColor : public IFilter
+{
+public:
+
+    SolidColor (const IPrivateFilterList& filterList, IResourceManager& resourceManager);
+    
+    // Apply filter to frame.
+    bool apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params) override;
+    
+    // @return number of parameters.
+    index_t parameterNumber() override;
+    
+    // @return parameter info.
+    const ParameterInfo& parameterInfo(index_t) override;
+    
+    // @return name. Latin only letters.
+    const char* const name() override;
+    
+    // @return output frame params for input frame.
+    FrameParams outputFrameParams(const FrameParams& inputFrame) override;
+    
+protected:
+
+
+    IResourceManager& resourceManager;
+    const IPrivateFilterList& filterList;
+
+};
