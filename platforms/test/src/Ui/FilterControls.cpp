@@ -20,8 +20,7 @@
 #include <QtWidgets/QFileDialog>
 #include <QtCore/QByteArray.h>
 #include <QtWidgets/QCheckBox.h>
-#include <QtGui/QColor.h>
-#include <QtWidgets/QColorDialog.h>
+#include "ColorControl.h"
 
 
 FilterControls::FilterControls ()
@@ -277,38 +276,15 @@ QWidget* FilterControls::createBoolControl(const ParameterInfo& parameterInfo, i
 
 QWidget* FilterControls::createColorControl(const ParameterInfo& parameterInfo, index_t index)
 {
-    QWidget* res = new QWidget();
+    auto colorControl = new ColorControl(this, parameterInfo);
 
-    auto layout = new QVBoxLayout();
-    res->setLayout(layout);
-    
-    auto openButton   = new QPushButton("Color", this);
-
-    layout->addWidget(openButton);
-    
-    auto displayColor = [=](const Color& color)
+    connect(colorControl, &ColorControl::paramChanged, [=](const Parameter& value)
     {
-        QString qss = QString("background-color: %1").arg(QColor(color.red, color.green, color.blue, color.alpha).name());
-        openButton->setStyleSheet(qss);
-    };
+        emit paramChanged(index, value);
+    });
 
-    auto openColorDialog = [=]()
-    {
-        auto color = QColorDialog::getColor(QColor(), this, "Color", QColorDialog::ShowAlphaChannel);
-        if (color.isValid())
-        {
-            Color newColor = {(uint8_t)color.red(), (uint8_t)color.green(), (uint8_t)color.blue(), (uint8_t)color.alpha()};
-            displayColor(newColor);
-            emit paramChanged(index, ColorParameter(newColor));
-        }
-    };
-
-    auto color = ColorParameter::field(&parameterInfo.defaultValue);
-    displayColor(color);
-    
-    connect(openButton, &QPushButton::clicked, openColorDialog);
-
-    return res;
-
+    return colorControl;
 }
+
+
 

@@ -33,6 +33,8 @@
 		68AA34581D9090C000D54A8D /* QtWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EFA1D907A6300D952BB /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		68AA345C1D91CE2A00D54A8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AA345B1D91CE2A00D54A8D /* main.m */; };
 		68AA34621D91D0FE00D54A8D /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34601D91D0FE00D54A8D /* MainWindow.cpp */; };
+		68F6AE7F1DFDDCE600432519 /* ColorControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F6AE7D1DFDDCE600432519 /* ColorControl.cpp */; };
+		68F6AE801DFDDF3200432519 /* ColorControl.h in Sources */ = {isa = PBXBuildFile; fileRef = 68F6AE7E1DFDDCE600432519 /* ColorControl.h */; };
 		68F793A31DD79205003E93EE /* Dilate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F793A11DD79205003E93EE /* Dilate.cpp */; };
 		68F96A6A1D9460D4003606E3 /* ImageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F96A681D9460D4003606E3 /* ImageControl.cpp */; };
 		68FFCE8C1DE0C0A20007DE9A /* SolidColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68FFCE8A1DE0C0A20007DE9A /* SolidColor.cpp */; };
@@ -113,6 +115,8 @@
 		68DF63C51DA828C700EAF7C9 /* IPrivateFilterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPrivateFilterList.h; sourceTree = "<group>"; };
 		68DF63C61DA828C700EAF7C9 /* IFilterCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFilterCollection.h; sourceTree = "<group>"; };
 		68DF63C71DA828C700EAF7C9 /* IParameterSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IParameterSet.h; sourceTree = "<group>"; };
+		68F6AE7D1DFDDCE600432519 /* ColorControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorControl.cpp; path = src/Ui/ColorControl.cpp; sourceTree = SOURCE_ROOT; };
+		68F6AE7E1DFDDCE600432519 /* ColorControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorControl.h; path = src/Ui/ColorControl.h; sourceTree = SOURCE_ROOT; };
 		68F793A11DD79205003E93EE /* Dilate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Dilate.cpp; sourceTree = "<group>"; };
 		68F793A21DD79205003E93EE /* Dilate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dilate.h; sourceTree = "<group>"; };
 		68F96A681D9460D4003606E3 /* ImageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageControl.cpp; path = src/Ui/ImageControl.cpp; sourceTree = SOURCE_ROOT; };
@@ -220,6 +224,8 @@
 				6803D9FD1DBEB740008F5895 /* Controller.h */,
 				680206C21DC3E5BA00E855B6 /* FilterControls.cpp */,
 				680206C31DC3E5BA00E855B6 /* FilterControls.h */,
+				68F6AE7D1DFDDCE600432519 /* ColorControl.cpp */,
+				68F6AE7E1DFDDCE600432519 /* ColorControl.h */,
 			);
 			name = Ui;
 			sourceTree = "<group>";
@@ -332,9 +338,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68F6AE801DFDDF3200432519 /* ColorControl.h in Sources */,
 				6809A6DA1DC4F549008C6962 /* Controller.h in Sources */,
 				6809A6D91DC4F40E008C6962 /* FilterControls.h in Sources */,
 				680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */,
+				68F6AE7F1DFDDCE600432519 /* ColorControl.cpp in Sources */,
 				680918E71DBCDB0F008C60C6 /* ImageControl.h in Sources */,
 				688F5CDD1DD6802B00243A5E /* ROICopy.cpp in Sources */,
 				6803D9FE1DBEB740008F5895 /* Controller.cpp in Sources */,
