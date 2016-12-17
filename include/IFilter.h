@@ -11,7 +11,7 @@
 
 #include "Base.h"
 #include "IParameterSet.h"
-
+#include <memory>
 
 class IFilter : public VirtualDestructor
 {
@@ -33,5 +33,7 @@ class IFilter : public VirtualDestructor
         // If input frame format is unsupported, out frame format will be unsupported.
         virtual FrameParams outputFrameParams(const FrameParams& inputFrame) = 0;
 };
+
+typedef std::shared_ptr<IFilter> FilterPtr;
 
 #endif /* IFilter_h */
