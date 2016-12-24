@@ -9,6 +9,7 @@
 #include "Controller.h"
 #include "BaseParameterSet.h"
 #include <QTGui/QPainter>
+#include "BaseFilter.h"
 
 
 Controller::Controller ()
@@ -42,9 +43,9 @@ void Controller::applyFilter(index_t index, const IParameterSet* parameters, QIm
         sourceFrame.byteSpan = source.bytesPerLine();
         sourceFrame.data     = reinterpret_cast<uint8_t*>(source.bits());
     
-        auto outputFrameParams = filter->outputFrameParams(sourceFrame);
+        FrameParams outputFrameParams;
         
-        if (outputFrameParams.format != FrameParams::Unsupported)
+        if (filter->outputFrameParams(&sourceFrame, &outputFrameParams))
         {
             dest = QImage(outputFrameParams.width, outputFrameParams.height, formatMap.key(outputFrameParams.format));
             
@@ -55,7 +56,7 @@ void Controller::applyFilter(index_t index, const IParameterSet* parameters, QIm
             destFrame.byteSpan = dest.bytesPerLine();
             destFrame.data     = reinterpret_cast<uint8_t*>(dest.bits());
             
-            filter->apply(sourceFrame, destFrame, *parameters);
+            BaseFilter::apply(filter.get(), sourceFrame, destFrame, *parameters);
         }
         else
         {

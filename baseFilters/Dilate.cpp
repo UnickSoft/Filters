@@ -15,7 +15,7 @@
 #include "BaseParameterSet.h"
 
 
-Dilate::Dilate (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : resourceManager(resourceManager), filterList(filterList)
+Dilate::Dilate (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : BaseFilter(filterList, resourceManager, "Dilate")
 {}
 
 // Apply filter to frame.
@@ -58,7 +58,7 @@ bool Dilate::apply(const Frame& inputFrame, Frame& outputFrame, const IParameter
             }
             
             // Todo create separate function for bResultOnly true/false.
-            *outputRow = (bResultOnly ? ((value != *inputRow) ? value : 0) : value);
+            *outputRow = (bResultOnly ? value - *inputRow : value);
         };
         
         ROI roi  = {static_cast<uint32_t>(kernelSizeHalfH), static_cast<uint32_t>(kernelSizeHalfV), inputFrame.width - 2 * kernelSizeHalfH, inputFrame.height - 2 * kernelSizeHalfV};
@@ -220,12 +220,6 @@ const ParameterInfo& Dilate::parameterInfo(index_t index)
         return resOnly;
     }
     return emptyParam;
-}
-
-// @return name. Latin only letters.
-const char* const Dilate::name()
-{
-    return "Dilate";
 }
 
 // @return output frame params for input frame.

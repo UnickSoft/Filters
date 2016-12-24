@@ -39,6 +39,7 @@
 		68F6AE801DFDDF3200432519 /* ColorControl.h in Sources */ = {isa = PBXBuildFile; fileRef = 68F6AE7E1DFDDCE600432519 /* ColorControl.h */; };
 		68F793A31DD79205003E93EE /* Dilate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F793A11DD79205003E93EE /* Dilate.cpp */; };
 		68F96A6A1D9460D4003606E3 /* ImageControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F96A681D9460D4003606E3 /* ImageControl.cpp */; };
+		68FD97EB1E09C1260029120E /* BaseFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68FD97E91E09C1260029120E /* BaseFilter.cpp */; };
 		68FFCE8C1DE0C0A20007DE9A /* SolidColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68FFCE8A1DE0C0A20007DE9A /* SolidColor.cpp */; };
 /* End PBXBuildFile section */
 
@@ -127,6 +128,8 @@
 		68F793A21DD79205003E93EE /* Dilate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dilate.h; sourceTree = "<group>"; };
 		68F96A681D9460D4003606E3 /* ImageControl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ImageControl.cpp; path = src/Ui/ImageControl.cpp; sourceTree = SOURCE_ROOT; };
 		68F96A691D9460D4003606E3 /* ImageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageControl.h; path = src/Ui/ImageControl.h; sourceTree = SOURCE_ROOT; };
+		68FD97E91E09C1260029120E /* BaseFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BaseFilter.cpp; sourceTree = "<group>"; };
+		68FD97EA1E09C1260029120E /* BaseFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseFilter.h; sourceTree = "<group>"; };
 		68FE8E5D1DCA84CA00A2A8A7 /* FilterTemplatesImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterTemplatesImpl.h; sourceTree = "<group>"; };
 		68FE8E5E1DCA84CA00A2A8A7 /* FilterTemplates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterTemplates.h; sourceTree = "<group>"; };
 		68FFCE8A1DE0C0A20007DE9A /* SolidColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SolidColor.cpp; sourceTree = "<group>"; };
@@ -164,6 +167,8 @@
 				6800043F1DCBE16400CE6C28 /* FrameEx.h */,
 				6809CC2C1E05428C00781CAF /* FilterGraph.cpp */,
 				6809CC2D1E05428C00781CAF /* FilterGraph.h */,
+				68FD97E91E09C1260029120E /* BaseFilter.cpp */,
+				68FD97EA1E09C1260029120E /* BaseFilter.h */,
 			);
 			name = core;
 			path = ../../core;
@@ -374,6 +379,7 @@
 				68FFCE8C1DE0C0A20007DE9A /* SolidColor.cpp in Sources */,
 				68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */,
 				680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */,
+				68FD97EB1E09C1260029120E /* BaseFilter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

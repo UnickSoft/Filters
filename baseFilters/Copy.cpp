@@ -15,7 +15,7 @@
 #include "FilterTemplates.h"
 
 
-Copy::Copy (const IPrivateFilterList& filterList, IResourceManager& resourceManager)
+Copy::Copy (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : BaseFilter(filterList, resourceManager, "Copy")
 {}
 
 // Apply filter to frame.
@@ -61,12 +61,6 @@ const ParameterInfo& Copy::parameterInfo(index_t)
 {
     static ParameterInfo emptyParam;
     return emptyParam;
-}
-
-// @return name. Latin only letters.
-const char* const Copy::name()
-{
-    return "Copy";
 }
 
 // @return output frame params for input frame.

@@ -15,7 +15,7 @@
 #include "BaseParameterSet.h"
 
 
-SolidColor::SolidColor (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : resourceManager(resourceManager), filterList(filterList)
+SolidColor::SolidColor (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : BaseFilter(filterList, resourceManager, "SolidColor")
 {}
 
 // Apply filter to frame.
@@ -76,12 +76,6 @@ const ParameterInfo& SolidColor::parameterInfo(index_t index)
     }
     
     return emptyParam;
-}
-
-// @return name. Latin only letters.
-const char* const SolidColor::name()
-{
-    return "Solid Color";
 }
 
 // @return output frame params for input frame.

@@ -14,7 +14,7 @@
 #include "BaseParameterSet.h"
 
 
-Blur::Blur (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : resourceManager(resourceManager), filterList(filterList)
+Blur::Blur (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : BaseFilter(filterList, resourceManager, "Blur")
 {}
 
 // Apply filter to frame.
@@ -205,11 +205,6 @@ const ParameterInfo& Blur::parameterInfo(index_t index)
     return emptyParam;
 }
 
-// @return name. Latin only letters.
-const char* const Blur::name()
-{
-    return "Blur";
-}
 
 
 template <typename HFunc, typename VFunc> bool Blur::process(HFunc hFunc, VFunc vFunc, const Frame& inputFrame, Frame& outputFrame, int kernelSizeHalf)
@@ -238,25 +233,25 @@ template <typename HFunc, typename VFunc> bool Blur::process(HFunc hFunc, VFunc 
             // Top
             border.push_back(ROIParameter({roi.x, 0, roi.width, roi.y}));
             border.push_back(border.front());
-            copyROIFilter->apply(input, output, border);
+            BaseFilter::apply(copyROIFilter.get(), input, output, border);
             border.clear();
             
             // Bottom
             border.push_back(ROIParameter({roi.x, roi.y + roi.height, roi.width, roi.y}));
             border.push_back(border.front());
-            copyROIFilter->apply(input, output, border);
+            BaseFilter::apply(copyROIFilter.get(), input, output, border);
             border.clear();
             
             // Left
             border.push_back(ROIParameter({0, roi.y, roi.x, roi.height}));
             border.push_back(border.front());
-            copyROIFilter->apply(input, output, border);
+            BaseFilter::apply(copyROIFilter.get(), input, output, border);
             border.clear();
             
             // Right
             border.push_back(ROIParameter({roi.x + roi.width, roi.y, roi.x, roi.height}));
             border.push_back(border.front());
-            copyROIFilter->apply(input, output, border);
+            BaseFilter::apply(copyROIFilter.get(), input, output, border);
         }
     };
     

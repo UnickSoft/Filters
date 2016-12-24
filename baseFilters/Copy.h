@@ -13,9 +13,10 @@
 #include "IFilter.h"
 #include "IPrivateFilterList.h"
 #include "IResourceManager.h"
+#include "BaseFilter.h"
 
 
-class Copy : public IFilter
+class Copy : public BaseFilter
 {
 public:
 
@@ -29,9 +30,6 @@ public:
     
     // @return parameter info.
     const ParameterInfo& parameterInfo(index_t) override;
-    
-    // @return name. Latin only letters.
-    const char* const name() override;
     
     // @return output frame params for input frame.
     FrameParams outputFrameParams(const FrameParams& inputFrame) override;

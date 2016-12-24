@@ -16,7 +16,7 @@
 #include "ParameterHelpers.h"
 
 
-ROICopy::ROICopy (const IPrivateFilterList& filterList, IResourceManager& resourceManager)
+ROICopy::ROICopy (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : BaseFilter(filterList, resourceManager, "ROI Copy")
 {}
 
 // Apply filter to frame.
@@ -74,12 +74,6 @@ const ParameterInfo& ROICopy::parameterInfo(index_t index)
         return roiDst;
     }
     return emptyParam;
-}
-
-// @return name. Latin only letters.
-const char* const ROICopy::name()
-{
-    return "ROI Copy";
 }
 
 // @return output frame params for input frame.
