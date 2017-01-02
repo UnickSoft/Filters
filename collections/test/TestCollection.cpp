@@ -12,6 +12,7 @@
 #include "ROICopy.h"
 #include "Dilate.h"
 #include "SolidColor.h"
+#include "Splitter.h"
 
 // Create this collection.
 IFilterCollection* createCollection()
@@ -26,6 +27,7 @@ TestCollection::TestCollection () : resourceManager(nullptr)
     addFilter<ROICopy>();
     addFilter<Dilate>();
     addFilter<SolidColor>();
+    addFilter<Splitter>();
 }
 
 // Create filter by index.

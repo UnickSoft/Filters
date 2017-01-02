@@ -9,6 +9,7 @@
 #include "FilterGraph.h"
 #include "BaseParameters.h"
 #include "BaseParameterSet.h"
+#include "BaseFilter.h"
 
 
 class FilterNodeImpl : public FilterGraph::FilterNode
@@ -49,17 +50,18 @@ FilterGraph::FilterGraph(IResourceManager& resourceManager, const std::string& f
 }
 
 // Apply filter to frame.
-bool FilterGraph::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params)
+bool FilterGraph::apply(const Frame* inputFrames, index_t inputFramesNumber, Frame* outputFrames, index_t outputFramesNumber, const IParameterSet& params)
 {
-    const Frame* currentFrame = &inputFrame;
+    const Frame* currentFrame = inputFrames;
     index_t paramIndex = 0;
     
     auto func = [&](FilterNodePtr node)
     {
         auto filter = node->filter();
-        auto outputFrameParam = filter->outputFrameParams(*currentFrame);
+        FrameParams outputFrameParam;
+        filter->outputFrameParams(currentFrame, &outputFrameParam);
         
-        Frame* tempOutputFrame = (!node->outputs().empty() ? resourceManager.createFrame(outputFrameParam) : &outputFrame);
+        Frame* tempOutputFrame = (!node->outputs().empty() ? resourceManager.createFrame(outputFrameParam) : outputFrames);
         
         // Fill params for current filter.
         BaseParameterSet parameters;
@@ -69,8 +71,8 @@ bool FilterGraph::apply(const Frame& inputFrame, Frame& outputFrame, const IPara
             paramIndex++;
         }
         
-        bool res = filter->apply(*currentFrame, *tempOutputFrame, parameters);
-        if (currentFrame != &inputFrame)
+        bool res = BaseFilter::apply(filter.get(), *currentFrame, *tempOutputFrame, parameters);
+        if (currentFrame != inputFrames)
         {
             resourceManager.releaseFrame(const_cast<Frame*>(currentFrame));
         }
@@ -129,18 +131,32 @@ const char* const FilterGraph::name()
 
 // @return output frame params for input frame.
 // If input frame format is unsupported, out frame format will be unsupported.
-FrameParams FilterGraph::outputFrameParams(const FrameParams& inputFrame)
+bool FilterGraph::outputFrameParams(const FrameParams* inputFrames, FrameParams* outputFrames)
 {
-    FrameParams currentFrameParams = inputFrame;
+    FrameParams currentFrameParams = *inputFrames;
     auto func = [&](FilterNodePtr node) -> bool
     {
-        currentFrameParams = node->filter()->outputFrameParams(currentFrameParams);
-        return currentFrameParams.format != FrameParams::Unsupported;
+        FrameParams outputFrameParams;
+        bool res = node->filter()->outputFrameParams(&currentFrameParams, &outputFrameParams);
+        currentFrameParams = outputFrameParams;
+        return res;
     };
     
-    aroundGraph(root(), func);
-    
-    return currentFrameParams;
+    bool res = aroundGraph(root(), func);
+    *outputFrames = currentFrameParams;
+    return res;
+}
+
+// @return number of input frames.
+index_t FilterGraph::inputsNumber()
+{
+    return 0;
+}
+
+// @return number of output frames.
+index_t FilterGraph::outputsNumber()
+{
+    return 0;
 }
 
 // Add filter to graph.

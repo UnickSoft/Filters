@@ -37,7 +37,7 @@ public:
     FilterGraph(IResourceManager& resourceManager, const std::string& filterName);
     
     // Apply filter to frame.
-    bool apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params) override;
+    bool apply(const Frame* inputFrames, index_t inputFramesNumber, Frame* outputFrames, index_t outputFramesNumber, const IParameterSet& params) override;
     
     // @return number of parameters.
     index_t parameterNumber() override;
@@ -50,7 +50,14 @@ public:
     
     // @return output frame params for input frame.
     // If input frame format is unsupported, out frame format will be unsupported.
-    FrameParams outputFrameParams(const FrameParams& inputFrame) override;
+    bool outputFrameParams(const FrameParams* inputFrames, FrameParams* outputFrames) override;
+    
+    // @return number of input frames.
+    virtual index_t inputsNumber() override;
+    
+    // @return number of output frames.
+    virtual index_t outputsNumber() override;
+
     
     // Add filter to graph.
     FilterNodePtr addFilter(FilterPtr filter);
