@@ -12,7 +12,6 @@
 #include <memory>
 #include "BaseParameterSet.h"
 
-
 Splitter::Splitter (const IPrivateFilterList& filterList, IResourceManager& resourceManager)
 : resourceManager(resourceManager), filterList(filterList) {}
 

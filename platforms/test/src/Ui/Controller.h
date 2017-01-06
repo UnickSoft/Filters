@@ -28,11 +28,13 @@ public:
 
     QList<QString> filters();
     
-    void applyFilter(index_t index, const IParameterSet* parameters, QImage& source, QImage& dest);
+    void applyFilter(index_t index, const IParameterSet* parameters, QVector<QImage>& source, QVector<QImage>& dest);
     
     QVector<ParameterInfo> parameterList(index_t index);
     
 protected:
+
+    void drawMessage(QImage& image, const QString& text);
 
     TestApplicationBridge bridge;
     BaseResourceManager resourceManager;

@@ -39,10 +39,13 @@ private:
 
     void fillDefaultParameters(const QVector<ParameterInfo>& parameterInfo);
     QWidget* createRenderSetup();
-    void loadImage(const QString& filename);
+    void loadImage(ImageControl* control, const QString& filename);
 
-    ImageControl* source;
-    ImageControl* dest;
+    ImageControl* source1;
+    ImageControl* dest1;
+    ImageControl* source2;
+    ImageControl* dest2;
+    
     Controller& controller;
     QPixmap     currentImage;
     FilterControls  controls;

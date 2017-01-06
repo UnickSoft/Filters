@@ -50,6 +50,6 @@ protected:
 
     IResourceManager& resourceManager;
     const IPrivateFilterList& filterList;
-    const std::string& name_;
+    const std::string name_;
 
 };

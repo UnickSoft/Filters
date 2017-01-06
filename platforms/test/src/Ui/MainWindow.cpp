@@ -52,30 +52,49 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     controlsLayout->addStretch();
     
     // Setup preview outputs.
-    source = new ImageControl("Source (Click to open image)", this);
-    dest   = new ImageControl("Dest (Click to open filter)", this);
+    source1 = new ImageControl("Source (Click to open image)", this);
+    source2 = new ImageControl("Source (Click to open image)", this);
     
-    preview->addWidget(source);
-    preview->addWidget(dest);
+    source1->setObjectName("Source1");
+    source2->setObjectName("Source2");
+
+    dest1   = new ImageControl("Dest (Click to open filter)", this);
+    dest2   = new ImageControl("Dest (Click to open filter)", this);
+    
+    auto sourceLayout = new QHBoxLayout();
+    sourceLayout->addWidget(source1, 1);
+    sourceLayout->addWidget(source2, 1);
+
+    auto destLayout = new QHBoxLayout();
+    destLayout->addWidget(dest1, 1);
+    destLayout->addWidget(dest2, 1);
+    
+    preview->addLayout(sourceLayout);
+    preview->addLayout(destLayout);
     
     // Set QWidget as the central layout of the main window
     setCentralWidget(window);
 
     connect(filterList, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::addFilter);
-    connect(source, &ImageControl::onMousePress, this, &MainWindow::openImage);
+    connect(source1, &ImageControl::onMousePress, this, &MainWindow::openImage);
+    connect(source2, &ImageControl::onMousePress, this, &MainWindow::openImage);
+    
     connect(&controls, &FilterControls::paramChanged, this, &MainWindow::paramChanged);
     connect(renderFormats, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::renderFormatChanged);
-    connect(dest, &ImageControl::onMousePress, this, &MainWindow::saveImage);
+    
+    connect(dest1, &ImageControl::onMousePress, this, &MainWindow::saveImage);
+    connect(dest2, &ImageControl::onMousePress, this, &MainWindow::saveImage);
     
     resize(600, 600);
 
     if (settings.contains(previewImageKey))
     {
-        loadImage(settings.value(previewImageKey).toString());
+        loadImage(source1, settings.value(previewImageKey + source1->objectName()).toString());
+        loadImage(source2, settings.value(previewImageKey + source2->objectName()).toString());
     }
     else
     {
-        loadImage(QApplication::applicationDirPath() + "/../Resources/resources/Lenna.png");
+        loadImage(source1, QApplication::applicationDirPath() + "/../Resources/resources/Lenna.png");
     }
     
     addFilter((index_t)0);
@@ -86,15 +105,15 @@ void MainWindow::openImage()
 {
     QString filename = QFileDialog::getOpenFileName(this,
         tr("Open Image"), "~/Pictures", tr("Image Files (*.png *.jpg *.bmp)"));
-    loadImage(filename);
+    loadImage(static_cast<ImageControl*>(sender()), filename);
 }
 
-void MainWindow::loadImage(const QString& filename)
+void MainWindow::loadImage(ImageControl* control, const QString& filename)
 {
     if (!filename.isEmpty())
     {
-        settings.setValue(previewImageKey, filename);
-        source->setImage(QPixmap(filename));
+        settings.setValue(previewImageKey + control->objectName(), filename);
+        control->setImage(QPixmap(filename));
     }
 }
 
@@ -117,16 +136,38 @@ void MainWindow::applyFilter(QMouseEvent * event)
 
 void MainWindow::applyFilter(index_t index)
 {
-    auto sourcePix = source->image();
-    if (!sourcePix.isNull())
+    auto sourcePix1 = source1->image();
+    auto sourcePix2 = source2->image();
+    
+    if (!sourcePix1.isNull())
     {
         QImage::Format renderFormat = (QImage::Format)renderFormats->itemData(renderFormats->currentIndex()).toInt();
         QImage destImage;
         
-        auto sourceImage = sourcePix.toImage().convertToFormat(renderFormat);
-        controller.applyFilter(index, &parameters, sourceImage, destImage);
+        QVector<QImage> source;
+        auto sourceImage1 = sourcePix1.toImage().convertToFormat(renderFormat);
+        source.push_back(sourceImage1);
         
-        dest->setImage(QPixmap::fromImage(destImage.convertToFormat(QImage::Format_RGBA8888)));
+        if (!sourcePix2.isNull())
+        {
+            auto sourceImage2 = sourcePix2.toImage().convertToFormat(renderFormat);
+            source.push_back(sourceImage2);
+        }
+        else
+        {
+            source.push_back(sourceImage1);
+        }
+        
+        QVector<QImage> dest;
+        
+        controller.applyFilter(index, &parameters, source, dest);
+        
+        dest1->setImage(QPixmap::fromImage(dest[0].convertToFormat(QImage::Format_RGBA8888)));
+        
+        if (dest.size() > 1)
+        {
+            dest2->setImage(QPixmap::fromImage(dest[1].convertToFormat(QImage::Format_RGBA8888)));
+        }
     }
 }
 
@@ -189,7 +230,7 @@ void MainWindow::saveImage()
         tr("Save Image"), "~/Pictures/result.png", tr("Image Files (*.png *.jpg *.bmp)"));
     if (!filename.isEmpty())
     {
-        dest->image().toImage().convertToFormat(QImage::Format_RGBA8888).save(filename);
+        static_cast<ImageControl*>(sender())->image().toImage().convertToFormat(QImage::Format_RGBA8888).save(filename);
     }
 }
 
