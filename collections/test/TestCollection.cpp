@@ -13,6 +13,8 @@
 #include "Dilate.h"
 #include "SolidColor.h"
 #include "Splitter.h"
+#include "AlphaBlend.h"
+#include "ColorOutline.h"
 
 // Create this collection.
 IFilterCollection* createCollection()
@@ -28,6 +30,8 @@ TestCollection::TestCollection () : resourceManager(nullptr)
     addFilter<Dilate>();
     addFilter<SolidColor>();
     addFilter<Splitter>();
+    addFilter<AlphaBlend>();
+    addFilter<ColorOutline>();
 }
 
 // Create filter by index.

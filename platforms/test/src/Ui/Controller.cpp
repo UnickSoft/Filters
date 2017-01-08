@@ -75,7 +75,10 @@ void Controller::applyFilter(index_t index, const IParameterSet* parameters, QVe
                     destFrame[i].data     = reinterpret_cast<uint8_t*>(dest[i].bits());
                 }
                 
-                filter.get()->apply(sourceFrame, filter->inputsNumber(), destFrame, filter->outputsNumber(), *parameters);
+                if (!filter.get()->apply(sourceFrame, filter->inputsNumber(), destFrame, filter->outputsNumber(), *parameters))
+                {
+                    drawMessage(dest[0], "Render error");
+                }
             }
             else
             {

@@ -25,6 +25,7 @@ public:
     // @return pointer to buffer with offset.
     uint8_t* dataPtr(uint32_t x = 0, uint32_t y = 0);
     
+    static bool isEquals(const FrameParams& frameParams1, const FrameParams& frameParams2);
 };
 
 

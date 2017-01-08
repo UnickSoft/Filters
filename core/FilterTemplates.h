@@ -29,6 +29,15 @@ template <typename T> bool processFrameToFramePixel(T function, FrameEx& inputFr
 template <typename T> bool processFrameToFrameRow(T function, FrameEx& inputFrame, FrameEx& outputFrame, const ROI* inputROI = nullptr, const ROI* outputROI = nullptr);
 
 
+/**
+ * Call function for each pixel.
+ * ROIs should be the same.
+ * You can pass nullptr ROI for full images.
+ * This function process 2 inputs frame and one output.
+ */
+template <typename T> bool process2FramesToFramePixel(T function, FrameEx& inputFrame1, FrameEx& inputFrame2, FrameEx& outputFrame, const ROI* inputROI1 = nullptr, const ROI* inputROI2 = nullptr, const ROI* outputROI = nullptr);
+
+
 #include "FilterTemplatesImpl.h"
 
 #endif /* FilterTemplates_hpp */

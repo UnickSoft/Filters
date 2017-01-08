@@ -7,6 +7,7 @@
 //
 
 #include "FrameEx.h"
+#include <cstring>
 
 FrameEx::FrameEx(const Frame& frame)
 {
@@ -33,5 +34,11 @@ uint32_t FrameEx::pixelDepth() const
 uint8_t* FrameEx::dataPtr(uint32_t x, uint32_t y)
 {
     return data ? data  + y  * byteSpan  + pixelDepth() * x : nullptr;
+}
+
+bool FrameEx::isEquals(const FrameParams& frameParams1, const FrameParams& frameParams2)
+{
+    // Because FrameParams is POD.
+    return memcmp(&frameParams1, &frameParams2, sizeof(FrameParams)) == 0;
 }
 

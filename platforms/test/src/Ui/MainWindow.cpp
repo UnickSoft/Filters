@@ -145,12 +145,12 @@ void MainWindow::applyFilter(index_t index)
         QImage destImage;
         
         QVector<QImage> source;
-        auto sourceImage1 = sourcePix1.toImage().convertToFormat(renderFormat);
+        auto sourceImage1 = sourcePix1.toImage().scaled(source1->width(), source1->height()).convertToFormat(renderFormat);
         source.push_back(sourceImage1);
         
         if (!sourcePix2.isNull())
         {
-            auto sourceImage2 = sourcePix2.toImage().convertToFormat(renderFormat);
+            auto sourceImage2 = sourcePix2.toImage().scaled(source1->width(), source1->height()).convertToFormat(renderFormat);
             source.push_back(sourceImage2);
         }
         else

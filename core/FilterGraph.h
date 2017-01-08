@@ -67,7 +67,8 @@ public:
 
 private:
 
-    template <typename T> bool aroundGraph(FilterNodePtr rootNode, T func);
+    template <typename TFunc, typename TInputData> bool aroundGraph(FilterNodePtr rootNode, TFunc func, TInputData& data);
+    template <typename TFunc> bool aroundGraph(FilterNodePtr rootNode, TFunc func);
 
     FilterNodePtr rootNode;
     std::string filterName;

@@ -10,7 +10,8 @@
 #include "BaseParameters.h"
 #include "BaseParameterSet.h"
 #include "BaseFilter.h"
-
+#include <unordered_map>
+#include <stack>
 
 class FilterNodeImpl : public FilterGraph::FilterNode
 {
@@ -52,16 +53,31 @@ FilterGraph::FilterGraph(IResourceManager& resourceManager, const std::string& f
 // Apply filter to frame.
 bool FilterGraph::apply(const Frame* inputFrames, index_t inputFramesNumber, Frame* outputFrames, index_t outputFramesNumber, const IParameterSet& params)
 {
-    const Frame* currentFrame = inputFrames;
     index_t paramIndex = 0;
     
-    auto func = [&](FilterNodePtr node)
+    std::unordered_map<FilterNodePtr, std::vector<Frame>> data;
+    std::vector<Frame*> allocatedFrames;
+    
+    auto func = [&](FilterNodePtr node, std::unordered_map<FilterNodePtr, std::vector<Frame>>& data)
     {
         auto filter = node->filter();
-        FrameParams outputFrameParam;
-        filter->outputFrameParams(currentFrame, &outputFrameParam);
+        FrameParams outputFrameParam[2];
+        filter->outputFrameParams(data[node].data(), outputFrameParam);
         
-        Frame* tempOutputFrame = (!node->outputs().empty() ? resourceManager.createFrame(outputFrameParam) : outputFrames);
+        std::vector<Frame> currentOutputFrames;
+        
+        for (int i = 0; i < filter->outputsNumber(); i++)
+        {
+            if (!node->outputs().empty())
+            {
+                allocatedFrames.push_back(resourceManager.createFrame(outputFrameParam[i]));
+                currentOutputFrames.push_back(*allocatedFrames.back());
+            }
+            else
+            {
+                currentOutputFrames.push_back(outputFrames[i]);
+            }
+        }
         
         // Fill params for current filter.
         BaseParameterSet parameters;
@@ -71,17 +87,31 @@ bool FilterGraph::apply(const Frame* inputFrames, index_t inputFramesNumber, Fra
             paramIndex++;
         }
         
-        bool res = BaseFilter::apply(filter.get(), *currentFrame, *tempOutputFrame, parameters);
-        if (currentFrame != inputFrames)
+        bool res = filter->apply(data[node].data(), data[node].size(), currentOutputFrames.data(), currentOutputFrames.size(), parameters);
+        
+        int index = 0;
+        for (FilterNodePtr childNode : node->outputs())
         {
-            resourceManager.releaseFrame(const_cast<Frame*>(currentFrame));
+            data[childNode].push_back(currentOutputFrames[index]);
+            index++;
         }
         
-        currentFrame = tempOutputFrame;
         return res;
     };
     
-    return aroundGraph(root(), func);
+    for (FilterNodePtr node : root()->outputs())
+    {
+        data[node].push_back(*inputFrames);
+    }
+    
+    bool res = aroundGraph(root(), func, data);
+    
+    for (auto* frame : allocatedFrames)
+    {
+        resourceManager.releaseFrame(frame);
+    }
+                                     
+    return res;
 }
 
 // @return number of parameters.
@@ -133,30 +163,52 @@ const char* const FilterGraph::name()
 // If input frame format is unsupported, out frame format will be unsupported.
 bool FilterGraph::outputFrameParams(const FrameParams* inputFrames, FrameParams* outputFrames)
 {
-    FrameParams currentFrameParams = *inputFrames;
-    auto func = [&](FilterNodePtr node) -> bool
+    std::unordered_map<FilterNodePtr, std::vector<FrameParams>> data;
+    
+    auto func = [&](FilterNodePtr node, std::unordered_map<FilterNodePtr, std::vector<FrameParams>>& data) -> bool
     {
-        FrameParams outputFrameParams;
-        bool res = node->filter()->outputFrameParams(&currentFrameParams, &outputFrameParams);
-        currentFrameParams = outputFrameParams;
+        FrameParams outputFrameParams[2];
+        
+        bool res = node->filter()->outputFrameParams(data[node].data(), outputFrameParams);
+        
+        if (!node->outputs().empty())
+        {
+            int index = 0;
+            for (FilterNodePtr childNode : node->outputs())
+            {
+                data[childNode].push_back(outputFrameParams[index]);
+                index++;
+            }
+        }
+        else
+        {
+            data[root()].push_back(outputFrameParams[0]);
+        }
         return res;
     };
     
-    bool res = aroundGraph(root(), func);
-    *outputFrames = currentFrameParams;
+    for (FilterNodePtr node : root()->outputs())
+    {
+        data[node].push_back(*inputFrames);
+    }
+    bool res = aroundGraph(root(), func, data);
+    if (res)
+    {
+        outputFrames[0] = data[root()].front();
+    }
     return res;
 }
 
 // @return number of input frames.
 index_t FilterGraph::inputsNumber()
 {
-    return 0;
+    return 1;
 }
 
 // @return number of output frames.
 index_t FilterGraph::outputsNumber()
 {
-    return 0;
+    return 1;
 }
 
 // Add filter to graph.
@@ -171,19 +223,49 @@ FilterGraph::FilterNodePtr FilterGraph::root()
     return rootNode;
 }
 
-template <typename T> bool FilterGraph::aroundGraph(FilterNodePtr rootNode, T func)
+template <typename TFunc, typename TInputData> bool FilterGraph::aroundGraph(FilterNodePtr rootNode, TFunc func, TInputData& data)
 {
     bool res = false;
     if (!rootNode->outputs().empty())
     {
         res = true;
-        FilterNodePtr node = rootNode;
-        while (!node->outputs().empty() && res)
+        std::stack<FilterNodePtr> aroundOrder;
+        
+        aroundOrder.push(rootNode);
+        
+        // Holds number of inputs ready for node.
+        std::unordered_map<FilterNodePtr, index_t> processedNumber;
+        
+        while (!aroundOrder.empty() && !aroundOrder.top()->outputs().empty() && res)
         {
-            node = node->outputs()[0];
-            res = func(node);
+            FilterNodePtr current = aroundOrder.top();
+            aroundOrder.pop();
+            for (FilterNodePtr node : current->outputs())
+            {
+                auto readyInputs = ++processedNumber[node];
+                if (readyInputs == node->filter()->inputsNumber())
+                {
+                    res = func(node, data);
+                    aroundOrder.push(node);
+                    if (!res)
+                    {
+                        break;
+                    }
+                }
+            }
         }
     }
     
     return res;
 }
+
+template <typename TFunc> bool FilterGraph::aroundGraph(FilterNodePtr rootNode, TFunc func)
+{
+    std::unordered_map<FilterNodePtr, bool> data;
+    auto funcNew = [&](FilterNodePtr node, std::unordered_map<FilterNodePtr, bool>) -> bool
+    {
+        return func(node);
+    };
+    return FilterGraph::aroundGraph(rootNode, funcNew, data);
+}
+
