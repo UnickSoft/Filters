@@ -15,7 +15,7 @@
 #include "BaseParameterSet.h"
 
 
-SolidColor::SolidColor (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : BaseFilter(filterList, resourceManager, "SolidColor")
+SolidColor::SolidColor (const IPrivateFilterList& filterList, IResourceManager& resourceManager) : BaseFilter(filterList, resourceManager, "Solid Color")
 {}
 
 // Apply filter to frame.

@@ -45,14 +45,17 @@ private:
 };
 
 
-FilterGraph::FilterGraph(IResourceManager& resourceManager, const std::string& filterName) : rootNode(new FilterNodeImpl(FilterPtr())), resourceManager(resourceManager), filterName(filterName)
-{
-    
-}
+FilterGraph::FilterGraph(const IPrivateFilterList& filterList, IResourceManager& resourceManager, const std::string& filterName) : rootNode(new FilterNodeImpl(FilterPtr())), resourceManager(resourceManager), filterName(filterName), isInited(false), filterList(filterList)
+{}
 
 // Apply filter to frame.
 bool FilterGraph::apply(const Frame* inputFrames, index_t inputFramesNumber, Frame* outputFrames, index_t outputFramesNumber, const IParameterSet& params)
 {
+    if (!isInited)
+    {
+        isInited = init();
+    }
+    
     index_t paramIndex = 0;
     
     std::unordered_map<FilterNodePtr, std::vector<Frame>> data;
@@ -117,6 +120,11 @@ bool FilterGraph::apply(const Frame* inputFrames, index_t inputFramesNumber, Fra
 // @return number of parameters.
 index_t FilterGraph::parameterNumber()
 {
+    if (!isInited)
+    {
+        isInited = init();
+    }
+    
     index_t res = 0;
     
     auto func = [&](FilterNodePtr node)
@@ -133,6 +141,11 @@ index_t FilterGraph::parameterNumber()
 // @return parameter info.
 const ParameterInfo& FilterGraph::parameterInfo(index_t index)
 {
+    if (!isInited)
+    {
+        isInited = init();
+    }
+    
     FilterPtr filter;
     static ParameterInfo emptyParamInfo;
     
@@ -163,6 +176,11 @@ const char* const FilterGraph::name()
 // If input frame format is unsupported, out frame format will be unsupported.
 bool FilterGraph::outputFrameParams(const FrameParams* inputFrames, FrameParams* outputFrames)
 {
+    if (!isInited)
+    {
+        isInited = init();
+    }
+    
     std::unordered_map<FilterNodePtr, std::vector<FrameParams>> data;
     
     auto func = [&](FilterNodePtr node, std::unordered_map<FilterNodePtr, std::vector<FrameParams>>& data) -> bool

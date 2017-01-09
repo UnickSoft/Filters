@@ -12,6 +12,8 @@
 #include <vector>
 #include <string>
 #include "IResourceManager.h"
+#include "IPrivateFilterList.h"
+
 
 class FilterGraph : public IFilter
 {
@@ -34,7 +36,7 @@ public:
         virtual std::vector<FilterNodePtr>& outputs() = 0;
     };
     
-    FilterGraph(IResourceManager& resourceManager, const std::string& filterName);
+    FilterGraph(const IPrivateFilterList& filterList, IResourceManager& resourceManager,const std::string& filterName);
     
     // Apply filter to frame.
     bool apply(const Frame* inputFrames, index_t inputFramesNumber, Frame* outputFrames, index_t outputFramesNumber, const IParameterSet& params) override;
@@ -64,6 +66,14 @@ public:
     
     //@return pseudo root node
     FilterNodePtr root();
+    
+protected:
+    
+    // Init filter graph.
+    virtual bool init() = 0;
+    
+    IResourceManager& resourceManager;
+    const IPrivateFilterList& filterList;
 
 private:
 
@@ -72,6 +82,8 @@ private:
 
     FilterNodePtr rootNode;
     std::string filterName;
-    IResourceManager& resourceManager;
+    
+    bool isInited;
+    index_t paramNumber;
 
 };
