@@ -38,3 +38,5 @@ const QPixmap& ImageControl::image()
 {
     return _image;
 }
+
+

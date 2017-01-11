@@ -14,6 +14,7 @@
 #include <QtGui/QMouseEvent>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QApplication>
+#include <QtCore/QElapsedTimer>
 
 static const QString previewImageKey = "testImage";
 
@@ -61,16 +62,15 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     dest1   = new ImageControl("Dest (Click to open filter)", this);
     dest2   = new ImageControl("Dest (Click to open filter)", this);
     
-    auto sourceLayout = new QHBoxLayout();
-    sourceLayout->addWidget(source1, 1);
-    sourceLayout->addWidget(source2, 1);
-
-    auto destLayout = new QHBoxLayout();
-    destLayout->addWidget(dest1, 1);
-    destLayout->addWidget(dest2, 1);
+    previews = new QTabWidget();
     
-    preview->addLayout(sourceLayout, 1);
-    preview->addLayout(destLayout, 1);
+    preview->addWidget(previews);
+    
+    previews->addTab(source1, "Source 1");
+    previews->addTab(source2, "Source 2");
+    previews->addTab(dest1, "Dest 1");
+    previews->addTab(dest2, "Dest 2");
+    
     
     // Set QWidget as the central layout of the main window
     setCentralWidget(window);
@@ -162,7 +162,12 @@ void MainWindow::applyFilter(index_t index)
         
         QVector<QImage> dest;
         
+        QElapsedTimer timer;
+        timer.start();
         controller.applyFilter(index, &parameters, source, dest);
+        
+        renderTime->setText(QString::number(timer.elapsed()) + " ms " +
+            QString::number(renderFrameSize.width()) + "x" + QString::number(renderFrameSize.height()));
         
         dest1->setImage(QPixmap::fromImage(dest[0].convertToFormat(QImage::Format_RGBA8888)));
         
@@ -217,6 +222,12 @@ QWidget* MainWindow::createRenderSetup()
     renderFormats->addItem("Alpha8", QImage::Format_Alpha8);
     
     setupLayout->addWidget(renderFormats);
+    
+    auto renderTimeTitle = new QLabel("Render time and size");
+    setupLayout->addWidget(renderTimeTitle);
+    
+    renderTime = new QLabel("0 1x1");
+    setupLayout->addWidget(renderTime);
     
     return res;
 }

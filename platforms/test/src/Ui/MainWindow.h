@@ -17,6 +17,7 @@
 #include <QtWidgets/QComboBox>
 #include "BaseParameterSet.h"
 #include <QtCore/QSettings>
+#include <QtWidgets/QTabWidget>
 
 class MainWindow : public QMainWindow
 {
@@ -54,6 +55,8 @@ private:
     index_t filterIndex;
     QComboBox* renderFormats;
     QSettings settings;
+    QTabWidget* previews;
+    QLabel* renderTime;
 };
 
 #endif /* MainWindow_h */
