@@ -10,8 +10,9 @@
 #define ImageControl_hpp
 
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QScrollArea>
 
-class ImageControl : public QLabel
+class ImageControl : public QWidget
 {
     Q_OBJECT
 
@@ -28,9 +29,10 @@ Q_SIGNALS:
 protected:
 
     void mousePressEvent(QMouseEvent * event) override;
-    void paintEvent(QPaintEvent * event) override;
     
     QPixmap _image;
+    QLabel*  _imageLabel;
+    QScrollArea* _scrollArea;
 
 
 };

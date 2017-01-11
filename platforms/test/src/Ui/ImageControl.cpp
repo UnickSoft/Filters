@@ -8,11 +8,17 @@
 
 #include "ImageControl.h"
 #include <QtGui/QPainter>
+#include <QtWidgets/QBoxLayout>
 
 
-ImageControl::ImageControl (const QString& text, QWidget* parent) : QLabel(text, parent)
+ImageControl::ImageControl (const QString& text, QWidget* parent) : QWidget(parent)
 {
-
+    _scrollArea = new QScrollArea(this);
+    _imageLabel = new QLabel(text, _scrollArea);
+    _scrollArea->setWidget(_imageLabel);
+    QBoxLayout* layout = new QHBoxLayout();
+    layout->addWidget(_scrollArea);
+    setLayout(layout);
 }
 
 void ImageControl::mousePressEvent(QMouseEvent * event)
@@ -20,23 +26,11 @@ void ImageControl::mousePressEvent(QMouseEvent * event)
     emit onMousePress(event);
 }
 
-void ImageControl::paintEvent(QPaintEvent * event)
-{
-    if (!_image.isNull())
-    {
-        QPainter painter(this);
-        painter.setRenderHint(QPainter::Antialiasing);
-        painter.drawPixmap(0, 0, _image.scaled(size()));
-    }
-    else
-    {
-        QLabel::paintEvent(event);
-    }
-}
-
 void ImageControl::setImage(const QPixmap& pixmap)
 {
     _image = pixmap;
+    _imageLabel->setPixmap(_image);
+    _imageLabel->setFixedSize(_image.size());
     repaint();
 }
 

@@ -69,8 +69,8 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     destLayout->addWidget(dest1, 1);
     destLayout->addWidget(dest2, 1);
     
-    preview->addLayout(sourceLayout);
-    preview->addLayout(destLayout);
+    preview->addLayout(sourceLayout, 1);
+    preview->addLayout(destLayout, 1);
     
     // Set QWidget as the central layout of the main window
     setCentralWidget(window);
@@ -145,12 +145,14 @@ void MainWindow::applyFilter(index_t index)
         QImage destImage;
         
         QVector<QImage> source;
-        auto sourceImage1 = sourcePix1.toImage().scaled(source1->width(), source1->height()).convertToFormat(renderFormat);
+        QSize renderFrameSize = source1->image().size();
+        
+        auto sourceImage1 = sourcePix1.toImage().scaled(renderFrameSize).convertToFormat(renderFormat);
         source.push_back(sourceImage1);
         
         if (!sourcePix2.isNull())
         {
-            auto sourceImage2 = sourcePix2.toImage().scaled(source1->width(), source1->height()).convertToFormat(renderFormat);
+            auto sourceImage2 = sourcePix2.toImage().scaled(renderFrameSize).convertToFormat(renderFormat);
             source.push_back(sourceImage2);
         }
         else
