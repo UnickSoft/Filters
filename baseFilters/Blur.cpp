@@ -22,6 +22,16 @@ bool Blur::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSe
 {
     const int kernelSizeHalf = UintParameter::field(&params.value(0));
     
+    if (kernelSizeHalf == 0)
+    {
+        // Simple copy.
+        auto copyFilter = filterList.createFilter("Copy", filterList, resourceManager);
+        if (copyFilter)
+        {
+            return BaseFilter::apply(copyFilter, inputFrame, outputFrame, params);
+        }
+    }
+    
     const int kernelSize = kernelSizeHalf * 2 + 1;
     
     unsigned int kernel[kernelSize];
@@ -199,7 +209,7 @@ const ParameterInfo& Blur::parameterInfo(index_t index)
     static ParameterInfo emptyParam;
     if (index == 0)
     {
-        static UintParameterInfo radius("radius", 16, 1, 32);
+        static UintParameterInfo radius("radius", 16, 0, 32);
         return radius;
     }
     return emptyParam;
