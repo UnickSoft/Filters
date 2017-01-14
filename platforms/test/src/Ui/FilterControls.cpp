@@ -201,7 +201,7 @@ QWidget* FilterControls::createMaskControl(const ParameterInfo& parameterInfo, i
         colors.push_back(0xFFFFFFFF);
         for (int i = 0; i < 256; i++)
         {
-            colors.push_back(0xFF000000);
+            colors.push_back(qRgb(255 - i, 255 - i, 255 - i));
         }
         maskImage.setColorTable(colors);
         

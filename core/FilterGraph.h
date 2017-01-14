@@ -31,6 +31,7 @@ public:
         virtual FilterPtr filter() = 0;
         virtual const std::vector<FilterNodePtr>& outputs() const = 0;
         virtual void addOutput(FilterNodePtr node) = 0;
+        virtual index_t firstParameterIndex() = 0;
         
     private:
         virtual std::vector<FilterNodePtr>& outputs() = 0;

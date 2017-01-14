@@ -85,7 +85,7 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     connect(dest1, &ImageControl::onMousePress, this, &MainWindow::saveImage);
     connect(dest2, &ImageControl::onMousePress, this, &MainWindow::saveImage);
     
-    resize(600, 600);
+    resize(880, 600);
 
     if (settings.contains(previewImageKey))
     {

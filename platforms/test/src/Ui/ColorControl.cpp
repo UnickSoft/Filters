@@ -20,7 +20,7 @@ ColorControl::ColorControl (QWidget* parent, const ParameterInfo& parameterInfo)
     auto layout = new QVBoxLayout();
     setLayout(layout);
     
-    auto openButton   = new QPushButton("Color", this);
+    auto openButton   = new QPushButton(parameterInfo.title, this);
 
     layout->addWidget(openButton);
     

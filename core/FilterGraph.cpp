@@ -16,7 +16,8 @@
 class FilterNodeImpl : public FilterGraph::FilterNode
 {
 public:
-    FilterNodeImpl (FilterPtr filter) : filterPtr(filter) {}
+    FilterNodeImpl (FilterPtr filter, index_t startParameterIndex) : filterPtr(filter), startParameterIndex(startParameterIndex) {}
+    
     virtual ~FilterNodeImpl() {}
     FilterPtr filter() override
     {
@@ -33,6 +34,11 @@ public:
         nodes.push_back(node);
     }
     
+    index_t firstParameterIndex() override
+    {
+        return startParameterIndex;
+    }
+    
 private:
 
     std::vector<FilterGraph::FilterNodePtr>& outputs() override
@@ -42,10 +48,11 @@ private:
     
     std::vector<FilterGraph::FilterNodePtr> nodes;
     FilterPtr filterPtr;
+    index_t startParameterIndex;
 };
 
 
-FilterGraph::FilterGraph(const IPrivateFilterList& filterList, IResourceManager& resourceManager, const std::string& filterName) : rootNode(new FilterNodeImpl(FilterPtr())), resourceManager(resourceManager), filterName(filterName), isInited(false), filterList(filterList)
+FilterGraph::FilterGraph(const IPrivateFilterList& filterList, IResourceManager& resourceManager, const std::string& filterName) : rootNode(new FilterNodeImpl(FilterPtr(), 0)), resourceManager(resourceManager), filterName(filterName), isInited(false), filterList(filterList), paramNumber(0)
 {}
 
 // Apply filter to frame.
@@ -55,8 +62,6 @@ bool FilterGraph::apply(const Frame* inputFrames, index_t inputFramesNumber, Fra
     {
         isInited = init();
     }
-    
-    index_t paramIndex = 0;
     
     std::unordered_map<FilterNodePtr, std::vector<Frame>> data;
     std::vector<Frame*> allocatedFrames;
@@ -86,8 +91,7 @@ bool FilterGraph::apply(const Frame* inputFrames, index_t inputFramesNumber, Fra
         BaseParameterSet parameters;
         for (index_t i = 0; i < filter->parameterNumber(); i ++)
         {
-            parameters.push_back(params.value(paramIndex));
-            paramIndex++;
+            parameters.push_back(params.value(i + node->firstParameterIndex()));
         }
         
         bool res = filter->apply(data[node].data(), data[node].size(), currentOutputFrames.data(), currentOutputFrames.size(), parameters);
@@ -125,17 +129,7 @@ index_t FilterGraph::parameterNumber()
         isInited = init();
     }
     
-    index_t res = 0;
-    
-    auto func = [&](FilterNodePtr node)
-    {
-        res += node->filter()->parameterNumber();
-        return true;
-    };
-    
-    aroundGraph(root(), func);
-    
-    return res;
+    return paramNumber;
 }
 
 // @return parameter info.
@@ -149,21 +143,22 @@ const ParameterInfo& FilterGraph::parameterInfo(index_t index)
     FilterPtr filter;
     static ParameterInfo emptyParamInfo;
     
+    index_t localIndex = 0;
     auto func = [&](FilterNodePtr node)
     {
-        if (index < node->filter()->parameterNumber())
+        if (index >= node->firstParameterIndex() && index < node->firstParameterIndex() + node->filter()->parameterNumber())
         {
             filter = node->filter();
+            localIndex = index - node->firstParameterIndex();
             return false;
         }
 
-        index -= node->filter()->parameterNumber();
         return true;
     };
     
     aroundGraph(root(), func);
     
-    return filter ? filter->parameterInfo(index) : emptyParamInfo;
+    return filter ? filter->parameterInfo(localIndex) : emptyParamInfo;
 }
 
 // @return name. Latin only letters.
@@ -232,7 +227,9 @@ index_t FilterGraph::outputsNumber()
 // Add filter to graph.
 FilterGraph::FilterNodePtr FilterGraph::addFilter(FilterPtr filter)
 {
-    return FilterNodePtr(new FilterNodeImpl(filter));
+    auto res = FilterNodePtr(new FilterNodeImpl(filter, paramNumber));
+    paramNumber += filter->parameterNumber();
+    return res;
 }
 
 //@return pseudo root node

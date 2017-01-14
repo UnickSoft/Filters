@@ -35,7 +35,8 @@ bool Dilate::apply(const Frame& inputFrame, Frame& outputFrame, const IParameter
         
         auto processAlpha8 = [=, &mask](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
-            uint8_t value = 0;
+            uint32_t value = 0;
+            uint32_t temp = 0;
             auto maskCenterData = mask.data + (int32_t)mask.byteSpan * kernelSizeHalfV;
             
             for (int l = -kernelSizeHalfV; l <= kernelSizeHalfVEnd; l++)
@@ -46,9 +47,10 @@ bool Dilate::apply(const Frame& inputFrame, Frame& outputFrame, const IParameter
                 {
                     if (*maskLine > 0)
                     {
-                        if (value < *inputLine)
+                        temp = *inputLine * *maskLine;
+                        if (value < temp)
                         {
-                            value = *inputLine;
+                            value = temp;
                         }
                     }
                     
@@ -58,6 +60,7 @@ bool Dilate::apply(const Frame& inputFrame, Frame& outputFrame, const IParameter
             }
             
             // Todo create separate function for bResultOnly true/false.
+            value /= 255;
             *outputRow = (bResultOnly ? value - *inputRow : value);
         };
         
@@ -201,11 +204,11 @@ const ParameterInfo& Dilate::parameterInfo(index_t index)
     static ParameterInfo emptyParam;
     if (index == 0)
     {
-        static uint8_t data[] = {0, 0, 1, 0, 0,
-                                 0, 1, 1, 1, 0,
-                                 1, 1, 1, 1, 1,
-                                 0, 1, 1, 1, 0,
-                                 0, 0, 1, 0, 0};
+        static uint8_t data[] = {0, 0, 255, 0, 0,
+                                 0, 255, 255, 255, 0,
+                                 255, 255, 255, 255, 255,
+                                 0, 255, 255, 255, 0,
+                                 0, 0, 255, 0, 0};
         
         MaskBitmap bitmap = {data, 5, 5, 5};
         MaskBitmap minBitmap = {nullptr, 3, 3,   0};
