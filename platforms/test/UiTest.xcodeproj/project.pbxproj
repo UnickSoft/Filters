@@ -24,7 +24,6 @@
 		6809CC2E1E05428C00781CAF /* FilterGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6809CC2C1E05428C00781CAF /* FilterGraph.cpp */; };
 		680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */; };
 		6845F84D1E20FC8000932B56 /* AlphaBlend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6845F84B1E20FC8000932B56 /* AlphaBlend.cpp */; };
-		6845F8501E22870C00932B56 /* ColorOutline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6845F84E1E22870C00932B56 /* ColorOutline.cpp */; };
 		6846CD941E1AC6D200AFE00E /* Splitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6846CD921E1AC6D200AFE00E /* Splitter.cpp */; };
 		688F5CDD1DD6802B00243A5E /* ROICopy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688F5CDB1DD6802B00243A5E /* ROICopy.cpp */; };
 		6890A4631DC15E520016EE2C /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 6890A4621DC15E520016EE2C /* resources */; };
@@ -106,8 +105,6 @@
 		680B41431DFC561A0025FB65 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		6845F84B1E20FC8000932B56 /* AlphaBlend.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaBlend.cpp; sourceTree = "<group>"; };
 		6845F84C1E20FC8000932B56 /* AlphaBlend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaBlend.h; sourceTree = "<group>"; };
-		6845F84E1E22870C00932B56 /* ColorOutline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorOutline.cpp; path = ../collections/private/ColorOutline.cpp; sourceTree = "<group>"; };
-		6845F84F1E22870C00932B56 /* ColorOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorOutline.h; path = ../collections/private/ColorOutline.h; sourceTree = "<group>"; };
 		6846CD921E1AC6D200AFE00E /* Splitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Splitter.cpp; sourceTree = "<group>"; };
 		6846CD931E1AC6D200AFE00E /* Splitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Splitter.h; sourceTree = "<group>"; };
 		68524EDF1D8ED95800D952BB /* UiMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UiMain.cpp; path = src/UiMain.cpp; sourceTree = SOURCE_ROOT; };
@@ -208,8 +205,6 @@
 		680B2B671D96E0930017F1B2 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				6845F84E1E22870C00932B56 /* ColorOutline.cpp */,
-				6845F84F1E22870C00932B56 /* ColorOutline.h */,
 				688F5CDB1DD6802B00243A5E /* ROICopy.cpp */,
 				688F5CDC1DD6802B00243A5E /* ROICopy.h */,
 				68028C4E1D9832D80058A733 /* Blur.cpp */,
@@ -364,7 +359,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				68F6AE801DFDDF3200432519 /* ColorControl.h in Sources */,
-				6845F8501E22870C00932B56 /* ColorOutline.cpp in Sources */,
 				6809A6DA1DC4F549008C6962 /* Controller.h in Sources */,
 				6809A6D91DC4F40E008C6962 /* FilterControls.h in Sources */,
 				680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */,
