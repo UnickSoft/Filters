@@ -14,6 +14,7 @@
 		68028C641D9833200058A733 /* BaseResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C5E1D9833200058A733 /* BaseResourceManager.cpp */; };
 		68028C661D9833200058A733 /* PrivateFilterList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C621D9833200058A733 /* PrivateFilterList.cpp */; };
 		68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C6A1D9834410058A733 /* TestCollection.cpp */; };
+		6803BE741E3A7F7200F7FFBD /* AlphaConvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6803BE721E3A7F7200F7FFBD /* AlphaConvert.cpp */; };
 		6803D9FE1DBEB740008F5895 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6803D9FC1DBEB740008F5895 /* Controller.cpp */; };
 		680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */; };
 		680918E51DBBAF02008C60C6 /* BaseParameterSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E31DBBAF01008C60C6 /* BaseParameterSet.cpp */; };
@@ -91,6 +92,8 @@
 		68028C681D98333F0058A733 /* Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
 		68028C6A1D9834410058A733 /* TestCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCollection.cpp; sourceTree = "<group>"; };
 		68028C6B1D9834410058A733 /* TestCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCollection.h; sourceTree = "<group>"; };
+		6803BE721E3A7F7200F7FFBD /* AlphaConvert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaConvert.cpp; sourceTree = "<group>"; };
+		6803BE731E3A7F7200F7FFBD /* AlphaConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaConvert.h; sourceTree = "<group>"; };
 		6803D9FC1DBEB740008F5895 /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Controller.cpp; path = src/Ui/Controller.cpp; sourceTree = SOURCE_ROOT; };
 		6803D9FD1DBEB740008F5895 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = src/Ui/Controller.h; sourceTree = SOURCE_ROOT; };
 		680685301DAAAF5C00937267 /* BaseParameters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseParameters.h; sourceTree = "<group>"; };
@@ -219,6 +222,8 @@
 				6846CD931E1AC6D200AFE00E /* Splitter.h */,
 				6845F84B1E20FC8000932B56 /* AlphaBlend.cpp */,
 				6845F84C1E20FC8000932B56 /* AlphaBlend.h */,
+				6803BE721E3A7F7200F7FFBD /* AlphaConvert.cpp */,
+				6803BE731E3A7F7200F7FFBD /* AlphaConvert.h */,
 			);
 			name = Filters;
 			path = ../../baseFilters;
@@ -366,6 +371,7 @@
 				680918E71DBCDB0F008C60C6 /* ImageControl.h in Sources */,
 				6845F84D1E20FC8000932B56 /* AlphaBlend.cpp in Sources */,
 				688F5CDD1DD6802B00243A5E /* ROICopy.cpp in Sources */,
+				6803BE741E3A7F7200F7FFBD /* AlphaConvert.cpp in Sources */,
 				6803D9FE1DBEB740008F5895 /* Controller.cpp in Sources */,
 				68AA345C1D91CE2A00D54A8D /* main.m in Sources */,
 				68F793A31DD79205003E93EE /* Dilate.cpp in Sources */,

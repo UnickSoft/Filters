@@ -47,6 +47,9 @@ protected:
     // If input frame format is unsupported, out frame format will be unsupported.
     // Input frames and output frames should be inputsNumber/outputsNumber.
     bool outputFrameParams(const FrameParams* inputFrames, FrameParams* outputFrames) final;
+    
+    // create filter by name
+    FilterPtr createFilter(const char* const name);
 
     IResourceManager& resourceManager;
     const IPrivateFilterList& filterList;

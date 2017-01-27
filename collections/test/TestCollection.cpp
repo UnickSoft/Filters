@@ -14,7 +14,7 @@
 #include "SolidColor.h"
 #include "Splitter.h"
 #include "AlphaBlend.h"
-#include "ColorOutline.h"
+#include "AlphaConvert.h"
 
 // Create this collection.
 IFilterCollection* createCollection()
@@ -31,7 +31,7 @@ TestCollection::TestCollection () : resourceManager(nullptr)
     addFilter<SolidColor>();
     addFilter<Splitter>();
     addFilter<AlphaBlend>();
-    addFilter<ColorOutline>();
+    addFilter<AlphaConvert>();
 }
 
 // Create filter by index.

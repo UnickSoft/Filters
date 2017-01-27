@@ -39,3 +39,8 @@ bool BaseFilter::outputFrameParams(const FrameParams* inputFrames, FrameParams* 
     *outputFrames = outputFrameParams(*inputFrames);
     return outputFrames->format != FrameParams::Unsupported;
 }
+
+FilterPtr BaseFilter::createFilter(const char* const name)
+{
+    return  FilterPtr(filterList.createFilter(name, filterList, resourceManager));
+}
