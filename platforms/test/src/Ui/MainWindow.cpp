@@ -15,6 +15,8 @@
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QApplication>
 #include <QtCore/QElapsedTimer>
+#include <QtWidgets/QPushButton>
+
 
 static const QString previewImageKey = "testImage";
 
@@ -47,8 +49,26 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
         filterList->addItem(filter);
     }
     
+    // Preset saving.
+    QWidget* presetPanel = new QWidget();
+    auto presetPanelLayout = new QHBoxLayout();
+    presetPanel->setLayout(presetPanelLayout);
+    
+    auto presetNameLable = new QLabel("Preset name", presetPanel);
+    presetPanelLayout->addWidget(presetNameLable);
+    
+    _presetName = new QLineEdit("Preset", presetPanel);
+    presetPanelLayout->addWidget(_presetName);
+    
+    QPushButton* savePreset = new QPushButton("Save preset", presetPanel);
+    presetPanelLayout->addWidget(savePreset);
+    
+    QPushButton* loadPreset = new QPushButton("Load preset", presetPanel);
+    presetPanelLayout->addWidget(loadPreset);
+    
     controlsLayout->addWidget(filterList);
     controlsLayout->addWidget(&controls);
+    controlsLayout->addWidget(presetPanel);
     controlsLayout->addWidget(createRenderSetup());
     controlsLayout->addStretch();
     
@@ -85,6 +105,9 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
     connect(dest1, &ImageControl::onMousePress, this, &MainWindow::saveImage);
     connect(dest2, &ImageControl::onMousePress, this, &MainWindow::saveImage);
     
+    connect(savePreset, &QPushButton::clicked, this, &MainWindow::savePreset);
+    connect(loadPreset, &QPushButton::clicked, this, &MainWindow::loadPreset);
+    
     resize(880, 600);
 
     if (settings.contains(previewImageKey))
@@ -97,7 +120,7 @@ MainWindow::MainWindow(Controller& controller) : controller(controller), filterI
         loadImage(source1, QApplication::applicationDirPath() + "/../Resources/resources/Lenna.png");
     }
     
-    addFilter((index_t)0);
+    selectFilter((index_t)0, nullptr);
 }
 
 
@@ -180,8 +203,21 @@ void MainWindow::applyFilter(index_t index)
 
 void MainWindow::addFilter(int index)
 {
+    selectFilter(index, nullptr);
+}
+
+void MainWindow::selectFilter(int index, const IParameterSet* newValue)
+{
     filterIndex = index;
     auto parameterInfo = controller.parameterList(index);
+    
+    if (newValue)
+    {
+        for (int i = 0; i < newValue->parametersNumber(); i++)
+        {
+            parameterInfo[i].defaultValue = newValue->value(i);
+        }
+    }
     
     fillDefaultParameters(parameterInfo);
 
@@ -247,3 +283,31 @@ void MainWindow::saveImage()
     }
 }
 
+void MainWindow::savePreset()
+{
+    QString presetName = _presetName->text();
+    QString filename = QFileDialog::getSaveFileName(this,
+        tr("Save Preset"), "~/Documents/" + presetName + ".json", tr("Preset files (*.json)"));
+    if (!filename.isEmpty())
+    {
+        controller.savePreset(parameters, filterIndex, presetName, filename);
+    }
+}
+
+void MainWindow::loadPreset()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+        tr("Open Preset"), "~/Documents", tr("Preset files (*.json)"));
+    if (!filename.isEmpty())
+    {
+        FilterPreset preset = controller.loadPreset(filename);
+        auto filters = controller.filters();
+        int index = filters.indexOf(QString::fromStdString(preset.filterName()));
+        if (index >= 0)
+        {
+            filterList->setCurrentIndex(index);
+            selectFilter(index, &preset);
+            _presetName->setText(QString::fromStdString(preset.name()));
+        }
+    }
+}

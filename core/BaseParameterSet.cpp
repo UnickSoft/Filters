@@ -9,6 +9,14 @@
 #include "BaseParameterSet.h"
 #include <assert.h>
 
+BaseParameterSet::BaseParameterSet(const IParameterSet& paramSet)
+{
+        for (int i = 0; i < paramSet.parametersNumber(); i++)
+        {
+            push_back(paramSet.value(i));
+        }
+}
+
 const Parameter& BaseParameterSet::value(index_t index) const
 {
     assert(index >= 0 && index < size());

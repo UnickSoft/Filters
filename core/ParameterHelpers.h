@@ -10,7 +10,11 @@
 
 #include "BaseParameters.h"
 #include <cstdlib>
+#include "ParameterHelpers.h"
+#include <string>
+#include "json.hpp"
 
+using json = nlohmann::json;
 
 // Parameter helper.
 template <typename T> struct NumberParameter : public Parameter
@@ -20,13 +24,24 @@ template <typename T> struct NumberParameter : public Parameter
         field(this) = value;
     }
     
+    NumberParameter (const Parameter* parameter) : NumberParameter(field(parameter)) {}
+    
     static T& field(Parameter* parameter)
     {
         return const_cast<T&>(NumberParameter<T>::field(static_cast<const Parameter*>(parameter)));
     }
-
+    
     static const T& field(const Parameter* parameter);
+    
+    static json save(const Parameter* parameter);
+    
+    static Parameter load(const json& data);
 };
+
+
+// @return json string of parameter.
+json saveParameter(BaseParameters type, const Parameter* parameter);
+Parameter loadParameter(BaseParameters type, const json& data);
 
 // Parameter Info Helper
 template <typename T> struct NumberParameterInfo : public ParameterInfo
@@ -40,7 +55,7 @@ template <typename T> struct NumberParameterInfo : public ParameterInfo
         type = paramType();
     }
     
-    BaseParameters paramType();
+    static BaseParameters paramType();
 };
 
 

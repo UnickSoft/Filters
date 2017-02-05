@@ -18,6 +18,7 @@
 #include "BaseParameterSet.h"
 #include <QtCore/QSettings>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QLineEdit>
 
 class MainWindow : public QMainWindow
 {
@@ -36,11 +37,15 @@ protected slots:
     void renderFormatChanged(int index);
     void saveImage();
     
+    void savePreset();
+    void loadPreset();
+    
 private:
 
     void fillDefaultParameters(const QVector<ParameterInfo>& parameterInfo);
     QWidget* createRenderSetup();
     void loadImage(ImageControl* control, const QString& filename);
+    void selectFilter(int index, const IParameterSet* newValue);
 
     ImageControl* source1;
     ImageControl* dest1;
@@ -57,6 +62,7 @@ private:
     QSettings settings;
     QTabWidget* previews;
     QLabel* renderTime;
+    QLineEdit* _presetName;
 };
 
 #endif /* MainWindow_h */

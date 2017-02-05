@@ -16,6 +16,9 @@
 class BaseParameterSet : public std::vector<Parameter>, public IParameterSet
 {
 public:
+
+    BaseParameterSet() = default;
+    BaseParameterSet(const IParameterSet& paramSet);
     
     // @return parameter from set.
     virtual const Parameter& value(index_t index) const override;

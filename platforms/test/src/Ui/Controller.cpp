@@ -10,6 +10,7 @@
 #include "BaseParameterSet.h"
 #include <QTGui/QPainter>
 #include "BaseFilter.h"
+#include "FilterPreset.h"
 
 
 Controller::Controller ()
@@ -119,6 +120,16 @@ void Controller::drawMessage(QImage& image, const QString& text)
     painter.fillRect(0, 0, image.width(), image.height(), QBrush(QColor(Qt::white)));
     painter.setFont(QFont("Arial", 30));
     painter.drawText(QRect(QPoint(0, 0), image.size()), Qt::AlignCenter, text);
+}
+
+bool Controller::savePreset(const IParameterSet& params, index_t filterIndex, const QString& presetName, const QString& fileName)
+{
+    return FilterPreset(params, bridge.createFilter(filterIndex), presetName.toStdString()).save(fileName.toStdString());
+}
+
+FilterPreset Controller::loadPreset(const QString& fileName)
+{
+    return FilterPreset(fileName.toStdString());
 }
 
 

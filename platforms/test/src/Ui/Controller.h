@@ -17,6 +17,7 @@
 #include <QtCore/QList>
 #include <QtGui/QImage>
 #include <QtCore/QMap>
+#include "FilterPreset.h"
 
 class Controller : public QObject
 {
@@ -31,6 +32,10 @@ public:
     void applyFilter(index_t index, const IParameterSet* parameters, QVector<QImage>& source, QVector<QImage>& dest);
     
     QVector<ParameterInfo> parameterList(index_t index);
+    
+    bool savePreset(const IParameterSet& params, index_t filterIndex, const QString& presetName, const QString& fileName);
+    
+    FilterPreset loadPreset(const QString& fileName);
     
 protected:
 
