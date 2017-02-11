@@ -15,6 +15,7 @@
 #include "Splitter.h"
 #include "AlphaBlend.h"
 #include "AlphaConvert.h"
+#include "TestFilterGraph.h"
 
 // Create this collection.
 IFilterCollection* createCollection()
@@ -32,6 +33,7 @@ TestCollection::TestCollection () : resourceManager(nullptr)
     addFilter<Splitter>();
     addFilter<AlphaBlend>();
     addFilter<AlphaConvert>();
+    addFilter<TestFilterGraph>();
 }
 
 // Create filter by index.
