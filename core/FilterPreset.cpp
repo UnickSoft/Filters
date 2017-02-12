@@ -69,24 +69,33 @@ bool FilterPreset::load(const std::string& filename)
     std::ifstream inFile(filename);
     if (inFile.is_open())
     {
-        json j;
-        inFile >> j;
-        _filterName = j["filterName"];
-        _presetName = j["presetName"];
-
-        auto params = j["params"];
-        if (params.is_array())
+        try
         {
-            std::for_each(params.begin(), params.end(), [this](const json& param)
-                          {
-                              ParamAndType current;
-                              current.first  = (BaseParameters)param["type"];
-                              Parameter filterParameter;
-                              current.second = loadParameter(current.first, param);
-                              
-                              _params.push_back(current);
-                          });
-
+            json j;
+            inFile >> j;
+            _filterName = j["filterName"];
+            _presetName = j["presetName"];
+            
+            auto params = j["params"];
+            if (params.is_array())
+            {
+                std::for_each(params.begin(), params.end(), [this](const json& param)
+                              {
+                                  ParamAndType current;
+                                  current.first  = (BaseParameters)param["type"];
+                                  Parameter filterParameter;
+                                  current.second = loadParameter(current.first, param);
+                                  
+                                  _params.push_back(current);
+                              });
+                
+            }
+        }
+        catch (...)
+        {
+            _filterName.clear();
+            _presetName.clear();
+            _params.clear();
         }
     }
     
@@ -98,7 +107,14 @@ const std::string& FilterPreset::name()
     return _presetName;
 }
 
-const std::string FilterPreset::filterName()
+const std::string& FilterPreset::filterName()
 {
     return _filterName;
 }
+
+bool FilterPreset::isValid()
+{
+    return !_filterName.empty();
+}
+
+

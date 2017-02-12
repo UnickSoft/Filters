@@ -43,7 +43,10 @@ public:
     const std::string& name();
     
     // @return filter name.
-    const std::string filterName();
+    const std::string& filterName();
+    
+    // is valid preser or not.
+    bool isValid();
     
 private:
 
