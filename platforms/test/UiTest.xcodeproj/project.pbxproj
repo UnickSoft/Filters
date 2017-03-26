@@ -39,6 +39,7 @@
 		68AA34581D9090C000D54A8D /* QtWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EFA1D907A6300D952BB /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		68AA345C1D91CE2A00D54A8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AA345B1D91CE2A00D54A8D /* main.m */; };
 		68AA34621D91D0FE00D54A8D /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34601D91D0FE00D54A8D /* MainWindow.cpp */; };
+		68B6BA281E87B80B00723BFA /* LUTGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68B6BA261E87B80B00723BFA /* LUTGenerator.cpp */; };
 		68F6AE7F1DFDDCE600432519 /* ColorControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F6AE7D1DFDDCE600432519 /* ColorControl.cpp */; };
 		68F6AE801DFDDF3200432519 /* ColorControl.h in Sources */ = {isa = PBXBuildFile; fileRef = 68F6AE7E1DFDDCE600432519 /* ColorControl.h */; };
 		68F793A31DD79205003E93EE /* Dilate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F793A11DD79205003E93EE /* Dilate.cpp */; };
@@ -130,6 +131,8 @@
 		68AA345D1D91CE3300D54A8D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		68AA34601D91D0FE00D54A8D /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/Ui/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		68AA34611D91D0FE00D54A8D /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/Ui/MainWindow.h; sourceTree = SOURCE_ROOT; };
+		68B6BA261E87B80B00723BFA /* LUTGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LUTGenerator.cpp; sourceTree = "<group>"; };
+		68B6BA271E87B80B00723BFA /* LUTGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUTGenerator.h; sourceTree = "<group>"; };
 		68DF63C31DA828C700EAF7C9 /* IFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFilter.h; sourceTree = "<group>"; };
 		68DF63C41DA828C700EAF7C9 /* IResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IResourceManager.h; sourceTree = "<group>"; };
 		68DF63C51DA828C700EAF7C9 /* IPrivateFilterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPrivateFilterList.h; sourceTree = "<group>"; };
@@ -211,6 +214,8 @@
 				680A96E91E4F3DE7008673DF /* TestFilterGraph.cpp */,
 				68028C6A1D9834410058A733 /* TestCollection.cpp */,
 				68028C6B1D9834410058A733 /* TestCollection.h */,
+				68B6BA261E87B80B00723BFA /* LUTGenerator.cpp */,
+				68B6BA271E87B80B00723BFA /* LUTGenerator.h */,
 			);
 			name = collection;
 			path = ../../collections/test;
@@ -422,6 +427,7 @@
 				68AA34521D908D2900D54A8D /* UiMain.cpp in Sources */,
 				68FFCE8C1DE0C0A20007DE9A /* SolidColor.cpp in Sources */,
 				68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */,
+				68B6BA281E87B80B00723BFA /* LUTGenerator.cpp in Sources */,
 				680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */,
 				68FD97EB1E09C1260029120E /* BaseFilter.cpp in Sources */,
 			);

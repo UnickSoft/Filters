@@ -16,6 +16,7 @@
 #include "AlphaBlend.h"
 #include "AlphaConvert.h"
 #include "TestFilterGraph.h"
+#include "LUTGenerator.h"
 
 // Create this collection.
 IFilterCollection* createCollection()
@@ -34,6 +35,7 @@ TestCollection::TestCollection () : resourceManager(nullptr)
     addFilter<AlphaBlend>();
     addFilter<AlphaConvert>();
     addFilter<TestFilterGraph>();
+    addFilter<LUTGenerator>();
 }
 
 // Create filter by index.
