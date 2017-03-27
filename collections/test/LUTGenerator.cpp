@@ -48,12 +48,34 @@ bool LUTGenerator::apply(const Frame& inputFrame, Frame& outputFrame, const IPar
             */
         };
         
+        for (int i = 0; i < 256; i++)
+        {
+            uint sumR = 0;
+            uint sumG = 0;
+            uint sumB = 0;
+            uint size = 0;
+            for (auto& value : table[i])
+            {
+                sumR += value.second.red;
+                sumG += value.second.green;
+                sumB += value.second.blue;
+                
+                ++size;
+            }
+            
+            if (size > 0)
+            {
+                Color finalColor = {static_cast<uint8_t>(sumR / size), static_cast<uint8_t>(sumG / size), static_cast<uint8_t>(sumB / size), 255};
+                table[i][0] = finalColor;
+            }
+        }
+        
         auto processApplyRGBA8 = [&table](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i, int j)
         {
             if (j < 256)
             {
                 auto& map = table[j];
-                if (i < map.size())
+                if (i < 1)
                 {
                     Color color = map[i];
                     
