@@ -44,3 +44,13 @@ FilterPtr BaseFilter::createFilter(const char* const name)
 {
     return  FilterPtr(filterList.createFilter(name, filterList, resourceManager));
 }
+
+ROI BaseFilter::outputRoi(const ROI& inputRoi, const IParameterSet& params)
+{
+    return inputRoi;
+}
+
+bool BaseFilter::useRoi(const Frame& frame)
+{
+    return (frame.roi.x != 0 || frame.roi.y != 0 || frame.roi.width != frame.width || frame.roi.height != frame.height) && frame.roi.width > 0 && frame.roi.height > 0;
+}

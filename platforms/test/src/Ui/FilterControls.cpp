@@ -21,6 +21,8 @@
 #include <QtCore/QByteArray.h>
 #include <QtWidgets/QCheckBox.h>
 #include "ColorControl.h"
+#include "BaseParameterSet.h"
+
 
 
 FilterControls::FilterControls ()
@@ -28,26 +30,41 @@ FilterControls::FilterControls ()
     setLayout(new QVBoxLayout());
 }
 
-void FilterControls::setFilter(const QString& title, const QVector<ParameterInfo>& parameters)
+void FilterControls::setFilter(const QString& title, const QVector<ParameterInfo>& parameters, index_t firstParamIndex)
 {
     removeOldControls();
     
     auto vLayout  = qobject_cast<QVBoxLayout*>(layout());
+    vLayout->setContentsMargins(0, 0, 0, 0);
     
-    vLayout->addWidget(new QLabel(title));
+    auto header = new QWidget(this);
+    auto headerLayout  = new QHBoxLayout(header);
+    headerLayout->setContentsMargins(0, 0, 0, 0);
+    header->setLayout(headerLayout);
+    
+    auto remove = new QPushButton("X", this);
+    headerLayout->addWidget(new QLabel(title));
+    headerLayout->addWidget(remove, 0, Qt::AlignRight);
+    
+    vLayout->addWidget(header);
     
     index_t index = 0;
     for (ParameterInfo param : parameters)
     {
-        auto control = createControl(param, index);
+        auto control = createControl(param, firstParamIndex + index);
         if (control)
         {
+            control->setContentsMargins(0, 0, 0, 0);
             vLayout->addWidget(control);
         }
         index++;
     }
     
     vLayout->addStretch();
+    
+    connect(remove, &QPushButton::clicked, [=](){
+        emit removeFilter(filter_);
+    });
 }
 
 QWidget* FilterControls::createControl(const ParameterInfo& parameterInfo, index_t index)
@@ -227,13 +244,11 @@ QWidget* FilterControls::createMaskControl(const ParameterInfo& parameterInfo, i
             image = image.scaledToHeight(maxImage.height);
         }
         
-        // Hold mask arrays. Todo: release old.
-        static QByteArray maskBuffer;
+        uint8_t* buffer = new uint8_t[image.byteCount()];
+        memcpy(buffer, (const char *)image.constBits(), image.byteCount());
         
-        maskBuffer = QByteArray((const char *)image.constBits(), image.byteCount());
-        
-        MaskBitmap mask = {(uint8_t*)(maskBuffer.data()), static_cast<uint32_t>(image.width()), static_cast<uint32_t>(image.height()),
-            static_cast<uint32_t>(image.bytesPerLine())};
+        MaskBitmap mask = {(uint8_t*)(buffer), static_cast<uint32_t>(image.width()), static_cast<uint32_t>(image.height()),
+            static_cast<uint32_t>(image.bytesPerLine()), true};
         
         displayMask(mask);
         
@@ -286,5 +301,18 @@ QWidget* FilterControls::createColorControl(const ParameterInfo& parameterInfo, 
     return colorControl;
 }
 
-
+void FilterControls::setFilter(FilterPtr filter, const BaseParameterSet& parameters, index_t firstParamIndex)
+{
+    QVector<ParameterInfo> parametersInfo;
+    
+    for (int i = 0; i < filter->parameterNumber();  i ++)
+    {
+        auto info = filter->parameterInfo(i);
+        info.defaultValue = parameters.value(i + firstParamIndex);
+        parametersInfo.push_back(info);
+    }
+    
+    filter_ = filter;
+    setFilter(filter->name(), parametersInfo, firstParamIndex);
+}
 

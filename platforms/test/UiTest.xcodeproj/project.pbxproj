@@ -9,13 +9,11 @@
 /* Begin PBXBuildFile section */
 		680004401DCBE16400CE6C28 /* FrameEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6800043E1DCBE16400CE6C28 /* FrameEx.cpp */; };
 		680206C41DC3E5BA00E855B6 /* FilterControls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680206C21DC3E5BA00E855B6 /* FilterControls.cpp */; };
-		68020EEC1E3E75F20008205D /* FilterPreset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68020EEA1E3E75F20008205D /* FilterPreset.cpp */; };
 		68028C521D9832D80058A733 /* Blur.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C4E1D9832D80058A733 /* Blur.cpp */; };
 		68028C531D9832D80058A733 /* Copy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C501D9832D80058A733 /* Copy.cpp */; };
 		68028C641D9833200058A733 /* BaseResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C5E1D9833200058A733 /* BaseResourceManager.cpp */; };
 		68028C661D9833200058A733 /* PrivateFilterList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C621D9833200058A733 /* PrivateFilterList.cpp */; };
 		68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68028C6A1D9834410058A733 /* TestCollection.cpp */; };
-		6803BE741E3A7F7200F7FFBD /* AlphaConvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6803BE721E3A7F7200F7FFBD /* AlphaConvert.cpp */; };
 		6803D9FE1DBEB740008F5895 /* Controller.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6803D9FC1DBEB740008F5895 /* Controller.cpp */; };
 		680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */; };
 		680918E51DBBAF02008C60C6 /* BaseParameterSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680918E31DBBAF01008C60C6 /* BaseParameterSet.cpp */; };
@@ -24,22 +22,27 @@
 		6809A6D91DC4F40E008C6962 /* FilterControls.h in Sources */ = {isa = PBXBuildFile; fileRef = 680206C31DC3E5BA00E855B6 /* FilterControls.h */; };
 		6809A6DA1DC4F549008C6962 /* Controller.h in Sources */ = {isa = PBXBuildFile; fileRef = 6803D9FD1DBEB740008F5895 /* Controller.h */; };
 		6809CC2E1E05428C00781CAF /* FilterGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6809CC2C1E05428C00781CAF /* FilterGraph.cpp */; };
-		680A96EA1E4F3DE7008673DF /* TestFilterGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680A96E91E4F3DE7008673DF /* TestFilterGraph.cpp */; };
+		680A96F01E4F4561008673DF /* AlphaConvert.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680A96EE1E4F4561008673DF /* AlphaConvert.cpp */; };
+		680A96F31E4F4582008673DF /* FilterPreset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680A96F11E4F4582008673DF /* FilterPreset.cpp */; };
 		680B2B661D96DFA80017F1B2 /* TestApplicationBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */; };
 		6845F84D1E20FC8000932B56 /* AlphaBlend.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6845F84B1E20FC8000932B56 /* AlphaBlend.cpp */; };
 		6846CD941E1AC6D200AFE00E /* Splitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6846CD921E1AC6D200AFE00E /* Splitter.cpp */; };
+		685D7F1B1EB50FE5002716D4 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 685D7F181EB50FE5002716D4 /* QtWidgets.framework */; };
+		685D7F1C1EB50FE5002716D4 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 685D7F191EB50FE5002716D4 /* QtGui.framework */; };
+		685D7F1D1EB50FE5002716D4 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 685D7F1A1EB50FE5002716D4 /* QtCore.framework */; };
+		685D7F1E1EB51099002716D4 /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 685D7F181EB50FE5002716D4 /* QtWidgets.framework */; };
+		685D7F1F1EB51099002716D4 /* QtWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 685D7F181EB50FE5002716D4 /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		685D7F201EB51099002716D4 /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 685D7F191EB50FE5002716D4 /* QtGui.framework */; };
+		685D7F211EB51099002716D4 /* QtGui.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 685D7F191EB50FE5002716D4 /* QtGui.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		685D7F221EB51099002716D4 /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 685D7F1A1EB50FE5002716D4 /* QtCore.framework */; };
+		685D7F231EB51099002716D4 /* QtCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 685D7F1A1EB50FE5002716D4 /* QtCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		685D7F261EB672F6002716D4 /* LUTGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 685D7F241EB672F6002716D4 /* LUTGenerator.cpp */; };
+		685D7F291EB672FE002716D4 /* TestFilterGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 685D7F271EB672FE002716D4 /* TestFilterGraph.cpp */; };
 		688F5CDD1DD6802B00243A5E /* ROICopy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 688F5CDB1DD6802B00243A5E /* ROICopy.cpp */; };
 		6890A4631DC15E520016EE2C /* resources in Resources */ = {isa = PBXBuildFile; fileRef = 6890A4621DC15E520016EE2C /* resources */; };
-		68AA344E1D908C9D00D54A8D /* QtCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF81D907A6300D952BB /* QtCore.framework */; };
-		68AA344F1D908C9D00D54A8D /* QtGui.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF91D907A6300D952BB /* QtGui.framework */; };
 		68AA34521D908D2900D54A8D /* UiMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68524EDF1D8ED95800D952BB /* UiMain.cpp */; };
-		68AA34541D9090C000D54A8D /* QtCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF81D907A6300D952BB /* QtCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		68AA34561D9090C000D54A8D /* QtGui.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EF91D907A6300D952BB /* QtGui.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		68AA34571D9090C000D54A8D /* QtWidgets.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EFA1D907A6300D952BB /* QtWidgets.framework */; };
-		68AA34581D9090C000D54A8D /* QtWidgets.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 68524EFA1D907A6300D952BB /* QtWidgets.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		68AA345C1D91CE2A00D54A8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 68AA345B1D91CE2A00D54A8D /* main.m */; };
 		68AA34621D91D0FE00D54A8D /* MainWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68AA34601D91D0FE00D54A8D /* MainWindow.cpp */; };
-		68B6BA281E87B80B00723BFA /* LUTGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68B6BA261E87B80B00723BFA /* LUTGenerator.cpp */; };
 		68F6AE7F1DFDDCE600432519 /* ColorControl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F6AE7D1DFDDCE600432519 /* ColorControl.cpp */; };
 		68F6AE801DFDDF3200432519 /* ColorControl.h in Sources */ = {isa = PBXBuildFile; fileRef = 68F6AE7E1DFDDCE600432519 /* ColorControl.h */; };
 		68F793A31DD79205003E93EE /* Dilate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 68F793A11DD79205003E93EE /* Dilate.cpp */; };
@@ -59,7 +62,7 @@
 				"",
 				"${INPUT_FILE_DIR}/moc_${INPUT_FILE_BASE}.cpp",
 			);
-			script = "Qt/moc -o ${INPUT_FILE_DIR}/moc_${INPUT_FILE_BASE}.cpp ${INPUT_FILE_PATH}";
+			script = "../../thirdParty/Qt/moc -o ${INPUT_FILE_DIR}/moc_${INPUT_FILE_BASE}.cpp ${INPUT_FILE_PATH}";
 		};
 /* End PBXBuildRule section */
 
@@ -70,9 +73,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				68AA34541D9090C000D54A8D /* QtCore.framework in Embed Frameworks */,
-				68AA34581D9090C000D54A8D /* QtWidgets.framework in Embed Frameworks */,
-				68AA34561D9090C000D54A8D /* QtGui.framework in Embed Frameworks */,
+				685D7F231EB51099002716D4 /* QtCore.framework in Embed Frameworks */,
+				685D7F1F1EB51099002716D4 /* QtWidgets.framework in Embed Frameworks */,
+				685D7F211EB51099002716D4 /* QtGui.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,8 +87,6 @@
 		6800043F1DCBE16400CE6C28 /* FrameEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameEx.h; sourceTree = "<group>"; };
 		680206C21DC3E5BA00E855B6 /* FilterControls.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FilterControls.cpp; path = src/Ui/FilterControls.cpp; sourceTree = SOURCE_ROOT; };
 		680206C31DC3E5BA00E855B6 /* FilterControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterControls.h; path = src/Ui/FilterControls.h; sourceTree = SOURCE_ROOT; };
-		68020EEA1E3E75F20008205D /* FilterPreset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterPreset.cpp; sourceTree = "<group>"; };
-		68020EEB1E3E75F20008205D /* FilterPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterPreset.h; sourceTree = "<group>"; };
 		68028C4E1D9832D80058A733 /* Blur.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Blur.cpp; sourceTree = "<group>"; };
 		68028C4F1D9832D80058A733 /* Blur.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blur.h; sourceTree = "<group>"; };
 		68028C501D9832D80058A733 /* Copy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Copy.cpp; sourceTree = "<group>"; };
@@ -97,8 +98,6 @@
 		68028C681D98333F0058A733 /* Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base.h; sourceTree = "<group>"; };
 		68028C6A1D9834410058A733 /* TestCollection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestCollection.cpp; sourceTree = "<group>"; };
 		68028C6B1D9834410058A733 /* TestCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCollection.h; sourceTree = "<group>"; };
-		6803BE721E3A7F7200F7FFBD /* AlphaConvert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaConvert.cpp; sourceTree = "<group>"; };
-		6803BE731E3A7F7200F7FFBD /* AlphaConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaConvert.h; sourceTree = "<group>"; };
 		6803D9FC1DBEB740008F5895 /* Controller.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Controller.cpp; path = src/Ui/Controller.cpp; sourceTree = SOURCE_ROOT; };
 		6803D9FD1DBEB740008F5895 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Controller.h; path = src/Ui/Controller.h; sourceTree = SOURCE_ROOT; };
 		680685301DAAAF5C00937267 /* BaseParameters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseParameters.h; sourceTree = "<group>"; };
@@ -108,9 +107,11 @@
 		680918E41DBBAF02008C60C6 /* BaseParameterSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseParameterSet.h; sourceTree = "<group>"; };
 		6809CC2C1E05428C00781CAF /* FilterGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterGraph.cpp; sourceTree = "<group>"; };
 		6809CC2D1E05428C00781CAF /* FilterGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterGraph.h; sourceTree = "<group>"; };
-		680A96E81E4F3DE7008673DF /* TestFilterGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFilterGraph.h; sourceTree = "<group>"; };
-		680A96E91E4F3DE7008673DF /* TestFilterGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFilterGraph.cpp; sourceTree = "<group>"; };
-		680AE3A01E46150600427394 /* json.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
+		680A96ED1E4F44A8008673DF /* json.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = json.hpp; sourceTree = "<group>"; };
+		680A96EE1E4F4561008673DF /* AlphaConvert.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AlphaConvert.cpp; sourceTree = "<group>"; };
+		680A96EF1E4F4561008673DF /* AlphaConvert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlphaConvert.h; sourceTree = "<group>"; };
+		680A96F11E4F4582008673DF /* FilterPreset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FilterPreset.cpp; sourceTree = "<group>"; };
+		680A96F21E4F4582008673DF /* FilterPreset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterPreset.h; sourceTree = "<group>"; };
 		680B2B641D96DFA80017F1B2 /* TestApplicationBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TestApplicationBridge.cpp; path = src/TestApplicationBridge.cpp; sourceTree = SOURCE_ROOT; };
 		680B2B651D96DFA80017F1B2 /* TestApplicationBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestApplicationBridge.h; path = src/TestApplicationBridge.h; sourceTree = SOURCE_ROOT; };
 		680B41431DFC561A0025FB65 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
@@ -119,9 +120,13 @@
 		6846CD921E1AC6D200AFE00E /* Splitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Splitter.cpp; sourceTree = "<group>"; };
 		6846CD931E1AC6D200AFE00E /* Splitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Splitter.h; sourceTree = "<group>"; };
 		68524EDF1D8ED95800D952BB /* UiMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UiMain.cpp; path = src/UiMain.cpp; sourceTree = SOURCE_ROOT; };
-		68524EF81D907A6300D952BB /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = Qt/QtCore.framework; sourceTree = "<group>"; };
-		68524EF91D907A6300D952BB /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = Qt/QtGui.framework; sourceTree = "<group>"; };
-		68524EFA1D907A6300D952BB /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = Qt/QtWidgets.framework; sourceTree = "<group>"; };
+		685D7F181EB50FE5002716D4 /* QtWidgets.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtWidgets.framework; path = ../../thirdParty/Qt/QtWidgets.framework; sourceTree = "<group>"; };
+		685D7F191EB50FE5002716D4 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = ../../thirdParty/Qt/QtGui.framework; sourceTree = "<group>"; };
+		685D7F1A1EB50FE5002716D4 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = ../../thirdParty/Qt/QtCore.framework; sourceTree = "<group>"; };
+		685D7F241EB672F6002716D4 /* LUTGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LUTGenerator.cpp; sourceTree = "<group>"; };
+		685D7F251EB672F6002716D4 /* LUTGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUTGenerator.h; sourceTree = "<group>"; };
+		685D7F271EB672FE002716D4 /* TestFilterGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestFilterGraph.cpp; sourceTree = "<group>"; };
+		685D7F281EB672FE002716D4 /* TestFilterGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFilterGraph.h; sourceTree = "<group>"; };
 		688F5CDB1DD6802B00243A5E /* ROICopy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ROICopy.cpp; sourceTree = "<group>"; };
 		688F5CDC1DD6802B00243A5E /* ROICopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ROICopy.h; sourceTree = "<group>"; };
 		6890A4621DC15E520016EE2C /* resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resources; sourceTree = SOURCE_ROOT; };
@@ -131,8 +136,6 @@
 		68AA345D1D91CE3300D54A8D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		68AA34601D91D0FE00D54A8D /* MainWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MainWindow.cpp; path = src/Ui/MainWindow.cpp; sourceTree = SOURCE_ROOT; };
 		68AA34611D91D0FE00D54A8D /* MainWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainWindow.h; path = src/Ui/MainWindow.h; sourceTree = SOURCE_ROOT; };
-		68B6BA261E87B80B00723BFA /* LUTGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LUTGenerator.cpp; sourceTree = "<group>"; };
-		68B6BA271E87B80B00723BFA /* LUTGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LUTGenerator.h; sourceTree = "<group>"; };
 		68DF63C31DA828C700EAF7C9 /* IFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IFilter.h; sourceTree = "<group>"; };
 		68DF63C41DA828C700EAF7C9 /* IResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IResourceManager.h; sourceTree = "<group>"; };
 		68DF63C51DA828C700EAF7C9 /* IPrivateFilterList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPrivateFilterList.h; sourceTree = "<group>"; };
@@ -157,9 +160,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				68AA344E1D908C9D00D54A8D /* QtCore.framework in Frameworks */,
-				68AA34571D9090C000D54A8D /* QtWidgets.framework in Frameworks */,
-				68AA344F1D908C9D00D54A8D /* QtGui.framework in Frameworks */,
+				685D7F221EB51099002716D4 /* QtCore.framework in Frameworks */,
+				685D7F1B1EB50FE5002716D4 /* QtWidgets.framework in Frameworks */,
+				685D7F1C1EB50FE5002716D4 /* QtGui.framework in Frameworks */,
+				685D7F1D1EB50FE5002716D4 /* QtCore.framework in Frameworks */,
+				685D7F201EB51099002716D4 /* QtGui.framework in Frameworks */,
+				685D7F1E1EB51099002716D4 /* QtWidgets.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +175,8 @@
 		68028C541D9832E90058A733 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				680A96F11E4F4582008673DF /* FilterPreset.cpp */,
+				680A96F21E4F4582008673DF /* FilterPreset.h */,
 				680918E01DBBA21C008C60C6 /* ParameterHelpers.cpp */,
 				680918E11DBBA21C008C60C6 /* ParameterHelpers.h */,
 				68028C5E1D9833200058A733 /* BaseResourceManager.cpp */,
@@ -185,8 +193,6 @@
 				6809CC2D1E05428C00781CAF /* FilterGraph.h */,
 				68FD97E91E09C1260029120E /* BaseFilter.cpp */,
 				68FD97EA1E09C1260029120E /* BaseFilter.h */,
-				68020EEA1E3E75F20008205D /* FilterPreset.cpp */,
-				68020EEB1E3E75F20008205D /* FilterPreset.h */,
 			);
 			name = core;
 			path = ../../core;
@@ -210,38 +216,39 @@
 		68028C691D98342C0058A733 /* collection */ = {
 			isa = PBXGroup;
 			children = (
-				680A96E81E4F3DE7008673DF /* TestFilterGraph.h */,
-				680A96E91E4F3DE7008673DF /* TestFilterGraph.cpp */,
+				685D7F271EB672FE002716D4 /* TestFilterGraph.cpp */,
+				685D7F281EB672FE002716D4 /* TestFilterGraph.h */,
+				685D7F241EB672F6002716D4 /* LUTGenerator.cpp */,
+				685D7F251EB672F6002716D4 /* LUTGenerator.h */,
 				68028C6A1D9834410058A733 /* TestCollection.cpp */,
 				68028C6B1D9834410058A733 /* TestCollection.h */,
-				68B6BA261E87B80B00723BFA /* LUTGenerator.cpp */,
-				68B6BA271E87B80B00723BFA /* LUTGenerator.h */,
 			);
 			name = collection;
 			path = ../../collections/test;
 			sourceTree = SOURCE_ROOT;
 		};
-		680AE39D1E4614CE00427394 /* thirdParty */ = {
+		680A96EB1E4F4471008673DF /* thirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				680AE39F1E4614F900427394 /* json */,
+				680A96EC1E4F4491008673DF /* json */,
 			);
 			name = thirdParty;
 			path = ../../thirdParty;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
-		680AE39F1E4614F900427394 /* json */ = {
+		680A96EC1E4F4491008673DF /* json */ = {
 			isa = PBXGroup;
 			children = (
-				680AE3A01E46150600427394 /* json.hpp */,
+				680A96ED1E4F44A8008673DF /* json.hpp */,
 			);
-			name = json;
-			path = ../../thirdParty/json;
-			sourceTree = SOURCE_ROOT;
+			path = json;
+			sourceTree = "<group>";
 		};
 		680B2B671D96E0930017F1B2 /* Filters */ = {
 			isa = PBXGroup;
 			children = (
+				680A96EE1E4F4561008673DF /* AlphaConvert.cpp */,
+				680A96EF1E4F4561008673DF /* AlphaConvert.h */,
 				688F5CDB1DD6802B00243A5E /* ROICopy.cpp */,
 				688F5CDC1DD6802B00243A5E /* ROICopy.h */,
 				68028C4E1D9832D80058A733 /* Blur.cpp */,
@@ -256,12 +263,20 @@
 				6846CD931E1AC6D200AFE00E /* Splitter.h */,
 				6845F84B1E20FC8000932B56 /* AlphaBlend.cpp */,
 				6845F84C1E20FC8000932B56 /* AlphaBlend.h */,
-				6803BE721E3A7F7200F7FFBD /* AlphaConvert.cpp */,
-				6803BE731E3A7F7200F7FFBD /* AlphaConvert.h */,
 			);
 			name = Filters;
 			path = ../../baseFilters;
 			sourceTree = SOURCE_ROOT;
+		};
+		685D7F171EB50FE5002716D4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				685D7F181EB50FE5002716D4 /* QtWidgets.framework */,
+				685D7F191EB50FE5002716D4 /* QtGui.framework */,
+				685D7F1A1EB50FE5002716D4 /* QtCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
 		};
 		68AA34411D908AD400D54A8D /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -292,11 +307,9 @@
 		68EC29FE1D8ED8EF007C00EF = {
 			isa = PBXGroup;
 			children = (
-				68524EF81D907A6300D952BB /* QtCore.framework */,
-				68524EF91D907A6300D952BB /* QtGui.framework */,
-				68524EFA1D907A6300D952BB /* QtWidgets.framework */,
 				68EC2A091D8ED8EF007C00EF /* UiTest */,
 				68EC2A081D8ED8EF007C00EF /* Products */,
+				685D7F171EB50FE5002716D4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -311,7 +324,7 @@
 		68EC2A091D8ED8EF007C00EF /* UiTest */ = {
 			isa = PBXGroup;
 			children = (
-				680AE39D1E4614CE00427394 /* thirdParty */,
+				680A96EB1E4F4471008673DF /* thirdParty */,
 				680B41431DFC561A0025FB65 /* Info.plist */,
 				6890A4621DC15E520016EE2C /* resources */,
 				68028C691D98342C0058A733 /* collection */,
@@ -404,10 +417,8 @@
 				680918E61DBCDB0F008C60C6 /* MainWindow.h in Sources */,
 				68F6AE7F1DFDDCE600432519 /* ColorControl.cpp in Sources */,
 				680918E71DBCDB0F008C60C6 /* ImageControl.h in Sources */,
-				68020EEC1E3E75F20008205D /* FilterPreset.cpp in Sources */,
 				6845F84D1E20FC8000932B56 /* AlphaBlend.cpp in Sources */,
 				688F5CDD1DD6802B00243A5E /* ROICopy.cpp in Sources */,
-				6803BE741E3A7F7200F7FFBD /* AlphaConvert.cpp in Sources */,
 				6803D9FE1DBEB740008F5895 /* Controller.cpp in Sources */,
 				68AA345C1D91CE2A00D54A8D /* main.m in Sources */,
 				68F793A31DD79205003E93EE /* Dilate.cpp in Sources */,
@@ -417,7 +428,7 @@
 				68028C521D9832D80058A733 /* Blur.cpp in Sources */,
 				6809CC2E1E05428C00781CAF /* FilterGraph.cpp in Sources */,
 				6846CD941E1AC6D200AFE00E /* Splitter.cpp in Sources */,
-				680A96EA1E4F3DE7008673DF /* TestFilterGraph.cpp in Sources */,
+				680A96F01E4F4561008673DF /* AlphaConvert.cpp in Sources */,
 				68F96A6A1D9460D4003606E3 /* ImageControl.cpp in Sources */,
 				68028C531D9832D80058A733 /* Copy.cpp in Sources */,
 				680004401DCBE16400CE6C28 /* FrameEx.cpp in Sources */,
@@ -426,8 +437,10 @@
 				680918E51DBBAF02008C60C6 /* BaseParameterSet.cpp in Sources */,
 				68AA34521D908D2900D54A8D /* UiMain.cpp in Sources */,
 				68FFCE8C1DE0C0A20007DE9A /* SolidColor.cpp in Sources */,
+				685D7F261EB672F6002716D4 /* LUTGenerator.cpp in Sources */,
+				680A96F31E4F4582008673DF /* FilterPreset.cpp in Sources */,
+				685D7F291EB672FE002716D4 /* TestFilterGraph.cpp in Sources */,
 				68028C6C1D9834410058A733 /* TestCollection.cpp in Sources */,
-				68B6BA281E87B80B00723BFA /* LUTGenerator.cpp in Sources */,
 				680918E21DBBA21C008C60C6 /* ParameterHelpers.cpp in Sources */,
 				68FD97EB1E09C1260029120E /* BaseFilter.cpp in Sources */,
 			);
@@ -442,7 +455,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Qt",
+					"$(PROJECT_DIR)/../../thirdParty/Qt",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../include",
@@ -450,6 +463,7 @@
 					"$(PROJECT_DIR)/../../BaseFilters",
 					/usr/local/include/,
 					"$(PROJECT_DIR)/../../collections/private",
+					"$(PROJECT_DIR)/../../thirdParty/json",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -466,7 +480,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Qt",
+					"$(PROJECT_DIR)/../../thirdParty/Qt",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../include",
@@ -474,6 +488,7 @@
 					"$(PROJECT_DIR)/../../BaseFilters",
 					/usr/local/include/,
 					"$(PROJECT_DIR)/../../collections/private",
+					"$(PROJECT_DIR)/../../thirdParty/json",
 				);
 				INFOPLIST_FILE = Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

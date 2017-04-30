@@ -35,15 +35,17 @@ public:
     
     bool savePreset(const IParameterSet& params, index_t filterIndex, const QString& presetName, const QString& fileName);
     
-    FilterPreset loadPreset(const QString& fileName);
+    bool loadPreset(const QString& fileName, FilterPreset& preset);
     
 protected:
 
     void drawMessage(QImage& image, const QString& text);
+    Frame* getFrameWithROI(const Frame& inputFrame, const ROI& outputROI);
 
     TestApplicationBridge bridge;
     BaseResourceManager resourceManager;
     QMap<QImage::Format, FrameParams::PixelFormat> formatMap;
+    FilterPtr copyFilter_;
 };
 
 

@@ -44,10 +44,15 @@ public:
     // Input frames and output frames should be inputsNumber/outputsNumber.
     virtual bool outputFrameParams(const FrameParams* inputFrames, FrameParams* outputFrames) override;
     
+    virtual ROI outputRoi(const ROI& inputRoi, const IParameterSet& params) override;
+    
+    void setOutputsNumber(index_t number);
+    
 private:
 
     IResourceManager& resourceManager;
     const IPrivateFilterList& filterList;
-
+    index_t outputsNumber_;
+    
 };
 

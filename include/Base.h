@@ -16,8 +16,8 @@ typedef size_t index_t;
 // Region of image.
 struct ROI
 {
-    uint32_t x;
-    uint32_t y;
+    int32_t x;
+    int32_t y;
     uint32_t width;
     uint32_t height;
 };
@@ -35,8 +35,8 @@ struct Frame : FrameParams
 {
     uint8_t* data;
     uint32_t byteSpan;
+    ROI roi;
     // TODO:
-    // ROI
     // premulyiply.
     // PAR.
     // YUV.

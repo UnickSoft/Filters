@@ -17,10 +17,14 @@
 #include <vector>
 #include <utility>
 #include "BaseParameters.h"
+#include "BaseParameterSet.h"
 
-class FilterPreset : public IParameterSet
+class FilterPreset : public BaseParameterSet
 {
 public:
+
+    FilterPreset(bool paramOwner = true);
+    
     // Create from param set.
     FilterPreset(const IParameterSet& params, FilterPtr filter, const std::string& presetName);
     
@@ -45,15 +49,25 @@ public:
     // @return filter name.
     const std::string& filterName();
     
+    // @return filter name.
+    const std::string& fileName();
+    
     // is valid preser or not.
     bool isValid();
     
-private:
+protected:
+
+    // Save preset to file.
+    virtual bool saveJson(json& j);
+    // Load preset to file.
+    virtual bool loadJson(json& j);
 
     std::string _filterName;
     std::string _presetName;
-    using ParamAndType = std::pair<BaseParameters, Parameter>;
-    std::vector<ParamAndType> _params;
+    std::string _filename;
+    //using ParamAndType = std::pair<BaseParameters, Parameter>;
+    //std::vector<ParamAndType> _params;
+    //BaseParameterSet _params;
 };
 
 #endif /* FilterPreset_hpp */

@@ -36,12 +36,16 @@ template <typename T> struct NumberParameter : public Parameter
     static json save(const Parameter* parameter);
     
     static Parameter load(const json& data);
+    
+    static void remove(Parameter& data);
 };
 
 
 // @return json string of parameter.
 json saveParameter(BaseParameters type, const Parameter* parameter);
 Parameter loadParameter(BaseParameters type, const json& data);
+void removeParameter(BaseParameters type, Parameter& parameter);
+
 
 // Parameter Info Helper
 template <typename T> struct NumberParameterInfo : public ParameterInfo

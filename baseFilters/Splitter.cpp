@@ -13,16 +13,20 @@
 #include "BaseParameterSet.h"
 
 Splitter::Splitter (const IPrivateFilterList& filterList, IResourceManager& resourceManager)
-: resourceManager(resourceManager), filterList(filterList) {}
+: resourceManager(resourceManager), filterList(filterList), outputsNumber_(2) {}
 
 bool Splitter::apply(const Frame* inputFrames, index_t inputFramesNumber, Frame* outputFrames, index_t outputFramesNumber, const IParameterSet& params)
 {
-    if (inputFramesNumber == 1 && outputFramesNumber == 2)
+    if (inputFramesNumber == 1 && outputFramesNumber == outputsNumber_)
     {
         auto copyFilter = std::unique_ptr<IFilter>(filterList.createFilter("Copy", filterList, resourceManager));
         
-        bool res = copyFilter->apply(inputFrames, 1, &outputFrames[0], 1, params);
-        res = res && copyFilter->apply(inputFrames, 1, &outputFrames[1], 1, params);
+        bool res = true;
+        
+        for (index_t i = 0; i < outputsNumber_; i ++)
+        {
+            res = res && copyFilter->apply(inputFrames, 1, &outputFrames[i], 1, params);
+        }
         
         return res;
     }
@@ -37,7 +41,7 @@ index_t Splitter::inputsNumber()
 
 index_t Splitter::outputsNumber()
 {
-    return 2;
+    return outputsNumber_;
 }
 
 index_t Splitter::parameterNumber()
@@ -58,9 +62,20 @@ const char* const Splitter::name()
 
 bool Splitter::outputFrameParams(const FrameParams* inputFrames, FrameParams* outputFrames)
 {
-    outputFrames[0] = inputFrames[0];
-    outputFrames[1] = inputFrames[0];
-    
+    for (index_t i = 0; i < outputsNumber_; i ++)
+    {
+        outputFrames[i] = inputFrames[0];
+    }
+
     return true;
 }
 
+void Splitter::setOutputsNumber(index_t number)
+{
+    outputsNumber_ = number;
+}
+
+ROI Splitter::outputRoi(const ROI& inputRoi, const IParameterSet& params)
+{
+    return inputRoi;
+}

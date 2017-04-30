@@ -24,6 +24,9 @@ template <typename T> Parameter NumberParameter<T>::load(const json& data)
     return NumberParameter<T>((T)data["value"]);
 }
 
+template <typename T> void NumberParameter<T>::remove(Parameter& parameter)
+{}
+
 template <> const float& NumberParameter<float>::field(const Parameter* parameter)
 {
     return parameter->value.floatNumber;
@@ -148,7 +151,6 @@ template <> Parameter NumberParameter<MaskBitmap>::load(const json& data)
     field(&res).height = data["height"];
     field(&res).byteSpan  = data["byteSpan"];
     
-    // TODO: memory leak.
     auto size = field(&res).byteSpan * field(&res).height;
     field(&res).data = new uint8_t[size];
     auto pixels = data["data"];
@@ -156,6 +158,7 @@ template <> Parameter NumberParameter<MaskBitmap>::load(const json& data)
     {
         field(&res).data[i] = (uint8_t)pixels[i];
     }
+    field(&res).dynamic = true;
     
     return res;
 }
@@ -169,6 +172,15 @@ template <> Parameter NumberParameter<Color>::load(const json& data)
     field(&res).alpha  = data["alpha"];
     
     return res;
+}
+
+template <> void NumberParameter<MaskBitmap>::remove(Parameter& parameter)
+{
+    MaskBitmap bitmap =  MaskParameter::field(&parameter);
+    if (bitmap.dynamic)
+    {
+        delete[] bitmap.data;
+    }
 }
 
 json saveParameter(BaseParameters type, const Parameter* parameter)
@@ -198,5 +210,20 @@ Parameter loadParameter(BaseParameters type, const json& data)
         case BS_BOOL:   return BoolParameter::load(data);
         case BS_COLOR:  return ColorParameter::load(data);
         default : assert ("Error"); return Parameter();
+    }
+}
+
+void removeParameter(BaseParameters type, Parameter& parameter)
+{
+    switch (type)
+    {
+        case BS_FLOAT:  FloatParameter::remove(parameter); break;
+        case BS_INT:    IntParameter::remove(parameter); break;
+        case BS_UINT:   UintParameter::remove(parameter); break;
+        case BS_ROI:    ROIParameter::remove(parameter); break;
+        case BS_MASK:   MaskParameter::remove(parameter); break;
+        case BS_BOOL:   BoolParameter::remove(parameter); break;
+        case BS_COLOR:  ColorParameter::remove(parameter); break;
+        default : assert ("Error");
     }
 }

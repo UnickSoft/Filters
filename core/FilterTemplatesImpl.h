@@ -10,8 +10,8 @@ template <typename T> bool processFrameToFrameRow(T function, FrameEx& inputFram
 {
     bool res = false;
     
-    ROI input  = inputROI  ? *inputROI : ROI{0, 0, inputFrame.width, inputFrame.height};
-    ROI output = outputROI ? *outputROI : ROI{0, 0, inputFrame.width, inputFrame.height};
+    ROI input  = inputROI  ? *inputROI  : inputFrame.roi;
+    ROI output = outputROI ? *outputROI : inputFrame.roi;
     
     if (input.width  == output.width &&
         input.height == output.height)
@@ -28,6 +28,8 @@ template <typename T> bool processFrameToFrameRow(T function, FrameEx& inputFram
             
             function(inputFrame, outputFrame, inputRow, outputRow, i);
         }
+        
+        outputFrame.roi = output;
     }
     
     return res;
@@ -38,8 +40,8 @@ template <typename T> bool processFrameToFramePixel(T function, FrameEx& inputFr
 {
     bool res = false;
     
-    ROI input  = inputROI  ? *inputROI : ROI{0, 0, inputFrame.width, inputFrame.height};
-    ROI output = outputROI ? *outputROI : ROI{0, 0, inputFrame.width, inputFrame.height};
+    ROI input  = inputROI  ? *inputROI  : inputFrame.roi;
+    ROI output = outputROI ? *outputROI : inputFrame.roi;
     
     if (input.width  == output.width &&
         input.height == output.height)
@@ -65,6 +67,8 @@ template <typename T> bool processFrameToFramePixel(T function, FrameEx& inputFr
                 outputRow  += outputPixelSize;
             }
         }
+        
+        outputFrame.roi = output;
     }
     
     return res;
@@ -74,9 +78,18 @@ template <typename T> bool process2FramesToFramePixel(T function, FrameEx& input
 {
     bool res = false;
     
-    ROI input1  = inputROI1  ? *inputROI1 : ROI{0, 0, inputFrame1.width, inputFrame1.height};
-    ROI input2  = inputROI2  ? *inputROI2 : ROI{0, 0, inputFrame2.width, inputFrame2.height};
-    ROI output = outputROI ? *outputROI : ROI{0, 0, outputFrame.width, outputFrame.height};
+    ROI maxRoi = {std::min(inputFrame1.roi.x, inputFrame2.roi.x),
+                  std::min(inputFrame1.roi.y, inputFrame2.roi.y),
+                  std::max(inputFrame1.roi.x + inputFrame1.roi.width, inputFrame2.roi.x + inputFrame2.roi.width),
+                  std::max(inputFrame1.roi.y + inputFrame1.roi.height, inputFrame2.roi.y + inputFrame2.roi.height),
+                  };
+    
+    maxRoi.width  = maxRoi.width - maxRoi.x;
+    maxRoi.height = maxRoi.height - maxRoi.y;
+    
+    ROI input1  = inputROI1  ? *inputROI1  : maxRoi;
+    ROI input2  = inputROI2  ? *inputROI2  : maxRoi;
+    ROI output  = outputROI  ? *outputROI  : maxRoi;
     
     if (input1.width  == output.width &&
         input1.height == output.height &&
@@ -108,6 +121,8 @@ template <typename T> bool process2FramesToFramePixel(T function, FrameEx& input
                 outputRow   += outputPixelSize;
             }
         }
+        
+        outputFrame.roi = output;
     }
     
     return res;

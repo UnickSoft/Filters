@@ -46,6 +46,7 @@ bool ROICopy::apply(const Frame& inputFrame, Frame& outputFrame, const IParamete
         };
         
         res = processFrameToFrameRow(processRGB8, inputFrameEx, outputFrameEx, &srcROI, &dstROI);
+        outputFrame.roi = dstROI;
     }
     
     return res;
@@ -80,4 +81,11 @@ const ParameterInfo& ROICopy::parameterInfo(index_t index)
 FrameParams ROICopy::outputFrameParams(const FrameParams& inputFrame)
 {
     return inputFrame;
+}
+
+ROI ROICopy::outputRoi(const ROI& inputRoi, const IParameterSet& params)
+{
+    const ROI dstROI = ROIParameter::field(&params.value(1));
+    
+    return dstROI;
 }

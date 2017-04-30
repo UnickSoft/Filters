@@ -20,7 +20,7 @@
 
 static const QString previewImageKey = "testImage";
 
-MainWindow::MainWindow(Controller& controller) : controller(controller), filterIndex(0), settings("UnickSoft", "TestUI")
+MainWindow::MainWindow(Controller& controller) : controller(controller), filterIndex(0), settings("UnickSoft", "TestUI"), parameters(true)
 {
     QHBoxLayout* mainLayout = new QHBoxLayout();
     
@@ -228,7 +228,7 @@ void MainWindow::selectFilter(int index, const IParameterSet* newValue)
 
 void MainWindow::paramChanged(index_t index, const Parameter& value)
 {
-    parameters[index] = value;
+    parameters.replace(index, value);
     
     applyFilter(filterIndex);
 }
@@ -239,7 +239,7 @@ void MainWindow::fillDefaultParameters(const QVector<ParameterInfo>& parameterIn
     
     for (auto paramInfo : parameterInfo)
     {
-        parameters.push_back(paramInfo.defaultValue);
+        parameters.push_back((BaseParameters)paramInfo.type ,paramInfo.defaultValue);
     }
 }
 
@@ -300,7 +300,8 @@ void MainWindow::loadPreset()
         tr("Open Preset"), "~/Documents", tr("Preset files (*.json)"));
     if (!filename.isEmpty())
     {
-        FilterPreset preset = controller.loadPreset(filename);
+        FilterPreset preset;
+        controller.loadPreset(filename, preset);
         auto filters = controller.filters();
         int index = filters.indexOf(QString::fromStdString(preset.filterName()));
         if (index >= 0)

@@ -16,7 +16,6 @@ class BaseResourceManager : public IResourceManager
 {
 public:
     
-    
     BaseResourceManager();
     virtual ~BaseResourceManager();
     

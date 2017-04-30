@@ -27,6 +27,9 @@ public:
     // @return output frame params for input frame.
     virtual FrameParams outputFrameParams(const FrameParams& inputFrame) = 0;
     
+    //@return output roi. It can be larget or smaller or the same as inout frame.
+    virtual ROI outputRoi(const ROI& inputRoi, const IParameterSet& params) override;
+    
     // @return name. Latin only letters.
     const char* const name() override;
     
@@ -37,6 +40,8 @@ public:
     index_t outputsNumber() override {return 1;};
     
     static bool apply(IFilter* filter, const Frame& inputFrame, Frame& outputFrame, const IParameterSet& params);
+    
+    static bool useRoi(const Frame& frame);
     
 protected:
 

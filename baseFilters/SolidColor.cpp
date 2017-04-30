@@ -44,6 +44,8 @@ bool SolidColor::apply(const Frame& inputFrame, Frame& outputFrame, const IParam
         FrameEx inputFrameEx  = inputFrame;
         FrameEx outputFrameEx = outputFrame;
         
+        outputFrame.roi = inputFrame.roi;
+        
         if (color.alpha == 255)
         {
             return processFrameToFramePixel(processFullAlphaBGRA8, inputFrameEx, outputFrameEx);

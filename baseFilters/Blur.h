@@ -34,6 +34,9 @@ public:
     // @return output frame params for input frame.
     FrameParams outputFrameParams(const FrameParams& inputFrame) override;
     
+    //@return output roi. It can be larget or smaller or the same as inout frame.
+    ROI outputRoi(const ROI& inputRoi, const IParameterSet& params) override;
+    
 protected:
 
     template <typename HFunc, typename VFunc> bool process(HFunc hFunc, VFunc vFunc, const Frame& inputFrame, Frame& outputFrame, int kernelSizeHalf);

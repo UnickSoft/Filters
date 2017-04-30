@@ -28,6 +28,10 @@ QList<QString> Controller::filters()
     {
         auto filter = bridge.createFilter(i);
         res.push_back(filter->name());
+        if (std::string(filter->name()) == std::string("ROI Copy"))
+        {
+            copyFilter_ = filter;
+        }
     }
     return res;
 }
@@ -39,36 +43,56 @@ void Controller::applyFilter(index_t index, const IParameterSet* parameters, QVe
     {
         if (filter->inputsNumber() <= source.size())
         {
-            Frame sourceFrame[2];
+            const int maxOutputFrames = 2;
+            Frame sourceFrame[maxOutputFrames];
             
             // Convert Qt image to Frame.
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < maxOutputFrames; i++)
             {
                 sourceFrame[i].width    = source[i].width();
                 sourceFrame[i].height   = source[i].height();
                 sourceFrame[i].format   = formatMap.value(source[i].format());
                 sourceFrame[i].byteSpan = source[i].bytesPerLine();
                 sourceFrame[i].data     = reinterpret_cast<uint8_t*>(source[i].bits());
+                sourceFrame[i].roi      = {0, 0, sourceFrame[i].width, sourceFrame[i].height};
             }
             
-            FrameParams inputsFrameParams[2];
+            FrameParams inputsFrameParams[maxOutputFrames];
             
             for (int i = 0; i < filter->inputsNumber(); i++)
             {
                 inputsFrameParams[i] = sourceFrame[i];
             }
             
-            FrameParams outputFrameParams[2];
+            FrameParams outputFrameParams[maxOutputFrames];
             
             if (filter->outputFrameParams(inputsFrameParams, outputFrameParams))
             {
-                Frame destFrame[2];
-            
+                Frame destFrame[maxOutputFrames];
+                
+                ROI inputRoi = {0, 0, sourceFrame[0].width, sourceFrame[0].height};
+                auto outputRoi = filter->outputRoi(inputRoi, *parameters);
+                
+                Frame* freeFrame[maxOutputFrames] = {};
+                
+                if (std::memcmp(&inputRoi, &outputRoi, sizeof(inputRoi)) != 0)
+                {
+                    for (int i = 0; i < filter->inputsNumber(); i++)
+                    {
+                        freeFrame[i] = getFrameWithROI(sourceFrame[i], outputRoi);
+                        sourceFrame[i] = *freeFrame[i];
+                    }
+                }
+                
+
                 for (int i = 0; i < filter->outputsNumber(); i ++)
                 {
-                    QImage destImage = QImage(outputFrameParams[i].width, outputFrameParams[i].height, formatMap.key(outputFrameParams[i].format));
+                    QImage destImage = QImage(sourceFrame[0].width, sourceFrame[0].height, formatMap.key(outputFrameParams[i].format));
                     dest.push_back(destImage);
                     
+                    dest[i] = QImage(sourceFrame[0].width, sourceFrame[0].height, formatMap.key(outputFrameParams[i].format));
+                    
+                    dest[i].fill(0x00);
                     destFrame[i].width    = dest[i].width();
                     destFrame[i].height   = dest[i].height();
                     destFrame[i].format   = formatMap.value(dest[i].format());
@@ -79,6 +103,21 @@ void Controller::applyFilter(index_t index, const IParameterSet* parameters, QVe
                 if (!filter.get()->apply(sourceFrame, filter->inputsNumber(), destFrame, filter->outputsNumber(), *parameters))
                 {
                     drawMessage(dest[0], "Render error");
+                }
+                else
+                {
+                    // Draw output roi
+                    for (int i = 0; i < filter->outputsNumber(); i ++)
+                    {
+                        QPainter painter(&dest[i]);
+                        
+                        painter.drawRect(destFrame[i].roi.x - 1, destFrame[i].roi.y - 1, destFrame[i].roi.width + 1, destFrame[i].roi.height + 1);
+                    }
+                }
+                
+                for (int i = 0; i < maxOutputFrames; i++)
+                {
+                    resourceManager.releaseFrame(freeFrame[i]);
                 }
             }
             else
@@ -127,9 +166,39 @@ bool Controller::savePreset(const IParameterSet& params, index_t filterIndex, co
     return FilterPreset(params, bridge.createFilter(filterIndex), presetName.toStdString()).save(fileName.toStdString());
 }
 
-FilterPreset Controller::loadPreset(const QString& fileName)
+bool Controller::loadPreset(const QString& fileName, FilterPreset& preset)
 {
-    return FilterPreset(fileName.toStdString());
+    preset = FilterPreset(fileName.toStdString());
+    return preset.isValid();
+}
+
+Frame* Controller::getFrameWithROI(const Frame& inputFrame, const ROI& outputROI)
+{
+    FrameParams resFrameParams = inputFrame;
+    
+    ROI inputROI = {-std::min(0, outputROI.x), -std::min(0, outputROI.y), inputFrame.width, inputFrame.height};
+    
+    resFrameParams.width = std::max(inputFrame.width, outputROI.x + outputROI.width) + inputROI.x;
+    resFrameParams.height = std::max(inputFrame.height, outputROI.y + outputROI.height) + inputROI.y;
+    
+
+    Frame* res = resourceManager.createFrame(resFrameParams);
+    std::memset(res->data, 0, res->height * res->byteSpan);
+    res->roi = inputROI;
+    
+    BaseParameterSet params;
+    params.push_back(ROIParameter({0, 0, inputFrame.width, inputFrame.height}));
+    params.push_back(ROIParameter(inputROI));
+    
+    bool copyed = copyFilter_->apply(&inputFrame, 1, res, 1, params);
+    if (!copyed)
+    {
+        resourceManager.releaseFrame(res);
+        res = nullptr;
+        assert(!"Cannot copy frames");
+    }
+    
+    return res;
 }
 
 

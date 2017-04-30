@@ -8,7 +8,7 @@
 
 #include "BaseResourceManager.h"
 #include <assert.h>
-
+#include <cstring>
 
 BaseResourceManager::BaseResourceManager() : currentFrameNumber(0)
 {
@@ -38,6 +38,12 @@ Frame* BaseResourceManager::createFrame(const FrameParams& params)
         }
         res->byteSpan = res->width * pixelByteSize;
         res->data = new uint8_t[res->byteSpan * res->height];
+        res->roi.x = 0;
+        res->roi.y = 0;
+        res->roi.width  = res->width;
+        res->roi.height = res->height;
+        
+        std::memset(res->data, 0, res->byteSpan * res->height);
         
         currentFrameNumber++;
     }

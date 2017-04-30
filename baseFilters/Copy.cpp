@@ -27,7 +27,8 @@ bool Copy::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSe
         && inputFrame.height == outputFrame.height
         && inputFrame.format == outputFrame.format)
     {
-        if (inputFrame.byteSpan  == outputFrame.byteSpan)
+        outputFrame.roi = inputFrame.roi;
+        if (inputFrame.byteSpan == outputFrame.byteSpan && !useRoi(inputFrame) && !useRoi(outputFrame))
         {
             memcpy(outputFrame.data, inputFrame.data, inputFrame.height * inputFrame.byteSpan);
             res = true;
@@ -37,10 +38,12 @@ bool Copy::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSe
             FrameEx inputFrameEx  = inputFrame;
             FrameEx outputFrameEx = outputFrame;
     
+            auto copyByte = inputFrame.roi.width * inputFrameEx.pixelDepth();
+            
             // Process function.
-            auto processRGB8 = [](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i)
+            auto processRGB8 = [=](FrameEx& inputFrame, FrameEx& outputFrame, uint8_t* inputRow, uint8_t* outputRow, int i)
             {
-                memcpy(outputRow, inputRow, std::min(inputFrame.byteSpan, outputFrame.byteSpan));
+                memcpy(outputRow, inputRow, copyByte);
             };
             
             res = processFrameToFrameRow(processRGB8, inputFrameEx, outputFrameEx);
@@ -68,3 +71,5 @@ FrameParams Copy::outputFrameParams(const FrameParams& inputFrame)
 {
     return inputFrame;
 }
+
+

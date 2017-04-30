@@ -39,6 +39,9 @@ class IFilter : public VirtualDestructor
         // If input frame format is unsupported, out frame format will be unsupported.
         // Input frames and output frames should be inputsNumber/outputsNumber.
         virtual bool outputFrameParams(const FrameParams* inputFrames, FrameParams* outputFrames) = 0;
+    
+        //@return output roi. It can be larget or smaller or the same as inout frame.
+        virtual ROI outputRoi(const ROI& inputRoi, const IParameterSet& params) = 0;
 };
 
 typedef std::shared_ptr<IFilter> FilterPtr;

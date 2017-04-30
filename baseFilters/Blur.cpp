@@ -166,35 +166,6 @@ bool Blur::apply(const Frame& inputFrame, Frame& outputFrame, const IParameterSe
     }
     
     return false;
-    
-    /*
-    auto sourceData = inputFrame->data;
-    auto destData   = outputFrame->data;
-    for (int i = 0; i < inputFrame->height; i++)
-    {
-        auto sourceRow = sourceData + inputFrame->byteSpan * i   + kernelSizeHalf * 3;
-        auto destRow   = destData   + outputFrame->byteSpan * i  + kernelSizeHalf * 3;
-        for (int j = kernelSizeHalf; j < inputFrame->width - kernelSizeHalf - 1; j++)
-        {
-            unsigned int value[3] = {};
-            for (int k = -kernelSizeHalf; k <= kernelRightEdge; k++)
-            {
-                value[0] += kernel[k + kernelSizeHalf] * sourceRow[k * 3];
-                value[1] += kernel[k + kernelSizeHalf] * sourceRow[k * 3 + 1];
-                value[2] += kernel[k + kernelSizeHalf] * sourceRow[k * 3 + 2];
-            }
-            
-            destRow[0] = value[0] / kernelNorm;
-            destRow[1] = value[1] / kernelNorm;
-            destRow[2] = value[2] / kernelNorm;
-            
-            destRow   += 3;
-            sourceRow += 3;
-        }
-    }
-    
-    return true;
-    */
 }
 
 // @return number of parameters.
@@ -222,7 +193,7 @@ template <typename HFunc, typename VFunc> bool Blur::process(HFunc hFunc, VFunc 
     bool res = false;
     auto tempFrame = resourceManager.createFrame(inputFrame);
     
-    ROI roi  = {static_cast<uint32_t>(kernelSizeHalf), static_cast<uint32_t>(kernelSizeHalf), inputFrame.width - 2 * kernelSizeHalf, inputFrame.height - 2 * kernelSizeHalf};
+    ROI roi  = {inputFrame.roi.x - kernelSizeHalf, inputFrame.roi.y - kernelSizeHalf, inputFrame.roi.width + 2 * kernelSizeHalf, inputFrame.roi.height + 2 * kernelSizeHalf};
  
     FrameEx inputFrameEx  = inputFrame;
     FrameEx outputFrameEx = outputFrame;
@@ -231,46 +202,11 @@ template <typename HFunc, typename VFunc> bool Blur::process(HFunc hFunc, VFunc 
     // Horizontal filter
     res = processFrameToFramePixel(hFunc, inputFrameEx, tempFrameFrameEx, &roi, &roi);
     
-    // Copy border
-    auto copyROIFilter = std::unique_ptr<IFilter>(filterList.createFilter("ROI Copy", filterList, resourceManager));
-    
-    auto copyBorderFunction = [&](const Frame& input, Frame& output)
-    {
-        if (copyROIFilter)
-        {
-            BaseParameterSet border;
-            
-            // Top
-            border.push_back(ROIParameter({roi.x, 0, roi.width, roi.y}));
-            border.push_back(border.front());
-            BaseFilter::apply(copyROIFilter.get(), input, output, border);
-            border.clear();
-            
-            // Bottom
-            border.push_back(ROIParameter({roi.x, roi.y + roi.height, roi.width, roi.y}));
-            border.push_back(border.front());
-            BaseFilter::apply(copyROIFilter.get(), input, output, border);
-            border.clear();
-            
-            // Left
-            border.push_back(ROIParameter({0, roi.y, roi.x, roi.height}));
-            border.push_back(border.front());
-            BaseFilter::apply(copyROIFilter.get(), input, output, border);
-            border.clear();
-            
-            // Right
-            border.push_back(ROIParameter({roi.x + roi.width, roi.y, roi.x, roi.height}));
-            border.push_back(border.front());
-            BaseFilter::apply(copyROIFilter.get(), input, output, border);
-        }
-    };
-    
-    copyBorderFunction(inputFrameEx, *tempFrame);
-    
     // Vertical filter
     res = res && processFrameToFramePixel(vFunc, tempFrameFrameEx, outputFrameEx, &roi, &roi);
     
-    copyBorderFunction(*tempFrame, outputFrame);
+    outputFrame.roi = roi;
+    //copyBorderFunction(*tempFrame, outputFrame);
     
     resourceManager.releaseFrame(tempFrame);
     
@@ -289,4 +225,19 @@ FrameParams Blur::outputFrameParams(const FrameParams& inputFrame)
         res = inputFrame;
     }
     return res;
+}
+
+//@return output roi. It can be larget or smaller or the same as inout frame.
+ROI Blur::outputRoi(const ROI& inputRoi, const IParameterSet& params)
+{
+    const int kernelSizeHalf = UintParameter::field(&params.value(0));
+    
+    if (kernelSizeHalf == 0)
+    {
+        return inputRoi;
+    }
+    
+    const int kernelSize = kernelSizeHalf * 2;
+    
+    return {-kernelSize + inputRoi.x, -kernelSize + inputRoi.x, inputRoi.width + 2 * kernelSize, inputRoi.height + 2 * kernelSize};
 }

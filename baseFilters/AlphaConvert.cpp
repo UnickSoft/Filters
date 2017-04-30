@@ -32,8 +32,14 @@ bool AlphaConvert::apply(const Frame& inputFrame, Frame& outputFrame, const IPar
         FrameEx inputFrameEx  = inputFrame;
         FrameEx outputFrameEx = outputFrame;
         
-        // Horizontal filter
-        return processFrameToFramePixel(processRGBA8, inputFrameEx, outputFrameEx);
+        bool res = processFrameToFramePixel(processRGBA8, inputFrameEx, outputFrameEx);
+        
+        if (res)
+        {
+            outputFrame.roi = inputFrame.roi;
+        }
+        
+        return res;
     }
     
     return false;
